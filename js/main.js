@@ -119,6 +119,68 @@ const scriptCategoryColors = {
     'CJK': '#e06b9a'
 };
 
+(function () {
+    const finalGridSection = document.getElementById('section-final-grid');
+    if (finalGridSection) {
+        const gridEl = document.getElementById('portraitGrid');
+        const overlayEl = finalGridSection.querySelector('.final-title-overlay');
+
+        if (gridEl) {
+            const glyphs =
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?#§¶*&$@≡≈≠∴∵∞◊◇◆◎◐◑◧◨░▒▓█▞▚▙▟▛▜※卐中日文語形象字ᚠᚢᚦאבגדהשלום한글あいうえお';
+
+            const cells = [];
+            const totalCells = 20 * 10;
+
+            for (let i = 0; i < totalCells; i++) {
+                const span = document.createElement('span');
+                span.className = 'portrait-cell';
+                gridEl.appendChild(span);
+                cells.push(span);
+            }
+
+            function randomGlyph() {
+                const idx = Math.floor(Math.random() * glyphs.length);
+                return glyphs.charAt(idx);
+            }
+
+            function updateGrid() {
+                cells.forEach(cell => {
+                    cell.textContent = randomGlyph();
+                });
+            }
+
+            let gridTimer = null;
+
+            const gridObserver = new IntersectionObserver(
+                entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            gridEl.classList.add('visible');
+                            overlayEl && overlayEl.classList.add('visible');
+                            updateGrid();
+                            if (!gridTimer) {
+                                gridTimer = setInterval(updateGrid, 1000);
+                            }
+                        } else {
+                            if (gridTimer) {
+                                clearInterval(gridTimer);
+                                gridTimer = null;
+                            }
+                        }
+                    });
+                },
+                {
+                    root: document.getElementById('app') || null,
+                    threshold: 0.3
+                }
+            );
+
+            gridObserver.observe(finalGridSection);
+        }
+    }
+})();
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', async function () {
     // Load data

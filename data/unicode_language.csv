@@ -1,154 +1,153 @@
-script,iso_code,unicode_version,year_first_encoded,characters,languages,geography_summary,characters_in_script_today,languages_examples
-Arabic,Arab,1.1,1993,,,Middle East & North Africa; Iran; Afghanistan & Pakistan; parts of Sub‑Saharan Africa & Central Asia,1365.0,"Arabic, Persian (Farsi), Urdu, Pashto"
-Armenian,Armn,1.1,1993,,,"Armenia; diaspora in Russia, Europe, Middle East, Americas",96.0,Armenian
-Bengali,Beng,1.1,1993,,,"Bangladesh; India (West Bengal, Assam); diaspora",96.0,"Bengali, Assamese"
-Bopomofo,Bopo,1.1,1993,,,Taiwan; used in some learning contexts elsewhere,77.0,"Mandarin, Hokkien, Hakka (phonetic/educational)"
-Cyrillic,Cyrl,1.1,1993,,,Eastern Europe; Russia; Central Asia; Mongolia,443.0,"Russian, Ukrainian, Bulgarian, Serbian, Mongolian"
-Devanagari,Deva,1.1,1993,,,India; Nepal; diaspora,154.0,"Hindi, Marathi, Nepali, Sanskrit"
-Georgian,Geor,1.1,1993,,,Georgia; diaspora,173.0,Georgian
-Greek,Grek,1.1,1993,,,Greece; Cyprus; diaspora,518.0,Greek
-Gujarati,Gujr,1.1,1993,,,India (Gujarat); East Africa; UK; diaspora,91.0,Gujarati
-Gurmukhi,Guru,1.1,1993,,,India (Punjab); UK; Canada; global Sikh diaspora,80.0,Punjabi (Eastern)
-Han,Hani,1.1,1993,,,China; Taiwan; Japan; Korea; Vietnam (historic use); diaspora,94213.0,"Chinese; Japanese (kanji); Korean (Hanja, limited); Vietnamese (historic)"
-Hangul,Hang,1.1,1993,,,South Korea; North Korea; diaspora,11739.0,Korean
-Hebrew,Hebr,1.1,1993,,,Israel; Jewish communities worldwide,134.0,"Hebrew, Yiddish"
-Hiragana,Hira,1.1,1993,,,Japan,380.0,Japanese (syllabary)
-Kannada,Knda,1.1,1993,,,India (Karnataka); diaspora,90.0,"Kannada; also Tulu, Konkani (partly)"
-Katakana,Kana,1.1,1993,,,Japan,320.0,Japanese (syllabary)
-Lao,Laoo,1.1,1993,,,Laos; diaspora,82.0,Lao
-Latin,Latn,1.1,1993,,,"Worldwide (Americas, Europe, Africa, Asia, Oceania)",1475.0,"English, Spanish, French, Portuguese, Indonesian (and hundreds more)"
-Malayalam,Mlym,1.1,1993,,,"India (Kerala, Lakshadweep); Gulf diaspora",118.0,Malayalam
-Oriya (Odia),Orya,1.1,1993,,,India (Odisha); diaspora,91.0,Odia
-Tamil,Taml,1.1,1993,,,India (Tamil Nadu); Sri Lanka; Singapore; Malaysia; diaspora,123.0,Tamil
-Telugu,Telu,1.1,1993,,,"India (Andhra Pradesh, Telangana); diaspora",100.0,Telugu
-Thai,Thai,1.1,1993,,,Thailand; diaspora,86.0,Thai
-Tibetan,Tibt,2.0,1996,,,Tibet (China); Bhutan; parts of India & Nepal,207.0,"Tibetan, Dzongkha, Ladakhi"
-Braille Patterns,Brai,3.0,1999,,,Worldwide (accessibility),256.0,Braille (for many languages; tactile)
-Canadian Aboriginal Syllabics,Cans,3.0,1999,,,Canada; Alaska (Yupik variants),726.0,"Cree, Ojibwe, Inuktitut (and others)"
-Cherokee,Cher,3.0,1999,,,"United States (Oklahoma, North Carolina)",172.0,Cherokee
-Ethiopic,Ethi,3.0,1999,,,Ethiopia; Eritrea; diaspora,523.0,"Amharic, Tigrinya, Geʽez, Oromo (historically)"
-Khmer,Khmr,3.0,1999,,,Cambodia; diaspora,146.0,Khmer
-Mongolian,Mong,3.0,1999,,,Mongolia; Inner Mongolia (China),168.0,Mongolian (traditional)
-Myanmar,Mymr,3.0,1999,,,Myanmar; Thailand (border regions); diaspora,223.0,"Burmese, Shan, Karen languages (various)"
-Ogham,Ogam,3.0,1999,,,Ireland; UK (historic),29.0,Old Irish (historic)
-Runic,Runr,3.0,1999,,,Scandinavia; British Isles (historic),86.0,"Old Norse, Old English (historic)"
-Sinhala,Sinh,3.0,1999,,,Sri Lanka; diaspora,111.0,Sinhala
-Syriac,Syrc,3.0,1999,,,Iraq; Syria; Turkey; diaspora (US/Europe),88.0,"Syriac (Classical, Assyrian Neo-Aramaic liturgical)"
-Thaana,Thaa,3.0,1999,,,Maldives,50.0,Dhivehi (Maldivian)
-Yi,Yiii,3.0,1999,,,"China (Sichuan, Yunnan, Guizhou)",1220.0,Nuosu (Yi)
-Deseret,Dsrt,3.1,2001,,,United States (historic),80.0,English (historic phonetic)
-Gothic,Goth,3.1,2001,,,Europe (historic),27.0,Gothic (historic)
-Old Italic,Ital,3.1,2001,,,Italy (historic),39.0,"Etruscan, Oscan, Umbrian (historic)"
-Buhid,Buhd,3.2,2002,,,Philippines,20.0,Buhid
-Hanunoo,Hano,3.2,2002,,,Philippines,21.0,Hanunoo
-Tagalog,Tglg,3.2,2002,,,Philippines,23.0,Tagalog (historic)
-Tagbanwa,Tagb,3.2,2002,,,Philippines,18.0,Tagbanwa
-Cypriot Syllabary,Cprt,4.0,2003,,,Cyprus (historic),55.0,Ancient Cypriot Greek (historic)
-Limbu,Limb,4.0,2003,,,Nepal; India (Sikkim),68.0,Limbu
-Linear B,Linb,4.0,2003,,,Greece (historic),211.0,Mycenaean Greek (historic)
-Osmanya,Osma,4.0,2003,,,Somalia (historic),40.0,Somali (historic)
-Shavian,Shaw,4.0,2003,,,United Kingdom (historic use),48.0,"English (phonemic orthography, historic)"
-Tai Le,Tale,4.0,2003,,,China (Yunnan); Myanmar; Laos,35.0,Tai Nüa
-Ugaritic,Ugar,4.0,2003,,,Syria (historic),31.0,Ugaritic (historic)
-Buginese,Bugi,4.1,2005,,,Indonesia (South Sulawesi),30.0,Buginese
-Coptic,Copt,4.1,2005,,,Egypt; diaspora,137.0,Coptic (liturgical)
-"Cuneiform, Sumero-Akkadian",Xsux,4.1,2005,,,Iraq; Syria; Turkey (historic),1234.0,"Sumerian, Akkadian (historic)"
-Glagolitic,Glag,4.1,2005,,,Croatia; Bulgaria; others (historic),134.0,Old Church Slavonic (historic)
-Kharoshthi,Khar,4.1,2005,,,Pakistan; Afghanistan (historic),68.0,Gandhari Prakrit (historic)
-New Tai Lue,Talu,4.1,2005,,,China (Yunnan); Laos; Thailand; Myanmar,83.0,Tai Lü
-Old Persian,Xpeo,4.1,2005,,,Iran (historic),50.0,Old Persian (historic)
-Syloti Nagri,Sylo,4.1,2005,,,Bangladesh; India (Assam),45.0,Sylheti
-Tifinagh,Tfng,4.1,2005,,,Morocco; Algeria; Libya; Niger; Mali,59.0,Tamazight (Berber languages)
-Balinese,Bali,5.0,2006,,,Indonesia (Bali),124.0,Balinese
-"Cuneiform, Sumero-Akkadian",Xsux,5.0,2006,,,Iraq; Syria; Turkey (historic),1234.0,"Sumerian, Akkadian (historic)"
-N'Ko,Nkoo,5.0,2006,,,Guinea; Mali; Côte d’Ivoire; West African diaspora,62.0,"N'Ko (Mandinka, Bambara, Maninka and others)"
-Phags‑pa,Phag,5.0,2006,,,China; Mongolia (historic),56.0,"Mongolian, Chinese (historic use)"
-Phoenician,Phnx,5.0,2006,,,Levant (historic),29.0,Phoenician (historic)
-Carian,Cari,5.1,2008,,,Anatolia (Turkey) historic,49.0,Carian (historic)
-Cham,Cham,5.1,2008,,,Vietnam; Cambodia,83.0,Cham
-Kayah Li,Kali,5.1,2008,,,Myanmar; Thailand,47.0,Kayah languages
-Lepcha,Lepc,5.1,2008,,,"India (Sikkim, West Bengal); Nepal; Bhutan",74.0,Lepcha
-Lycian,Lyci,5.1,2008,,,Turkey (historic),29.0,Lycian (historic)
-Lydian,Lydi,5.1,2008,,,Turkey (historic),27.0,Lydian (historic)
-Ol Chiki,Olck,5.1,2008,,,"India (Jharkhand, Odisha, West Bengal); Bangladesh; Nepal",48.0,Santali
-Rejang,Rjng,5.1,2008,,,Indonesia (Sumatra),37.0,Rejang
-Saurashtra,Saur,5.1,2008,,,"India (Tamil Nadu, Gujarat)",82.0,Saurashtra
-Sundanese,Sund,5.1,2008,,,Indonesia (West Java),72.0,Sundanese
-Vai,Vaii,5.1,2008,,,Liberia; Sierra Leone,300.0,Vai
-Avestan,Avst,5.2,2009,,,Iran; India (Parsi community),61.0,Avestan (liturgical)
-Bamum,Bamu,5.2,2009,,,Cameroon,657.0,Bamum
-Egyptian Hieroglyphs,Egyp,5.2,2009,,,Egypt (historic),1080.0,Egyptian (historic)
-Imperial Aramaic,Armi,5.2,2009,,,Middle East (historic),31.0,Imperial Aramaic (historic)
-Inscriptional Pahlavi,Phli,5.2,2009,,,Iran (historic),27.0,Middle Persian (historic)
-Inscriptional Parthian,Prti,5.2,2009,,,Iran (historic),30.0,Parthian (historic)
-Javanese,Java,5.2,2009,,,Indonesia (Java),90.0,Javanese
-Kaithi,Kthi,5.2,2009,,,"India (Bihar, Uttar Pradesh)",68.0,"Bhojpuri, Magahi, Maithili (historic & limited)"
-Lisu,Lisu,5.2,2009,,,China; Myanmar; Thailand; India,49.0,Lisu
-Meetei Mayek,Mtei,5.2,2009,,,India (Manipur),79.0,Meitei (Manipuri)
-Meroitic Cursive,Merc,5.2,2009,,,Sudan (historic),90.0,Meroitic (historic)
-Meroitic Hieroglyphs,Mero,5.2,2009,,,Sudan (historic),32.0,Meroitic (historic)
-Old South Arabian,Sarb,5.2,2009,,,Yemen; Saudi Arabia (historic),32.0,Old South Arabian (historic)
-Old Turkic,Orkh,5.2,2009,,,Mongolia; Central Asia (historic),73.0,Old Turkic (historic)
-Samaritan,Samr,5.2,2009,,,Israel; Palestinian Territories,61.0,Samaritan (liturgical)
-Tai Tham,Lana,5.2,2009,,,Thailand; Laos; Myanmar; China (Yunnan),127.0,"Northern Thai, Tai Lue, Khün"
-Tai Viet,Tavt,5.2,2009,,,Vietnam; Laos; China; Thailand,72.0,"Tai Dam, Tai Dón"
-Batak,Batk,6.0,2010,,,Indonesia (Sumatra),56.0,Batak languages
-Brahmi,Brah,6.0,2010,,,India; South Asia (historic),115.0,"Sanskrit (historic), Prakrits (historic)"
-Mandaic,Mand,6.0,2010,,,Iraq; Iran,29.0,Mandaic (liturgical)
-Chakma,Cakm,6.1,2012,,,"Bangladesh; India (Tripura, Mizoram)",71.0,Chakma
-Meroitic Cursive,Merc,6.1,2012,,,Sudan (historic),90.0,Meroitic (historic)
-Meroitic Hieroglyphs,Mero,6.1,2012,,,Sudan (historic),32.0,Meroitic (historic)
-Miao (Plrd),Plrd,6.1,2012,,,China; Vietnam; Laos; Thailand; diaspora,149.0,Hmong languages (Pollard script)
-Sharada,Shrd,6.1,2012,,,India (Kashmir),96.0,Kashmiri (historic)
-Sora Sompeng,Sora,6.1,2012,,,"India (Odisha, Andhra Pradesh)",35.0,Sora
-Takri,Takr,6.1,2012,,,"India (Himachal Pradesh, Jammu)",68.0,"Dogri, Kangri, Chambeali (historic/limited modern)"
-Bassa Vah,Bass,7.0,2014,~300,Bassa,Liberia; Sierra Leone; diaspora,,
-Caucasian Albanian,Aghb,7.0,2014,~70,Caucasian Albanian (historic),"Azerbaijan, Dagestan (historic)",,
-Duployan,Dupl,7.0,2014,~143,"French, English (shorthand)",Canada; France; US (historic shorthand use),,
-Elbasan,Elba,7.0,2014,~40,Albanian (historic),Albania (historic),,
-Grantha,Gran,7.0,2014,~113,Sanskrit; Classical Tamil (loanwords),India (Tamil Nadu; scholarly),,
-Khojki,Khoj,7.0,2014,~61,"Sindhi (historic), Khojki liturgical",Pakistan; India,,
-Khudawadi,Sind,7.0,2014,~69,Sindhi (historic),Pakistan (Sindh); India,,
-Linear A,Lina,7.0,2014,~341,Minoan (undeciphered),Crete (historic),,
-Mahajani,Mahj,7.0,2014,~61,"Hindi, Punjabi, Marwari (merchant hand)",India; Pakistan (historic),,
-Manichaean,Mani,7.0,2014,~51,"Middle Persian, Sogdian (historic)",Iran; Central Asia (historic),,
-Mende Kikakui,Mend,7.0,2014,~213,Mende,Sierra Leone,,
-Modi,Modi,7.0,2014,~90,Marathi (historic administration),India (Maharashtra),,
-Mro,Mroo,7.0,2014,~44,Mru (Mro),Bangladesh; Myanmar,,
-Nabataean,Nbat,7.0,2014,~40,Nabataean Aramaic (historic),Jordan; Saudi Arabia (historic),,
-Old North Arabian,Narb,7.0,2014,~32,Ancient North Arabian (historic),Saudi Arabia; Jordan (historic),,
-Old Permic,Perm,7.0,2014,~43,Komi (historic),Russia (Ural region; historic),,
-Pahawh Hmong,Hmng,7.0,2014,~127,Hmong,Laos; Vietnam; China; Thailand; diaspora,,
-Palmyrene,Palm,7.0,2014,~32,Palmyrene Aramaic (historic),Syria (historic),,
-Pau Cin Hau,Pauc,7.0,2014,~57,Tedim (Zomi) and related,India (Manipur),,
-Psalter Pahlavi,Phlp,7.0,2014,~29,Middle Persian (historic),Iran (historic),,
-Siddham,Sidd,7.0,2014,~92,Sanskrit (Buddhist texts),India (historic); Japan; East Asia (liturgical),,
-Tirhuta,Tirh,7.0,2014,~82,Maithili,India (Bihar); Nepal,,
-Warang Citi,Wara,7.0,2014,~84,Ho,"India (Jharkhand, Odisha)",,
-Ahom,Ahom,8.0,2015,~65,Ahom (historic),India (Assam; historic),,
-Anatolian Hieroglyphs,Hluw,8.0,2015,~583,Luwian (historic),Turkey; Syria (historic),,
-Hatran,Hatr,8.0,2015,~26,Hatran Aramaic (historic),Iraq (historic),,
-Multani,Mult,8.0,2015,~38,Saraiki (historic),Pakistan (Punjab),,
-Old Hungarian,Hung,8.0,2015,~108,Hungarian (historic/revived),Hungary; Romania; diaspora,,
-SignWriting,Sgnw,8.0,2015,~672,"Sign languages (e.g., ASL)",Worldwide,,
-Adlam,Adlm,9.0,2016,~89,"Fula (Fulani, Pulaar)","West Africa (Guinea, Senegal, Nigeria, etc.)",,
-Bhaiksuki,Bhks,9.0,2016,~97,Sanskrit (historic),India; Nepal (historic),,
-Marchen,Marc,9.0,2016,~68,Zhang-Zhung (historic),Tibet (historic),,
-Newa,Newa,9.0,2016,~92,Newar (Nepal Bhasa),Nepal (Kathmandu Valley),,
-Osage,Osge,9.0,2016,~72,Osage,United States (Oklahoma),,
-Tangut,Tang,9.0,2016,~6125,Tangut (historic),"China (Ningxia, Gansu)",,
-Masaram Gondi,Gonm,10.0,2017,~75,Gondi,"India (Madhya Pradesh, Maharashtra, Chhattisgarh)",,
+script,iso_code,unicode_version,year_first_encoded,geography_summary,characters_in_script_today,languages_examples
+Arabic,Arab,1.1,1993,Middle East & North Africa; Iran; Afghanistan & Pakistan; parts of Sub‑Saharan Africa & Central Asia,1365.0,"Arabic, Persian (Farsi), Urdu, Pashto"
+Armenian,Armn,1.1,1993,"Armenia; diaspora in Russia, Europe, Middle East, Americas",96.0,Armenian
+Bengali,Beng,1.1,1993,"Bangladesh; India (West Bengal, Assam); diaspora",96.0,"Bengali, Assamese"
+Bopomofo,Bopo,1.1,1993,Taiwan; used in some learning contexts elsewhere,77.0,"Mandarin, Hokkien, Hakka (phonetic/educational)"
+Cyrillic,Cyrl,1.1,1993,Eastern Europe; Russia; Central Asia; Mongolia,443.0,"Russian, Ukrainian, Bulgarian, Serbian, Mongolian"
+Devanagari,Deva,1.1,1993,India; Nepal; diaspora,154.0,"Hindi, Marathi, Nepali, Sanskrit"
+Georgian,Geor,1.1,1993,Georgia; diaspora,173.0,Georgian
+Greek,Grek,1.1,1993,Greece; Cyprus; diaspora,518.0,Greek
+Gujarati,Gujr,1.1,1993,India (Gujarat); East Africa; UK; diaspora,91.0,Gujarati
+Gurmukhi,Guru,1.1,1993,India (Punjab); UK; Canada; global Sikh diaspora,80.0,Punjabi (Eastern)
+Han,Hani,1.1,1993,China; Taiwan; Japan; Korea; Vietnam (historic use); diaspora,94213.0,"Chinese; Japanese (kanji); Korean (Hanja, limited); Vietnamese (historic)"
+Hangul,Hang,1.1,1993,South Korea; North Korea; diaspora,11739.0,Korean
+Hebrew,Hebr,1.1,1993,Israel; Jewish communities worldwide,134.0,"Hebrew, Yiddish"
+Hiragana,Hira,1.1,1993,Japan,380.0,Japanese (syllabary)
+Kannada,Knda,1.1,1993,India (Karnataka); diaspora,90.0,"Kannada; also Tulu, Konkani (partly)"
+Katakana,Kana,1.1,1993,Japan,320.0,Japanese (syllabary)
+Lao,Laoo,1.1,1993,Laos; diaspora,82.0,Lao
+Latin,Latn,1.1,1993,"Worldwide (Americas, Europe, Africa, Asia, Oceania)",1475.0,"English, Spanish, French, Portuguese, Indonesian (and hundreds more)"
+Malayalam,Mlym,1.1,1993,"India (Kerala, Lakshadweep); Gulf diaspora",118.0,Malayalam
+Oriya (Odia),Orya,1.1,1993,India (Odisha); diaspora,91.0,Odia
+Tamil,Taml,1.1,1993,India (Tamil Nadu); Sri Lanka; Singapore; Malaysia; diaspora,123.0,Tamil
+Telugu,Telu,1.1,1993,"India (Andhra Pradesh, Telangana); diaspora",100.0,Telugu
+Thai,Thai,1.1,1993,Thailand; diaspora,86.0,Thai
+Tibetan,Tibt,2.0,1996,Tibet (China); Bhutan; parts of India & Nepal,207.0,"Tibetan, Dzongkha, Ladakhi"
+Braille Patterns,Brai,3.0,1999,Worldwide (accessibility),256.0,Braille (for many languages; tactile)
+Canadian Aboriginal Syllabics,Cans,3.0,1999,Canada; Alaska (Yupik variants),726.0,"Cree, Ojibwe, Inuktitut (and others)"
+Cherokee,Cher,3.0,1999,"United States (Oklahoma, North Carolina)",172.0,Cherokee
+Ethiopic,Ethi,3.0,1999,Ethiopia; Eritrea; diaspora,523.0,"Amharic, Tigrinya, Geʽez, Oromo (historically)"
+Khmer,Khmr,3.0,1999,Cambodia; diaspora,146.0,Khmer
+Mongolian,Mong,3.0,1999,Mongolia; Inner Mongolia (China),168.0,Mongolian (traditional)
+Myanmar,Mymr,3.0,1999,Myanmar; Thailand (border regions); diaspora,223.0,"Burmese, Shan, Karen languages (various)"
+Ogham,Ogam,3.0,1999,Ireland; UK (historic),29.0,Old Irish (historic)
+Runic,Runr,3.0,1999,Scandinavia; British Isles (historic),86.0,"Old Norse, Old English (historic)"
+Sinhala,Sinh,3.0,1999,Sri Lanka; diaspora,111.0,Sinhala
+Syriac,Syrc,3.0,1999,Iraq; Syria; Turkey; diaspora (US/Europe),88.0,"Syriac (Classical, Assyrian Neo-Aramaic liturgical)"
+Thaana,Thaa,3.0,1999,Maldives,50.0,Dhivehi (Maldivian)
+Yi,Yiii,3.0,1999,"China (Sichuan, Yunnan, Guizhou)",1220.0,Nuosu (Yi)
+Deseret,Dsrt,3.1,2001,United States (historic),80.0,English (historic phonetic)
+Gothic,Goth,3.1,2001,Europe (historic),27.0,Gothic (historic)
+Old Italic,Ital,3.1,2001,Italy (historic),39.0,"Etruscan, Oscan, Umbrian (historic)"
+Buhid,Buhd,3.2,2002,Philippines,20.0,Buhid
+Hanunoo,Hano,3.2,2002,Philippines,21.0,Hanunoo
+Tagalog,Tglg,3.2,2002,Philippines,23.0,Tagalog (historic)
+Tagbanwa,Tagb,3.2,2002,Philippines,18.0,Tagbanwa
+Cypriot Syllabary,Cprt,4.0,2003,Cyprus (historic),55.0,Ancient Cypriot Greek (historic)
+Limbu,Limb,4.0,2003,Nepal; India (Sikkim),68.0,Limbu
+Linear B,Linb,4.0,2003,Greece (historic),211.0,Mycenaean Greek (historic)
+Osmanya,Osma,4.0,2003,Somalia (historic),40.0,Somali (historic)
+Shavian,Shaw,4.0,2003,United Kingdom (historic use),48.0,"English (phonemic orthography, historic)"
+Tai Le,Tale,4.0,2003,China (Yunnan); Myanmar; Laos,35.0,Tai Nüa
+Ugaritic,Ugar,4.0,2003,Syria (historic),31.0,Ugaritic (historic)
+Buginese,Bugi,4.1,2005,Indonesia (South Sulawesi),30.0,Buginese
+Coptic,Copt,4.1,2005,Egypt; diaspora,137.0,Coptic (liturgical)
+"Cuneiform, Sumero-Akkadian",Xsux,4.1,2005,Iraq; Syria; Turkey (historic),1234.0,"Sumerian, Akkadian (historic)"
+Glagolitic,Glag,4.1,2005,Croatia; Bulgaria; others (historic),134.0,Old Church Slavonic (historic)
+Kharoshthi,Khar,4.1,2005,Pakistan; Afghanistan (historic),68.0,Gandhari Prakrit (historic)
+New Tai Lue,Talu,4.1,2005,China (Yunnan); Laos; Thailand; Myanmar,83.0,Tai Lü
+Old Persian,Xpeo,4.1,2005,Iran (historic),50.0,Old Persian (historic)
+Syloti Nagri,Sylo,4.1,2005,Bangladesh; India (Assam),45.0,Sylheti
+Tifinagh,Tfng,4.1,2005,Morocco; Algeria; Libya; Niger; Mali,59.0,Tamazight (Berber languages)
+Balinese,Bali,5.0,2006,Indonesia (Bali),124.0,Balinese
+"Cuneiform, Sumero-Akkadian",Xsux,5.0,2006,Iraq; Syria; Turkey (historic),1234.0,"Sumerian, Akkadian (historic)"
+N'Ko,Nkoo,5.0,2006,Guinea; Mali; Côte d’Ivoire; West African diaspora,62.0,"N'Ko (Mandinka, Bambara, Maninka and others)"
+Phags‑pa,Phag,5.0,2006,China; Mongolia (historic),56.0,"Mongolian, Chinese (historic use)"
+Phoenician,Phnx,5.0,2006,Levant (historic),29.0,Phoenician (historic)
+Carian,Cari,5.1,2008,Anatolia (Turkey) historic,49.0,Carian (historic)
+Cham,Cham,5.1,2008,Vietnam; Cambodia,83.0,Cham
+Kayah Li,Kali,5.1,2008,Myanmar; Thailand,47.0,Kayah languages
+Lepcha,Lepc,5.1,2008,"India (Sikkim, West Bengal); Nepal; Bhutan",74.0,Lepcha
+Lycian,Lyci,5.1,2008,Turkey (historic),29.0,Lycian (historic)
+Lydian,Lydi,5.1,2008,Turkey (historic),27.0,Lydian (historic)
+Ol Chiki,Olck,5.1,2008,"India (Jharkhand, Odisha, West Bengal); Bangladesh; Nepal",48.0,Santali
+Rejang,Rjng,5.1,2008,Indonesia (Sumatra),37.0,Rejang
+Saurashtra,Saur,5.1,2008,"India (Tamil Nadu, Gujarat)",82.0,Saurashtra
+Sundanese,Sund,5.1,2008,Indonesia (West Java),72.0,Sundanese
+Vai,Vaii,5.1,2008,Liberia; Sierra Leone,300.0,Vai
+Avestan,Avst,5.2,2009,Iran; India (Parsi community),61.0,Avestan (liturgical)
+Bamum,Bamu,5.2,2009,Cameroon,657.0,Bamum
+Egyptian Hieroglyphs,Egyp,5.2,2009,Egypt (historic),1080.0,Egyptian (historic)
+Imperial Aramaic,Armi,5.2,2009,Middle East (historic),31.0,Imperial Aramaic (historic)
+Inscriptional Pahlavi,Phli,5.2,2009,Iran (historic),27.0,Middle Persian (historic)
+Inscriptional Parthian,Prti,5.2,2009,Iran (historic),30.0,Parthian (historic)
+Javanese,Java,5.2,2009,Indonesia (Java),90.0,Javanese
+Kaithi,Kthi,5.2,2009,"India (Bihar, Uttar Pradesh)",68.0,"Bhojpuri, Magahi, Maithili (historic & limited)"
+Lisu,Lisu,5.2,2009,China; Myanmar; Thailand; India,49.0,Lisu
+Meetei Mayek,Mtei,5.2,2009,India (Manipur),79.0,Meitei (Manipuri)
+Meroitic Cursive,Merc,5.2,2009,Sudan (historic),90.0,Meroitic (historic)
+Meroitic Hieroglyphs,Mero,5.2,2009,Sudan (historic),32.0,Meroitic (historic)
+Old South Arabian,Sarb,5.2,2009,Yemen; Saudi Arabia (historic),32.0,Old South Arabian (historic)
+Old Turkic,Orkh,5.2,2009,Mongolia; Central Asia (historic),73.0,Old Turkic (historic)
+Samaritan,Samr,5.2,2009,Israel; Palestinian Territories,61.0,Samaritan (liturgical)
+Tai Tham,Lana,5.2,2009,Thailand; Laos; Myanmar; China (Yunnan),127.0,"Northern Thai, Tai Lue, Khün"
+Tai Viet,Tavt,5.2,2009,Vietnam; Laos; China; Thailand,72.0,"Tai Dam, Tai Dón"
+Batak,Batk,6.0,2010,Indonesia (Sumatra),56.0,Batak languages
+Brahmi,Brah,6.0,2010,India; South Asia (historic),115.0,"Sanskrit (historic), Prakrits (historic)"
+Mandaic,Mand,6.0,2010,Iraq; Iran,29.0,Mandaic (liturgical)
+Chakma,Cakm,6.1,2012,"Bangladesh; India (Tripura, Mizoram)",71.0,Chakma
+Meroitic Cursive,Merc,6.1,2012,Sudan (historic),90.0,Meroitic (historic)
+Meroitic Hieroglyphs,Mero,6.1,2012,Sudan (historic),32.0,Meroitic (historic)
+Miao (Plrd),Plrd,6.1,2012,China; Vietnam; Laos; Thailand; diaspora,149.0,Hmong languages (Pollard script)
+Sharada,Shrd,6.1,2012,India (Kashmir),96.0,Kashmiri (historic)
+Sora Sompeng,Sora,6.1,2012,"India (Odisha, Andhra Pradesh)",35.0,Sora
+Takri,Takr,6.1,2012,"India (Himachal Pradesh, Jammu)",68.0,"Dogri, Kangri, Chambeali (historic/limited modern)"
+Bassa Vah,Bass,7.0,2014,36,Bassa,Liberia; Sierra Leone; diaspora,,
+Caucasian Albanian,Aghb,7.0,2014,53,Caucasian Albanian (historic),"Azerbaijan, Dagestan (historic)",
+Duployan,Dupl,7.0,2014,143,"French, English (shorthand)",Canada; France; US (historic shorthand use),
+Elbasan,Elba,7.0,2014,40,Albanian (historic),Albania (historic),
+Grantha,Gran,7.0,2014,86,Sanskrit; Classical Tamil (loanwords),India (Tamil Nadu; scholarly),
+Khojki,Khoj,7.0,2014,65,"Sindhi (historic), Khojki liturgical",Pakistan; India,
+Khudawadi,Sind,7.0,2014,69,Sindhi (historic),Pakistan (Sindh); India,
+Linear A,Lina,7.0,2014,341,Minoan (undeciphered),Crete (historic),
+Mahajani,Mahj,7.0,2014,39,"Hindi, Punjabi, Marwari (merchant hand)",India; Pakistan (historic),
+Manichaean,Mani,7.0,2014,51,"Middle Persian, Sogdian (historic)",Iran; Central Asia (historic),
+Mende Kikakui,Mend,7.0,2014,213,Mende,Sierra Leone,
+Modi,Modi,7.0,2014,79,Marathi (historic administration),India (Maharashtra),
+Mro,Mroo,7.0,2014,43,Mru (Mro),Bangladesh; Myanmar,
+Nabataean,Nbat,7.0,2014,40,Nabataean Aramaic (historic),Jordan; Saudi Arabia (historic),
+Old North Arabian,Narb,7.0,2014,32,Ancient North Arabian (historic),Saudi Arabia; Jordan (historic),
+Old Permic,Perm,7.0,2014,43,Komi (historic),Russia (Ural region; historic),
+Pahawh Hmong,Hmng,7.0,2014,127,Hmong,Laos; Vietnam; China; Thailand; diaspora,
+Palmyrene,Palm,7.0,2014,32,Palmyrene Aramaic (historic),Syria (historic),
+Pau Cin Hau,Pauc,7.0,2014,57,Tedim (Zomi) and related,India (Manipur),
+Psalter Pahlavi,Phlp,7.0,2014,29,Middle Persian (historic),Iran (historic),,
+Siddham,Sidd,7.0,2014,92,Sanskrit (Buddhist texts),India (historic); Japan; East Asia (liturgical),,
+Tirhuta,Tirh,7.0,2014,82,Maithili,India (Bihar); Nepal,,
+Warang Citi,Wara,7.0,2014,84,Ho,"India (Jharkhand, Odisha)",,
+Ahom,Ahom,8.0,2015,65,Ahom (historic),India (Assam; historic),,
+Anatolian Hieroglyphs,Hluw,8.0,2015,583,Luwian (historic),Turkey; Syria (historic),,
+Hatran,Hatr,8.0,2015,26,Hatran Aramaic (historic),Iraq (historic),,
+Multani,Mult,8.0,2015,38,Saraiki (historic),Pakistan (Punjab),,
+Old Hungarian,Hung,8.0,2015,108,Hungarian (historic/revived),Hungary; Romania; diaspora,,
+SignWriting,Sgnw,8.0,2015,672,"Sign languages (e.g., ASL)",Worldwide,,
+Adlam,Adlm,9.0,2016,88,"Fula (Fulani, Pulaar)","West Africa (Guinea, Senegal, Nigeria, etc.)",,
+Bhaiksuki,Bhks,9.0,2016,97,Sanskrit (historic),India; Nepal (historic),,
+Newa,Newa,9.0,2016,97,Newar (Nepal Bhasa),Nepal (Kathmandu Valley),,
+Osage,Osge,9.0,2016,72,Osage,United States (Oklahoma),,
+Tangut,Tang,9.0,2016,6144,Tangut (historic),"China (Ningxia, Gansu)",,
+Masaram Gondi,Gonm,10.0,2017,75,Gondi,"India (Madhya Pradesh, Maharashtra, Chhattisgarh)",,
 Nushu,Nshu,10.0,2017,396,Nüshu (women’s script; Chinese topolects),China (Hunan; Jiangyong),,
-Soyombo,Soyo,10.0,2017,~83,"Mongolian, Tibetan, Sanskrit (historic)",Mongolia; China; India (historic),,
-Zanabazar Square,Zanb,10.0,2017,~72,"Mongolian, Tibetan, Sanskrit (historic)",Mongolia; China; India (historic),,
-Dogra,Dogr,11.0,2018,~60,Dogri,India (Jammu),,
-Gunjala Gondi,Gong,11.0,2018,~63,Gondi (Gunjala),"India (Telangana, Maharashtra)",,
-Hanifi Rohingya,Rohg,11.0,2018,~50,Rohingya,Bangladesh; Myanmar,,
-Makasar,Maka,11.0,2018,~25,Makasar,Indonesia (South Sulawesi),,
-Medefaidrin,Medf,11.0,2018,~91,Medefaidrin,Nigeria,,
-Old Sogdian,Sogo,11.0,2018,~40,Sogdian (historic),Central Asia (historic),,
-Sogdian,Sogd,11.0,2018,~42,Sogdian (historic),Central Asia (historic),,
-Elymaic,Elym,12.0,2019,~23,Elymaic (historic),Iran (Khuzestan; historic),,
+Soyombo,Soyo,10.0,2017,83,"Mongolian, Tibetan, Sanskrit (historic)",Mongolia; China; India (historic),,
+Zanabazar Square,Zanb,10.0,2017,72,"Mongolian, Tibetan, Sanskrit (historic)",Mongolia; China; India (historic),,
+Dogra,Dogr,11.0,2018,60,Dogri,India (Jammu),,
+Gunjala Gondi,Gong,11.0,2018,63,Gondi (Gunjala),"India (Telangana, Maharashtra)",,
+Hanifi Rohingya,Rohg,11.0,2018,50,Rohingya,Bangladesh; Myanmar,,
+Makasar,Maka,11.0,2018,25,Makasar,Indonesia (South Sulawesi),,
+Medefaidrin,Medf,11.0,2018,91,Medefaidrin,Nigeria,,
+Old Sogdian,Sogo,11.0,2018,40,Sogdian (historic),Central Asia (historic),,
+Sogdian,Sogd,11.0,2018,42,Sogdian (historic),Central Asia (historic),,
+Elymaic,Elym,12.0,2019,23,Elymaic (historic),Iran (Khuzestan; historic),,
 Nandinagari,Nand,12.0,2019,~65,Sanskrit (historic),"India (Karnataka, Andhra Pradesh; historic)",,
 Nyiakeng Puachue Hmong,Hmnp,12.0,2019,~71,"Hmong (White Hmong, Green Hmong)",Laos; Thailand; United States; diaspora,,
 Wancho,Wcho,12.0,2019,~59,Wancho,India (Arunachal Pradesh),,
