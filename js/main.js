@@ -1,44 +1,61 @@
-(function () {
-    const asciiEl = document.getElementById('asciiYangPortrait');
-    if (!asciiEl) return; // nothing to do if element doesn't exist
+// =======================
+// ASCII YANG LOADER LOGIC
+// =======================
 
-    const eyeOptions = ['• •', '0 0', '- -'];
-    const mouthOptions = ['___', ' q ', ' O ', '▂▂ '];
+const asciiEl = document.getElementById('asciiYangPortrait');
+const loader = document.getElementById('loader');
+const appContent = document.getElementById('appContent');
 
-    function makeAsciiYang() {
-        const eyes = eyeOptions[Math.floor(Math.random() * eyeOptions.length)];
-        const mouth = mouthOptions[Math.floor(Math.random() * mouthOptions.length)];
+const eyeOptions = ['• •', '0 0', '- -'];
+const mouthOptions = ['___', ' q ', ' O ', '▂▂ '];
 
-        const lines = [
-            '  %%%%%%%%%%%%   ',
-            ' |            |_',
-            ` |    ${eyes}     _|`,
-            ' |    <       | ',
-            ` |    ${mouth}     |`,
-            ' |____________| '
-        ];
+function makeAsciiYang() {
+    if (!asciiEl) return;
+    const eyes = eyeOptions[Math.floor(Math.random() * eyeOptions.length)];
+    const mouth = mouthOptions[Math.floor(Math.random() * mouthOptions.length)];
 
-        asciiEl.textContent = lines.join('\n');
-    }
+    const lines = [
+        '        %%%%%%%%%%%%   ',
+        '       |            |_',
+        `       |    ${eyes}     _|`,
+        '       |    <       | ',
+        `       |    ${mouth}     |`,
+        '       |____________| ',
+        '',
+        'One second I am loading my stuffs'
+    ];
 
-    // Show loader text immediately
-    asciiEl.textContent = '杨: Wait for me to load my stuff...';
-
-    let asciiTimer = null;
-
-    // Expose a function you can call once your content is ready
-    window.startYangAscii = function () {
-        if (asciiTimer) return; // already started
-
-        // Optionally keep the loader for a tiny moment more:
-        // setTimeout(() => { ... }, 500)
-        makeAsciiYang();
-        asciiTimer = setInterval(makeAsciiYang, 400); // adjust speed as you like
-    };
-})();
-if (window.startYangAscii) {
-    window.startYangAscii();
+    asciiEl.textContent = lines.join('\n');
 }
+
+// animate every 150ms
+const asciiInterval = setInterval(makeAsciiYang, 150);
+makeAsciiYang(); // draw immediately once
+
+// =======================
+// WAIT FOR CSV + 2 SECONDS
+// =======================
+
+// (example) your CSV loading promises:
+const csvPromises = [
+    fetch("data/file1.csv").then(r => r.text()),
+    fetch("data/file2.csv").then(r => r.text())
+    // add all CSV fetches here
+];
+
+const MIN_TIME = new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds
+
+// When ALL CSVs are loaded AND 2 seconds passed:
+Promise.all([Promise.all(csvPromises), MIN_TIME]).then(() => {
+    clearInterval(asciiInterval); // stop animation
+    loader.classList.add("fade-out");
+
+    setTimeout(() => {
+        loader.style.display = "none";
+        appContent.style.display = "block";
+    }, 600); // matches the CSS transition
+});
+
 
 // Global state
 let currentSection = 0;

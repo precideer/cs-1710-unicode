@@ -58,6 +58,30 @@
     padding: 0;
     box-sizing: border-box;
 }
+#loader {
+  position: fixed;
+  inset: 0;             /* full screen */
+  background: #2c3038;  /* same background as your site */
+  display: flex;        /* FLEXBOX centers child */
+  justify-content: center;
+  align-items: center;
+
+  font-size: 16px;
+  color: #bfbfbf;
+  z-index: 999999;
+}
+
+#loader pre {
+  margin: 0;
+  line-height: 1.2;
+  white-space: pre; /* Important so ASCII doesn’t collapse */
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
 
 .before-grid {
     display: grid;
