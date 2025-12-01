@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Navigation Dots -->
+        <nav class="nav-dots" id="navDots"></nav>
+
+        <!-- Title -->
+        <section class="section active" id="section-title">
+            <div class="title-container">
+                <h1 class="main-title">The Story of Unicode</h1>
+                <p class="subtitle">
+                    A Unique, Universal, and Uniform Standard of Digital Communication for All
+                </p>
+            </div>
+        </section>
+
+        <!-- Hook: ASCII Quiz (INTERACTIVE GAME) -->
+        <section class="section" id="section-quiz">
+            <div class="quiz-container">
+                <p class="quiz-prompt">
+                    The year is <span class="highlight-year">1963</span>, and the first modern digital character
+                    encoding system has been created.
+                    Which of the following characters can be represented on your computer screen?
+                </p>
+                <div class="character-grid" id="quizGrid">
+                    <!-- Quiz items will be dynamically generated! -->
+                </div>
+                <button class="submit-btn" id="submitBtn">Submit</button>
+                <button class="submit-btn hidden" id="playAgainBtn">Play Again</button>
+            </div>
+        </section>
+
+        <!-- Before Unicode (INTERACTIVE GAME) -->
+        <section class="section" id="section-before-unicode">
+            <div class="placeholder-container">
+                <h2 class="section-title">Before Unicode</h2>
+                <div class="before-grid">
+                    <!-- Retro terminal demo -->
+                    <div class="ascii-terminal">
+                        <div class="terminal-header">
+                            <span>ASCII • 1963</span>
+                            <div class="toggles">
+                                <label class="switch">
+                                    <input type="checkbox" id="mode1963" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="toggle-label">1963 mode</span>
+                            </div>
+                        </div>
+                        <div class="terminal-screen" id="terminalScreen" aria-live="polite">
+                            <div class="line">$ Type here. Lowercase will be <em>removed</em> in the 1963 mode.</div>
+                            <div class="line input">
+                                <span class="prompt">&gt;</span>
+                                <input id="terminalInput" type="text" autocomplete="off"
+                                    placeholder="try: hello world! café — Привет" />
+                                <span class="cursor"></span>
+                            </div>
+                            <div class="line meta" id="terminalMeta">Allowed: A-Z, digits, basic punctuation • 7-bit
+                                only</div>
+                        </div>
+                        <div class="terminal-actions">
+                            <button class="btn" id="demoLine1">"hello world!"</button>
+                            <button class="btn" id="demoLine2">"naïve café"</button>
+                            <button class="btn" id="demoLine3">"Привет"</button>
+                            <button class="btn" id="clearTerminal">Clear</button>
+                        </div>
+                        <div class="terminal-footer" id="terminalFooter">
+                            <span id="charCount">0</span> chars • <span id="filteredCount">0</span> removed
+                        </div>
+                    </div>
+
+                    <!-- Bits, timeline, and fun facts -->
+                    <div class="ascii-side">
+                        <div class="bit-card">
+                            <div class="bit-grid" id="bitGrid"></div>
+                            <p class="bit-caption">7 bits = 128 slots</p>
+                        </div>
+
+                        <div class="fun-facts">
+                            <div class="facts-header">
+                                <span>Fun fact</span>
+                                <button class="btn-ghost" id="nextFact">Next</button>
+                            </div>
+                            <p class="fact-text" id="factText">ASCII started as a 7-bit code so it fit into early
+                                hardware and left room for parity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journey to Unicode (INTERACTIVE TIMELINE) -->
+        <section class="section" id="section-timeline">
+            <div class="timeline-section-container">
+                <h2 class="section-title centered">A Brief Overview of the Journey to Unicode</h2>
+                <p class="section-description centered compact">Click on any milestone to explore key moments in encoding history</p>
+                <div class="interactive-timeline">
+                    <div class="timeline-track">
+                        <div class="timeline-line"></div>
+                        <div class="timeline-markers" id="timelineMarkers">
+                            <!-- Markers will be generated by JS -->
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-cards-container" id="timelineCards">
+                        <!-- Cards will be generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ASCII Frequency in English Corpus (VIZ) -->
+        <section class="section" id="section-ascii">
+            <div class="ascii-container">
+                <h2 class="section-title">Which characters (of ASCII-1963) are most frequently used?</h2>
+                <p class="section-description">
+                    Relative frequency data (derived from the Reuters21578 corpus) for only the characters
+                    encodable by the original ASCII-1963 set. Toggle the legend items on/off to filter by subcategory of
+                    characters.
+                </p>
+
+                <div class="controls-legend-wrapper">
+                    <div class="legend">
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-latin" checked>
+                            <span class="legend-color latin"></span>
+                            <span class="legend-label">Latin alphabet</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-digits" checked>
+                            <span class="legend-color digits"></span>
+                            <span class="legend-label">Digits</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-punctuation" checked>
+                            <span class="legend-color punctuation"></span>
+                            <span class="legend-label">Punctuation & Symbols</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="remove-outlier">
+                            <span class="legend-color outlier"></span>
+                            <span class="legend-label">Remove outlier</span>
+                        </label>
+                    </div>
+
+                    <div class="sort-control">
+                        <span>Sort by</span>
+                        <div class="dropdown">
+                            <button class="dropdown-btn" id="sortDropdown">
+                                <span id="sortLabel">Code Value</span>
+                                <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12">
+                                    <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu hidden" id="sortMenu">
+                                <button class="dropdown-option active" data-sort="code">Code Value</button>
+                                <button class="dropdown-option" data-sort="frequency">Frequency</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ascii-chart-container">
+                    <svg id="asciiChart" class="ascii-chart"></svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Unicode? -->
+        <section class="section" id="section-unicode-intro">
+            <div class="placeholder-container">
+                <h2 class="section-title">Why Unicode?</h2>
+                <p class="section-description">
+                    ASCII was built for an English-only society. 
+                    <br><br>
+                    It provided no way to represent accented letters or non-Latin scripts, leaving representations of languages like
+                    Spanish incomplete, and languages like Chinese completely unsupported. Early workarounds were awkward, and the
+                    8-bit "extended ASCII" systems that followed only made things more fragmented. 
+                    <br><br>
+                    Different vendors created incompatible code pages, and text often broke into unreadable "mojibake" (garbled gibberish) when moved between systems, especially in regions that required thousands of characters. 
+                    <br><br>
+                    <strong>
+                    That need became the motivation for Unicode, a single, universal character encoding system capable of representing as many writing systems, symbol sets, and textual elements as possible.
+                    </strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- Evolution of Unicode (VIZ) -->
+        <section class="section" id="section-unicode-sankey">
+            <div class="sankey-container">
+                <h2 class="section-title centered">The Evolution of Unicode</h2>
+                <p class="section-description centered compact">
+                    Explore how Unicode has grown over time. Each flow shows character additions by script category.
+                </p>
+                
+                <div class="sankey-controls">
+                    <div class="year-range-control">
+                        <label>Show versions up to:</label>
+                        <input type="range" id="sankeyYearSlider" min="1991" max="2025" value="2025" step="1">
+                        <span class="year-display" id="sankeyYearDisplay">2025</span>
+                    </div>
+                    <div class="sankey-stats">
+                        <div class="stat-box">
+                            <span class="stat-value" id="totalCharsCount">149,813</span>
+                            <span class="stat-desc">Total Characters</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-value" id="totalScriptsCount">161</span>
+                            <span class="stat-desc">Scripts Encoded</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-value" id="versionsShown">17</span>
+                            <span class="stat-desc">Unicode Versions</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sankey-viz-wrapper">
+                    <svg id="sankeyChart" class="sankey-chart"></svg>
+                    <div id="sankeyTooltip" class="sankey-tooltip hidden"></div>
+                </div>
+                
+                <div class="sankey-legend" id="sankeyLegend">
+                    <!-- Legend generated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Emoji Introduction -->
+        <section class="section" id="section-emoji-intro">
+            <div class="placeholder-container">
+                <h2 class="section-title">Emoji are also part of Unicode!</h2>
+                <p class="section-description">
+                    No story of Unicode is complete without emoji, the colorful symbols that have become a language of their own — one that transcends typical cultural and linguistic boundaries. Emoji were born in Japan in the late 1990s as proprietary character sets on cell phones, but today they are part of Unicode – meaning emoji are just another script defined by the Unicode Standard. In 2010, Unicode 6.0 officially added hundreds of emoji characters.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- Emoji Quiz (GAME) -->
+        <section class="section" id="section-emoji-quiz">
+            <div class="emoji-quiz-container">
+                <div class="emoji-quiz-hero">
+                    <h2 class="section-title centered">What emoji best describes you right now?</h2>
+                </div>
+
+                <div class="emoji-quiz-grid">
+                    <div class="quiz-card">
+                        <h3 class="quiz-q">1. Your energy level?</h3>
+                        <div class="pill-group" data-q="energy">
+                            <button class="pill" data-v="low">Low ☕</button>
+                            <button class="pill" data-v="mid">Cruising 🚶</button>
+                            <button class="pill" data-v="high">Hyped ⚡</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <h3 class="quiz-q">2. Your social vibe?</h3>
+                        <div class="pill-group" data-q="social">
+                            <button class="pill" data-v="solo">Solo-ing 🎧</button>
+                            <button class="pill" data-v="chill">Chilling 🫶</button>
+                            <button class="pill" data-v="party">Partying 🥳</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <h3 class="quiz-q">3. Your headspace?</h3>
+                        <div class="pill-group" data-q="head">
+                            <button class="pill" data-v="zen">Zen 😌</button>
+                            <button class="pill" data-v="think">Deep in thought 🤔</button>
+                            <button class="pill" data-v="chaos">Chaos 😵‍💫</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <h3 class="quiz-q">4. Weather in your soul?</h3>
+                        <div class="pill-group" data-q="weather">
+                            <button class="pill" data-v="sunny">Sunny ☀️</button>
+                            <button class="pill" data-v="cloudy">Cloudy ☁️</button>
+                            <button class="pill" data-v="stormy">Stormy ⛈️</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <h3 class="quiz-q">5. Focus level?</h3>
+                        <div class="pill-group" data-q="focus">
+                            <button class="pill" data-v="distracted">Distracted 🐿️</button>
+                            <button class="pill" data-v="steady">Steady 🧭</button>
+                            <button class="pill" data-v="locked">Locked in 🎯</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <h3 class="quiz-q">6. Fate throws a curveball. You…</h3>
+                        <div class="pill-group" data-q="curve">
+                            <button class="pill" data-v="lol">Laugh 😂</button>
+                            <button class="pill" data-v="cope">Cope 😬</button>
+                            <button class="pill" data-v="fight">Fight 😤</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emoji-quiz-actions">
+                    <button id="emojiQuizReset" class="btn">Reset</button>
+                    <button id="emojiQuizReveal" class="btn primary">Reveal my emoji</button>
+                </div>
+
+                <div id="emojiQuizResult" class="emoji-quiz-result hidden">
+                    <div class="result-emoji" id="resultEmoji">🤖</div>
+                    <div class="result-copy">
+                        <h3 id="resultTitle">You're… The Focused Robot</h3>
+                        <p id="resultText">Calm, methodical, and quietly unstoppable. Low drama, high output. Beam me
+                            another task.</p>
+                        <div class="result-actions">
+                            <button id="copyResult" class="btn-ghost">Copy result</button>
+                            <span id="copyStatus" class="copy-status" role="status" aria-live="polite"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Emoji Popularity (VIZ) -->
+        <section class="section" id="section-emoji">
+            <div class="emoji-container">
+                <h2 class="section-title centered">Are your favourite emoji niche or cliché?</h2>
+                <p class="emoji-instruction">Hover over emojis to see their usage statistics</p>
+
+                <div class="emoji-timeline-container">
+                    <input type="range" id="emojiTimeline" class="emoji-timeline" min="0.6" max="18" step="0.1"
+                        value="18">
+                    <div class="timeline-labels">
+                        <span>0.6</span><span>1.0</span><span>2.0</span><span>3.0</span><span>4.0</span><span>5.0</span>
+                        <span>6.0</span><span>7.0</span><span>8.0</span><span>9.0</span><span>10.0</span><span>11.0</span>
+                        <span>12.0</span><span>13.0</span><span>14.0</span><span>15.0</span><span>16.0</span><span>17.0</span><span>18.0</span>
+                    </div>
+                </div>
+
+                <div class="emoji-controls-wrapper">
+                    <div class="emoji-legend">
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-smileys" checked>
+                            <span class="legend-color smileys"></span>
+                            <span class="legend-label">Smileys & Emotion</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-people" checked>
+                            <span class="legend-color people"></span>
+                            <span class="legend-label">People & Body</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-animals" checked>
+                            <span class="legend-color animals"></span>
+                            <span class="legend-label">Animals & Nature</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-food" checked>
+                            <span class="legend-color food"></span>
+                            <span class="legend-label">Food & Drink</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-travel" checked>
+                            <span class="legend-color travel"></span>
+                            <span class="legend-label">Travel & Places</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-activities" checked>
+                            <span class="legend-color activities"></span>
+                            <span class="legend-label">Activities</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-objects" checked>
+                            <span class="legend-color objects"></span>
+                            <span class="legend-label">Objects</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-symbols" checked>
+                            <span class="legend-color symbols"></span>
+                            <span class="legend-label">Symbols</span>
+                        </label>
+                        <label class="legend-item">
+                            <input type="checkbox" id="filter-flags" checked>
+                            <span class="legend-color flags"></span>
+                            <span class="legend-label">Flags</span>
+                        </label>
+                    </div>
+
+                    <div class="region-control">
+                        <span>Region:</span>
+                        <div class="region-buttons">
+                            <button class="region-btn active" data-region="all">All</button>
+                            <button class="region-btn" data-region="us">US</button>
+                            <button class="region-btn" data-region="uk">UK</button>
+                        </div>
+                    </div>
+
+                    <div class="version-display">
+                        <span class="version-year">1963</span>
+                        <span class="version-number">v0.6</span>
+                    </div>
+                </div>
+
+                <div class="emoji-viz-container">
+                    <svg id="emojiViz" class="emoji-viz"></svg>
+                    <div id="emojiTooltip" class="emoji-tooltip hidden"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unicode Universe (VIZ) -->
+        <section class="section" id="section-unicode-universe">
+            <div class="universe-container-v2">
+                <h2 class="section-title centered">Explore the Unicode Universe</h2>
+                
+                <div class="universe-main-layout">
+                    <!-- left Panel: Script List -->
+                    <div class="universe-left-panel">
+                        <!-- search bar at top of list -->
+                        <div class="universe-search-box">
+                            <input type="text" id="scriptSearchV2" placeholder="Search for a language or script" class="universe-search-input-v2">
+                        </div>
+                        
+                        <!-- scrollable script list -->
+                        <div class="universe-script-list" id="universeScriptList">
+                            <!-- script items will be generated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- right panel: details (plus the other filter at the top) -->
+                    <div class="universe-right-panel">
+                        <!-- region filter -->
+                        <div class="universe-filter-row">
+                            <span class="filter-label">Or filter by region/period</span>
+                            <div class="universe-region-buttons-v2">
+                                <button class="universe-region-btn-v2 active" data-region="all">All</button>
+                                <button class="universe-region-btn-v2" data-region="asia">Asia</button>
+                                <button class="universe-region-btn-v2" data-region="europe">Europe</button>
+                                <button class="universe-region-btn-v2" data-region="africa">Africa</button>
+                                <button class="universe-region-btn-v2" data-region="americas">Americas</button>
+                                <button class="universe-region-btn-v2" data-region="historic">Historic</button>
+                            </div>
+                        </div>
+                        
+                        <!-- details panel (empty state / script info) -->
+                        <div class="universe-details-container" id="universeDetailsContainer">
+                            <!-- empty state (default / includes instructions for user) -->
+                            <div class="universe-empty-state" id="universeEmptyState">
+                                <span class="empty-state-text"><em>Select a script on the right to display its details</em></span>
+                            </div>
+                            
+                            <!-- script details (hidden initially) -->
+                            <div class="universe-script-details hidden" id="universeScriptDetails">
+                                <!-- top row: info box & map box -->
+                                <div class="details-top-row">
+                                    <!-- script info box -->
+                                    <div class="script-info-box">
+                                        <h3 class="script-info-name" id="scriptInfoName">Han</h3>
+                                        <div class="script-info-stats">
+                                            <p><span class="stat-number" id="scriptInfoChars">94,213</span> characters</p>
+                                            <p><strong>Unicode <span id="scriptInfoVersion">1.1</span></strong></p>
+                                            <p>Added <strong><span id="scriptInfoYear">1993</span></strong></p>
+                                        </div>
+                                        <div class="script-info-languages">
+                                            <p><strong>Languages:</strong></p>
+                                            <p id="scriptInfoLanguages">Chinese; Japanese (kanji); Korean (Hanja, limited); Vietnamese (historic)</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- world map (showing regions) box -->
+                                    <div class="script-map-box">
+                                        <svg id="worldMapSvg" class="world-map-svg" viewBox="0 0 800 400"></svg>
+                                        <p class="map-regions-text" id="mapRegionsText">Regions: China; Taiwan; Japan; Korea; Vietnam (historic use); diaspora</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- bottom row: character set samples -->
+                                <div class="details-bottom-row">
+                                    <p class="char-explore-label"><strong>Explore the character set below.</strong> Some characters may not be displayed due to the limited font/keyboard support of your OS.</p>
+                                    <div class="char-samples-row">
+                                        <div class="char-sample-box" id="charSample1">
+                                            <div class="char-sample-content">
+                                                <span class="char-display">字</span>
+                                            </div>
+                                            <div class="char-info-panel">
+                                                <span class="char-info-char">字</span>
+                                                <span class="char-info-name">CJK UNIFIED IDEOGRAPH</span>
+                                                <span class="char-info-category">Lo (Letter, other)</span>
+                                                <span class="char-info-codepoint">U+5B57</span>
+                                            </div>
+                                        </div>
+                                        <div class="char-sample-box" id="charSample2">
+                                            <div class="char-sample-content">
+                                                <span class="char-display">漢</span>
+                                            </div>
+                                            <div class="char-info-panel">
+                                                <span class="char-info-char">漢</span>
+                                                <span class="char-info-name">CJK UNIFIED IDEOGRAPH</span>
+                                                <span class="char-info-category">Lo (Letter, other)</span>
+                                                <span class="char-info-codepoint">U+6F22</span>
+                                            </div>
+                                        </div>
+                                        <div class="char-sample-box" id="charSample3">
+                                            <div class="char-sample-content">
+                                                <span class="char-display">語</span>
+                                            </div>
+                                            <div class="char-info-panel">
+                                                <span class="char-info-char">語</span>
+                                                <span class="char-info-name">CJK UNIFIED IDEOGRAPH</span>
+                                                <span class="char-info-category">Lo (Letter, other)</span>
+                                                <span class="char-info-codepoint">U+8A9E</span>
+                                            </div>
+                                        </div>
+                                        <div class="char-regenerate-box" id="charRegenerateBtn">
+                                            <span class="regenerate-text">Click to regenerate characters</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unicode Distribution Across Scripts (VIZ) -->
+        <section class="section" id="section-breakdown">
+            <div class="breakdown-container">
+                <h2 class="section-title centered">How are Unicode characters distributed across scripts?</h2>
+                <p class="section-description centered compact">
+                    See how Unicode's ~159,000 characters are distributed across different script families. CJK ideographs dominate, but hundreds of writing systems share the remaining space.
+                </p>
+                
+                <div class="breakdown-controls">
+                    <div class="breakdown-view-toggle">
+                        <button class="view-btn active" data-view="treemap">Treemap</button>
+                        <button class="view-btn" data-view="bar">Bar Chart</button>
+                        <button class="view-btn" data-view="sunburst">Sunburst</button>
+                    </div>
+                    <div class="breakdown-filter">
+                        <span>Show scripts with at least:</span>
+                        <div class="dropdown">
+                            <button class="dropdown-btn" id="minCharsDropdown">
+                                <span id="minCharsLabel">100+ characters</span>
+                                <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12">
+                                    <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu hidden" id="minCharsMenu">
+                                <button class="dropdown-option" data-value="0">0 characters (all)</button>
+                                <button class="dropdown-option" data-value="50">50+ characters</button>
+                                <button class="dropdown-option active" data-value="100">100+ characters</button>
+                                <button class="dropdown-option" data-value="500">500+ characters</button>
+                                <button class="dropdown-option" data-value="1000">1000+ characters</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="breakdown-viz-wrapper">
+                    <svg id="breakdownChart" class="breakdown-chart"></svg>
+                    <div id="breakdownTooltip" class="breakdown-tooltip hidden"></div>
+                </div>
+                
+                <div class="breakdown-legend" id="breakdownLegend">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- closing slide -->
+        <section class="section" id="section-conclusion">
+            <div class="conclusion-container">
+                <!-- HERO -->
+                <div class="conclusion-hero">
+                    <div class="hero-copy">
+                        <p class="hero-tagline">What started in the 20th century as a proposal for a unified character encoding has expanded into a broad suite of open source standards, tools, libraries, and technologies that make global text support and cross-platform interoperability possible on billions of devices.</p>
+                        <p class="hero-tagline">Unicode provides a consistent foundation for global text processing, multilingual computing, and reliable data exchange across all modern devices and systems.</p>
+                        <p class="hero-tagline"><strong>Unicode is built into every major operating system and runs on more than 20 billion devices worldwide, making it arguably the most widely deployed technology in existence.</strong></p>
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <span class="stat-num" data-target="159801">159,801</span>
+                                <span class="stat-label">characters</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="stat-num" data-target="172">172</span>
+                                <span class="stat-label">scripts</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="stat-num" data-target="24">24</span>
+                                <span class="stat-label">emoji categories</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-art" aria-hidden="true">
+                        <!-- Inline SVG "glyph planet" -->
+                        <svg viewBox="0 0 300 300" class="glyph-planet">
+                            <defs>
+                                <radialGradient id="gp" cx="50%" cy="50%" r="60%">
+                                    <stop offset="0%" stop-color="rgba(255,255,255,0.9)" />
+                                    <stop offset="100%" stop-color="rgba(255,255,255,0.05)" />
+                                </radialGradient>
+                            </defs>
+                            <circle cx="150" cy="150" r="100" fill="url(#gp)" opacity="0.6" />
+                            <g class="glyphs" font-family="monospace" font-size="16" fill="currentColor">
+                                <text x="90" y="120">A æ ش क 你</text>
+                                <text x="110" y="145">Б ה م あ 한</text>
+                                <text x="95" y="170">Ω د र 字 중</text>
+                                <text x="105" y="195">Ç й ל ひ ㄱ</text>
+                            </g>
+                            <ellipse cx="150" cy="210" rx="120" ry="18" fill="none" stroke="currentColor"
+                                opacity="0.2" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team and Resources pages -->
+        <section class="section" id="section-members">
+            <div class="simple-slide">
+                <h2 class="simple-title">Team</h2>
+
+                <div class="member-row">
+                    <figure class="member-box">
+                        <!-- swap with <img src="path/to/photo.jpg" alt="Chi"> to use a real photo -->
+                        <div class="avatar-placeholder" aria-hidden="true"></div>
+                        <figcaption class="member-name">Chi Le</figcaption>
+                        <figcaption class="member-name" style="color: var(--text-color);"><em>Class of 2028</em></figcaption>
+                        <figcaption class="member-name">Computer Science; Art & Visual Studies</figcaption>
+
+                    </figure>
+
+                    <figure class="member-box">
+                        <div class="avatar-placeholder" aria-hidden="true"></div>
+                        <figcaption class="member-name">Rain YeYang</figcaption>
+                        <figcaption class="member-name" style="color: var(--text-color);"><em>Class of 2027</em></figcaption>
+                        <figcaption class="member-name">Computer Science; Mathematics</figcaption>
+
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources -->
+        <section class="section" id="section-resources">
+            <div class="simple-slide">
+                <h2 class="simple-title">Resources</h2>
+
+                <!-- Link for users to explore the main Unicode website for more information! -->
+                <a href="https://home.unicode.org/" target="_blank" rel="noopener" class="consortium-link-box">
+                    ↗ &nbsp; &nbsp; Explore the Unicode Consortium
+                </a>
+
+                <ul class="resources-list centered">
+                    <li><a href="https://github.com/piersy/ascii-char-frequency-english?tab=readme-ov-file"
+                            target="_blank" rel="noopener">github.com/piersy/ascii-char-frequency-english</a></li>
+                    <li><a href="https://github.com/datasets/unicode-characters" target="_blank"
+                            rel="noopener">github.com/datasets/unicode-characters</a></li>
+                    <li><a href="https://theasciicode.com.ar/ascii-table-characters.pdf" target="_blank"
+                            rel="noopener">theasciicode.com.ar/ascii-table-characters.pdf</a></li>
+                    <li><a href="https://emojitracker.com/" target="_blank" rel="noopener">emojitracker.com</a></li>
+                    <li><a href="https://ceur-ws.org/Vol-2084/paper10.pdf" target="_blank"
+                            rel="noopener">ceur-ws.org/Vol-2084/paper10.pdf</a></li>
+                    <li><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2021.645173/full"
+                            target="_blank" rel="noopener">frontiersin.org/.../10.3389/fpsyg.2021.645173</a></li>
+                    <li><a href="https://en.wikipedia.org/wiki/Unicode" target="_blank"
+                            rel="noopener">wikipedia.org/wiki/Unicode</a></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
