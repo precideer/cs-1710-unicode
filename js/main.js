@@ -1,3 +1,45 @@
+(function () {
+    const asciiEl = document.getElementById('asciiYangPortrait');
+    if (!asciiEl) return; // nothing to do if element doesn't exist
+
+    const eyeOptions = ['• •', '0 0', '- -'];
+    const mouthOptions = ['___', ' q ', ' O ', '▂▂ '];
+
+    function makeAsciiYang() {
+        const eyes = eyeOptions[Math.floor(Math.random() * eyeOptions.length)];
+        const mouth = mouthOptions[Math.floor(Math.random() * mouthOptions.length)];
+
+        const lines = [
+            '  %%%%%%%%%%%%   ',
+            ' |            |_',
+            ` |    ${eyes}     _|`,
+            ' |    <       | ',
+            ` |    ${mouth}     |`,
+            ' |____________| '
+        ];
+
+        asciiEl.textContent = lines.join('\n');
+    }
+
+    // Show loader text immediately
+    asciiEl.textContent = '杨: Wait for me to load my stuff...';
+
+    let asciiTimer = null;
+
+    // Expose a function you can call once your content is ready
+    window.startYangAscii = function () {
+        if (asciiTimer) return; // already started
+
+        // Optionally keep the loader for a tiny moment more:
+        // setTimeout(() => { ... }, 500)
+        makeAsciiYang();
+        asciiTimer = setInterval(makeAsciiYang, 400); // adjust speed as you like
+    };
+})();
+if (window.startYangAscii) {
+    window.startYangAscii();
+}
+
 // Global state
 let currentSection = 0;
 let quizState = {
@@ -191,7 +233,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     initQuiz();
     initASCIIVisualization();
     initEmojiVisualization();
-    
+
     // Initialize new sections
     initInteractiveTimeline();
     initSankeyDiagram();
@@ -213,7 +255,7 @@ async function loadData() {
         const unicodeResponse = await fetch('data/unicode-characters_info.csv');
         const unicodeText = await unicodeResponse.text();
         unicodeData = parseCSV(unicodeText);
-        
+
         // Build character info map for quick lookup
         unicodeData.forEach(char => {
             if (char['Code value']) {
@@ -225,7 +267,7 @@ async function loadData() {
                 });
             }
         });
-        
+
         // Load language/script data
         const languageResponse = await fetch('data/unicode_language.csv');
         const languageText = await languageResponse.text();
@@ -289,7 +331,7 @@ function parseLanguageCSV(text) {
             const values = [];
             let current = '';
             let inQuotes = false;
-            
+
             for (const char of lines[i]) {
                 if (char === '"') {
                     inQuotes = !inQuotes;
@@ -301,7 +343,7 @@ function parseLanguageCSV(text) {
                 }
             }
             values.push(current.trim());
-            
+
             const row = {};
             headers.forEach((header, index) => {
                 row[header.trim()] = values[index] ? values[index].trim().replace(/"/g, '') : '';
@@ -822,128 +864,128 @@ function parseEmojiCSV(text) {
 // this is the end of the ASCII section (for ref)
 
 // retro terminal demo
-(function(){
-  const input = document.getElementById('terminalInput');
-  const screen = document.getElementById('terminalScreen');
-  const meta = document.getElementById('terminalMeta');
-  const footer = document.getElementById('terminalFooter');
-  const modeToggle = document.getElementById('mode1963');
-  const charCount = document.getElementById('charCount');
-  const filteredCount = document.getElementById('filteredCount');
-  const demo1 = document.getElementById('demoLine1');
-  const demo2 = document.getElementById('demoLine2');
-  const demo3 = document.getElementById('demoLine3');
-  const clearBtn = document.getElementById('clearTerminal');
-  const bitGrid = document.getElementById('bitGrid');
+(function () {
+    const input = document.getElementById('terminalInput');
+    const screen = document.getElementById('terminalScreen');
+    const meta = document.getElementById('terminalMeta');
+    const footer = document.getElementById('terminalFooter');
+    const modeToggle = document.getElementById('mode1963');
+    const charCount = document.getElementById('charCount');
+    const filteredCount = document.getElementById('filteredCount');
+    const demo1 = document.getElementById('demoLine1');
+    const demo2 = document.getElementById('demoLine2');
+    const demo3 = document.getElementById('demoLine3');
+    const clearBtn = document.getElementById('clearTerminal');
+    const bitGrid = document.getElementById('bitGrid');
 
-  // 7-bit grid visual
-  if (bitGrid){
-    for(let i=0;i<7;i++){
-      const d=document.createElement('div');
-      d.className='cell';
-      bitGrid.appendChild(d);
+    // 7-bit grid visual
+    if (bitGrid) {
+        for (let i = 0; i < 7; i++) {
+            const d = document.createElement('div');
+            d.className = 'cell';
+            bitGrid.appendChild(d);
+        }
+        function setBits(n) {
+            const cells = bitGrid.querySelectorAll('.cell');
+            cells.forEach((c, i) => c.classList.toggle('on', (n >> i) & 1));
+        }
+        setBits(127); // show all 7 bits "on"
     }
-    function setBits(n){
-      const cells = bitGrid.querySelectorAll('.cell');
-      cells.forEach((c,i)=> c.classList.toggle('on', (n>>i)&1 ));
-    }
-    setBits(127); // show all 7 bits "on"
-  }
 
-  const facts = [
-    "ASCII started as a 7‑bit code so it fit into early hardware and left room for parity.",
-    "1963 ASCII had NO lowercase; they arrived in 1967.",
-    "Control codes like BEL (\\x07) could make a teletype ring a bell.",
-    "Early modems often used ASCII for plain text exchange and device control.",
-    "The space character is the most frequent in English text."
-  ];
+    const facts = [
+        "ASCII started as a 7‑bit code so it fit into early hardware and left room for parity.",
+        "1963 ASCII had NO lowercase; they arrived in 1967.",
+        "Control codes like BEL (\\x07) could make a teletype ring a bell.",
+        "Early modems often used ASCII for plain text exchange and device control.",
+        "The space character is the most frequent in English text."
+    ];
 
-  const factBox = document.getElementById('factText');
-  const nextFact = document.getElementById('nextFact');
-  let factIndex = 0;
-  nextFact?.addEventListener('click', ()=>{
-    factIndex = (factIndex + 1) % facts.length;
-    factBox.textContent = facts[factIndex];
-  });
-
-  // Timeline chips
-  const dots = document.querySelectorAll('.mini-dot');
-  const infoYear = document.querySelector('.mini-year');
-  const infoText = document.querySelector('.mini-text');
-  dots.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      dots.forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      infoYear.textContent = btn.dataset.year;
-      infoText.textContent = btn.dataset.text;
+    const factBox = document.getElementById('factText');
+    const nextFact = document.getElementById('nextFact');
+    let factIndex = 0;
+    nextFact?.addEventListener('click', () => {
+        factIndex = (factIndex + 1) % facts.length;
+        factBox.textContent = facts[factIndex];
     });
-  });
 
-  // 1963 mode filtering
-  const allowedPunct = " .,!?:;'\"()-/\\&@#$%*+=<>[]{}_–—–—"; // keep some basics (dashes included)
-  function filter1963(str){
-    let removed = 0;
-    let out = "";
-    for (const ch of str){
-      const code = ch.codePointAt(0);
-      if (code >= 0x41 && code <= 0x5A){ out += ch; continue; }               // A-Z
-      if (code >= 0x30 && code <= 0x39){ out += ch; continue; }               // 0-9
-      if (ch === ' ' || allowedPunct.includes(ch)){ out += ch; continue; }    // basic punct/space
-      if (code >= 0x61 && code <= 0x7A){ out += ch.toUpperCase(); continue; } // map a-z -> A-Z (but original 1963 had no lowercase)
-      removed++;
+    // Timeline chips
+    const dots = document.querySelectorAll('.mini-dot');
+    const infoYear = document.querySelector('.mini-year');
+    const infoText = document.querySelector('.mini-text');
+    dots.forEach(btn => {
+        btn.addEventListener('click', () => {
+            dots.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            infoYear.textContent = btn.dataset.year;
+            infoText.textContent = btn.dataset.text;
+        });
+    });
+
+    // 1963 mode filtering
+    const allowedPunct = " .,!?:;'\"()-/\\&@#$%*+=<>[]{}_–—–—"; // keep some basics (dashes included)
+    function filter1963(str) {
+        let removed = 0;
+        let out = "";
+        for (const ch of str) {
+            const code = ch.codePointAt(0);
+            if (code >= 0x41 && code <= 0x5A) { out += ch; continue; }               // A-Z
+            if (code >= 0x30 && code <= 0x39) { out += ch; continue; }               // 0-9
+            if (ch === ' ' || allowedPunct.includes(ch)) { out += ch; continue; }    // basic punct/space
+            if (code >= 0x61 && code <= 0x7A) { out += ch.toUpperCase(); continue; } // map a-z -> A-Z (but original 1963 had no lowercase)
+            removed++;
+        }
+        return { out, removed };
     }
-    return {out, removed};
-  }
 
-  function updateFooter(text, removed){
-    charCount.textContent = String(text.length);
-    filteredCount.textContent = String(removed);
-  }
-
-  function echo(line){
-    const el = document.createElement('div');
-    el.className='line';
-    el.innerHTML = '&nbsp;' + line.replace(/</g,'&lt;');
-    screen.insertBefore(el, screen.children[screen.children.length-2]); // above input line
-    screen.scrollTop = screen.scrollHeight;
-  }
-
-  input?.addEventListener('keydown', (e)=>{
-    if (e.key === 'Enter'){
-      const raw = input.value;
-      const filtered = modeToggle?.checked ? filter1963(raw) : {out: raw, removed: 0};
-      echo(filtered.out);
-      updateFooter(filtered.out, filtered.removed);
-      input.value='';
-      e.preventDefault();
+    function updateFooter(text, removed) {
+        charCount.textContent = String(text.length);
+        filteredCount.textContent = String(removed);
     }
-  });
 
-  function loadDemo(text){
-    if (input){
-      input.value = text;
-      input.focus();
+    function echo(line) {
+        const el = document.createElement('div');
+        el.className = 'line';
+        el.innerHTML = '&nbsp;' + line.replace(/</g, '&lt;');
+        screen.insertBefore(el, screen.children[screen.children.length - 2]); // above input line
+        screen.scrollTop = screen.scrollHeight;
     }
-  }
-  demo1?.addEventListener('click', ()=>loadDemo('hello world!'));
-  demo2?.addEventListener('click', ()=>loadDemo('naïve café'));
-  demo3?.addEventListener('click', ()=>loadDemo('Привет'));
 
-  clearBtn?.addEventListener('click', ()=>{
-    const lines = Array.from(screen.querySelectorAll('.line')).slice(0,-2);
-    lines.forEach(l=>l.remove());
-    updateFooter('',0);
-    input.value='';
-  });
+    input?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const raw = input.value;
+            const filtered = modeToggle?.checked ? filter1963(raw) : { out: raw, removed: 0 };
+            echo(filtered.out);
+            updateFooter(filtered.out, filtered.removed);
+            input.value = '';
+            e.preventDefault();
+        }
+    });
 
-  // Update meta on toggle
-  modeToggle?.addEventListener('change', ()=>{
-    if (modeToggle.checked){
-      meta.textContent = 'Allowed: A–Z, digits, basic punctuation • 7-bit only';
-    } else {
-      meta.textContent = 'Modern mode: your device can show many scripts and emoji';
+    function loadDemo(text) {
+        if (input) {
+            input.value = text;
+            input.focus();
+        }
     }
-  });
+    demo1?.addEventListener('click', () => loadDemo('hello world!'));
+    demo2?.addEventListener('click', () => loadDemo('naïve café'));
+    demo3?.addEventListener('click', () => loadDemo('Привет'));
+
+    clearBtn?.addEventListener('click', () => {
+        const lines = Array.from(screen.querySelectorAll('.line')).slice(0, -2);
+        lines.forEach(l => l.remove());
+        updateFooter('', 0);
+        input.value = '';
+    });
+
+    // Update meta on toggle
+    modeToggle?.addEventListener('change', () => {
+        if (modeToggle.checked) {
+            meta.textContent = 'Allowed: A–Z, digits, basic punctuation • 7-bit only';
+        } else {
+            meta.textContent = 'Modern mode: your device can show many scripts and emoji';
+        }
+    });
 })();
 // this is the end of the retro terminal demo (for ref)
 
@@ -1103,7 +1145,7 @@ function updateEmojiVisualization(smooth = false) {
     // Update simulation
     const simulation = window.emojiSimulation;
     const dims = window.emojiDimensions || { width, height };
-    
+
     simulation.nodes(filteredData);
     simulation.force('collision').radius(d => d.radius + 3);
     simulation.force('center', d3.forceCenter(dims.width / 2, dims.height / 2).strength(0.1));
@@ -1158,14 +1200,14 @@ function updateEmojiVisualization(smooth = false) {
 
     // Event handlers
     allNodes
-        .on('mouseenter', function(event, d) {
+        .on('mouseenter', function (event, d) {
             showEmojiTooltip(event, d);
             d3.select(this).select('circle')
                 .attr('fill-opacity', 0.5)
                 .attr('stroke-width', 3);
         })
         .on('mousemove', moveEmojiTooltip)
-        .on('mouseleave', function() {
+        .on('mouseleave', function () {
             hideEmojiTooltip();
             d3.select(this).select('circle')
                 .attr('fill-opacity', 0.3)
@@ -1237,185 +1279,185 @@ function hideEmojiTooltip() {
 }
 
 (function () {
-  const stats = document.querySelectorAll('#section-conclusion .stat-num');
-  const gallery = document.getElementById('conclusionGallery');
-  const buttons = document.querySelectorAll('#section-conclusion .card-more');
+    const stats = document.querySelectorAll('#section-conclusion .stat-num');
+    const gallery = document.getElementById('conclusionGallery');
+    const buttons = document.querySelectorAll('#section-conclusion .card-more');
 
-  // count-up animation
-  function animateCount(el) {
-    const target = parseInt(el.getAttribute('data-target'), 10);
-    if (!target) return;
-    let current = 0;
-    const duration = 900; // ms
-    const start = performance.now();
-    function tick(now) {
-      const p = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      current = Math.floor(target * eased);
-      el.textContent = current.toLocaleString();
-      if (p < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  // trigger count-up when section comes into view
-  const section = document.getElementById('section-conclusion');
-  if (section) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          stats.forEach(animateCount);
-          io.disconnect();
+    // count-up animation
+    function animateCount(el) {
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        if (!target) return;
+        let current = 0;
+        const duration = 900; // ms
+        const start = performance.now();
+        function tick(now) {
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            current = Math.floor(target * eased);
+            el.textContent = current.toLocaleString();
+            if (p < 1) requestAnimationFrame(tick);
         }
-      });
-    }, { threshold: 0.5 });
-    io.observe(section);
-  }
+        requestAnimationFrame(tick);
+    }
 
-  // simple gallery focus switch
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const key = btn.dataset.card;
-      const items = Array.from(gallery.querySelectorAll('.gallery-item'));
-      items.forEach((it, i) => it.style.opacity = '0.45');
+    // trigger count-up when section comes into view
+    const section = document.getElementById('section-conclusion');
+    if (section) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    stats.forEach(animateCount);
+                    io.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+        io.observe(section);
+    }
 
-      const map = { design: 0, inclusion: 1, expression: 2 };
-      const idx = map[key];
-      if (idx != null && items[idx]) {
-        items[idx].style.opacity = '1';
-        items[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }
+    // simple gallery focus switch
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const key = btn.dataset.card;
+            const items = Array.from(gallery.querySelectorAll('.gallery-item'));
+            items.forEach((it, i) => it.style.opacity = '0.45');
+
+            const map = { design: 0, inclusion: 1, expression: 2 };
+            const idx = map[key];
+            if (idx != null && items[idx]) {
+                items[idx].style.opacity = '1';
+                items[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        });
     });
-  });
 })();
 
 // Emoji Fun Quiz
-(function(){
-  const groups = Array.from(document.querySelectorAll('#section-emoji-quiz .pill-group'));
-  if (!groups.length) return;
+(function () {
+    const groups = Array.from(document.querySelectorAll('#section-emoji-quiz .pill-group'));
+    if (!groups.length) return;
 
-  // simple scoring: dimensions map to archetypes
-  const archetypes = {
-    robot:  {emoji:'🤖', title:'The Focused Robot', text:'Calm, methodical, and quietly unstoppable. Low drama, high output.'},
-    party:  {emoji:'🥳', title:'The Party Popper', text:'High energy, social, and ready to celebrate the little wins.'},
-    cool:   {emoji:'😎', title:'The Cool Sunbeam', text:'Chill, sunny mood, and unbothered. Vibes on cruise control.'},
-    chaos:  {emoji:'😵‍💫', title:'The Whirlwind', text:'Brain tabs: 87. Coffee: yes. Plans: pending. You\'ll still make it work.'},
-    think:  {emoji:'🤔', title:'The Thinky Face', text:'Curious, analytical, always connecting dots and asking better questions.'},
-    cozy:   {emoji:'😌', title:'The Cozy Cloud', text:'Soft focus, gentle pace, big on comfort and care.'},
-    rage:   {emoji:'😤', title:'The Determined Puff', text:'Grit online. Obstacles are fuel. You\'re here to push through.'},
-    fragile:{emoji:'😬', title:'The Yikes Face', text:'Slightly crunchy on the outside, tender on the inside. Still showing up.'},
-    lol:    {emoji:'😂', title:'The Chaos Jester', text:'If you don\'t laugh you\'ll cry—but mostly you laugh.'},
-  };
+    // simple scoring: dimensions map to archetypes
+    const archetypes = {
+        robot: { emoji: '🤖', title: 'The Focused Robot', text: 'Calm, methodical, and quietly unstoppable. Low drama, high output.' },
+        party: { emoji: '🥳', title: 'The Party Popper', text: 'High energy, social, and ready to celebrate the little wins.' },
+        cool: { emoji: '😎', title: 'The Cool Sunbeam', text: 'Chill, sunny mood, and unbothered. Vibes on cruise control.' },
+        chaos: { emoji: '😵‍💫', title: 'The Whirlwind', text: 'Brain tabs: 87. Coffee: yes. Plans: pending. You\'ll still make it work.' },
+        think: { emoji: '🤔', title: 'The Thinky Face', text: 'Curious, analytical, always connecting dots and asking better questions.' },
+        cozy: { emoji: '😌', title: 'The Cozy Cloud', text: 'Soft focus, gentle pace, big on comfort and care.' },
+        rage: { emoji: '😤', title: 'The Determined Puff', text: 'Grit online. Obstacles are fuel. You\'re here to push through.' },
+        fragile: { emoji: '😬', title: 'The Yikes Face', text: 'Slightly crunchy on the outside, tender on the inside. Still showing up.' },
+        lol: { emoji: '😂', title: 'The Chaos Jester', text: 'If you don\'t laugh you\'ll cry—but mostly you laugh.' },
+    };
 
-  function score(selections){
-    // initialize
-    const s = {robot:0, party:0, cool:0, chaos:0, think:0, cozy:0, rage:0, fragile:0, lol:0};
+    function score(selections) {
+        // initialize
+        const s = { robot: 0, party: 0, cool: 0, chaos: 0, think: 0, cozy: 0, rage: 0, fragile: 0, lol: 0 };
 
-    // mapping per question
-    switch (selections.energy) {
-      case 'low': s.cozy+=2; s.robot+=1; break;
-      case 'mid': s.cool+=2; break;
-      case 'high': s.party+=2; s.rage+=1; break;
-    }
-    switch (selections.social) {
-      case 'solo': s.robot+=2; s.think+=1; break;
-      case 'chill': s.cool+=2; s.cozy+=1; break;
-      case 'party': s.party+=3; break;
-    }
-    switch (selections.head) {
-      case 'zen': s.cozy+=2; s.cool+=1; break;
-      case 'think': s.think+=3; break;
-      case 'chaos': s.chaos+=3; s.lol+=1; break;
-    }
-    switch (selections.weather) {
-      case 'sunny': s.cool+=2; break;
-      case 'cloudy': s.cozy+=2; break;
-      case 'stormy': s.rage+=2; s.fragile+=1; break;
-    }
-    switch (selections.focus) {
-      case 'distracted': s.chaos+=2; s.fragile+=1; break;
-      case 'steady': s.cool+=1; s.cozy+=1; s.robot+=1; break;
-      case 'locked': s.robot+=3; break;
-    }
-    switch (selections.curve) {
-      case 'lol': s.lol+=3; break;
-      case 'cope': s.fragile+=3; break;
-      case 'fight': s.rage+=3; break;
+        // mapping per question
+        switch (selections.energy) {
+            case 'low': s.cozy += 2; s.robot += 1; break;
+            case 'mid': s.cool += 2; break;
+            case 'high': s.party += 2; s.rage += 1; break;
+        }
+        switch (selections.social) {
+            case 'solo': s.robot += 2; s.think += 1; break;
+            case 'chill': s.cool += 2; s.cozy += 1; break;
+            case 'party': s.party += 3; break;
+        }
+        switch (selections.head) {
+            case 'zen': s.cozy += 2; s.cool += 1; break;
+            case 'think': s.think += 3; break;
+            case 'chaos': s.chaos += 3; s.lol += 1; break;
+        }
+        switch (selections.weather) {
+            case 'sunny': s.cool += 2; break;
+            case 'cloudy': s.cozy += 2; break;
+            case 'stormy': s.rage += 2; s.fragile += 1; break;
+        }
+        switch (selections.focus) {
+            case 'distracted': s.chaos += 2; s.fragile += 1; break;
+            case 'steady': s.cool += 1; s.cozy += 1; s.robot += 1; break;
+            case 'locked': s.robot += 3; break;
+        }
+        switch (selections.curve) {
+            case 'lol': s.lol += 3; break;
+            case 'cope': s.fragile += 3; break;
+            case 'fight': s.rage += 3; break;
+        }
+
+        // winner
+        let bestKey = 'cool', best = -1;
+        for (const [k, v] of Object.entries(s)) {
+            if (v > best) { best = v; bestKey = k; }
+        }
+        return archetypes[bestKey];
     }
 
-    // winner
-    let bestKey = 'cool', best = -1;
-    for (const [k,v] of Object.entries(s)) {
-      if (v > best) { best = v; bestKey = k; }
+    function selections() {
+        const out = {};
+        groups.forEach(g => {
+            const key = g.dataset.q;
+            const active = g.querySelector('.pill.active');
+            out[key] = active ? active.dataset.v : null;
+        });
+        return out;
     }
-    return archetypes[bestKey];
-  }
 
-  function selections(){
-    const out = {};
+    function allAnswered(sel) {
+        return Object.values(sel).every(Boolean);
+    }
+
+    // UI bindings
     groups.forEach(g => {
-      const key = g.dataset.q;
-      const active = g.querySelector('.pill.active');
-      out[key] = active ? active.dataset.v : null;
+        g.addEventListener('click', (e) => {
+            const pill = e.target.closest('.pill');
+            if (!pill) return;
+            g.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+        });
     });
-    return out;
-  }
 
-  function allAnswered(sel){
-    return Object.values(sel).every(Boolean);
-  }
+    const reveal = document.getElementById('emojiQuizReveal');
+    const reset = document.getElementById('emojiQuizReset');
+    const resultBox = document.getElementById('emojiQuizResult');
+    const resultEmoji = document.getElementById('resultEmoji');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultText = document.getElementById('resultText');
+    const copyBtn = document.getElementById('copyResult');
+    const copyStatus = document.getElementById('copyStatus');
 
-  // UI bindings
-  groups.forEach(g => {
-    g.addEventListener('click', (e)=>{
-      const pill = e.target.closest('.pill');
-      if (!pill) return;
-      g.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-      pill.classList.add('active');
+    reveal?.addEventListener('click', () => {
+        const sel = selections();
+        if (!allAnswered(sel)) {
+            copyStatus.textContent = 'Answer all 6 to reveal!';
+            setTimeout(() => copyStatus.textContent = '', 1200);
+            return;
+        }
+        const r = score(sel);
+        resultEmoji.textContent = r.emoji;
+        resultTitle.textContent = `You're… ${r.title}`;
+        resultText.textContent = r.text;
+        resultBox.classList.remove('hidden');
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
-  });
 
-  const reveal = document.getElementById('emojiQuizReveal');
-  const reset = document.getElementById('emojiQuizReset');
-  const resultBox = document.getElementById('emojiQuizResult');
-  const resultEmoji = document.getElementById('resultEmoji');
-  const resultTitle = document.getElementById('resultTitle');
-  const resultText = document.getElementById('resultText');
-  const copyBtn = document.getElementById('copyResult');
-  const copyStatus = document.getElementById('copyStatus');
+    reset?.addEventListener('click', () => {
+        groups.forEach(g => g.querySelectorAll('.pill').forEach(p => p.classList.remove('active')));
+        resultBox.classList.add('hidden');
+        copyStatus.textContent = '';
+    });
 
-  reveal?.addEventListener('click', ()=>{
-    const sel = selections();
-    if (!allAnswered(sel)) {
-      copyStatus.textContent = 'Answer all 6 to reveal!';
-      setTimeout(()=>copyStatus.textContent='', 1200);
-      return;
-    }
-    const r = score(sel);
-    resultEmoji.textContent = r.emoji;
-    resultTitle.textContent = `You're… ${r.title}`;
-    resultText.textContent = r.text;
-    resultBox.classList.remove('hidden');
-    resultBox.scrollIntoView({behavior:'smooth', block:'center'});
-  });
-
-  reset?.addEventListener('click', ()=>{
-    groups.forEach(g=>g.querySelectorAll('.pill').forEach(p=>p.classList.remove('active')));
-    resultBox.classList.add('hidden');
-    copyStatus.textContent='';
-  });
-
-  copyBtn?.addEventListener('click', async ()=>{
-    const text = `${resultEmoji.textContent} ${resultTitle.textContent} — ${resultText.textContent}`;
-    try{
-      await navigator.clipboard.writeText(text);
-      copyStatus.textContent = 'Copied!';
-      setTimeout(()=>copyStatus.textContent='', 1200);
-    } catch(e){
-      copyStatus.textContent = 'Copy failed';
-      setTimeout(()=>copyStatus.textContent='', 1200);
-    }
-  });
+    copyBtn?.addEventListener('click', async () => {
+        const text = `${resultEmoji.textContent} ${resultTitle.textContent} — ${resultText.textContent}`;
+        try {
+            await navigator.clipboard.writeText(text);
+            copyStatus.textContent = 'Copied!';
+            setTimeout(() => copyStatus.textContent = '', 1200);
+        } catch (e) {
+            copyStatus.textContent = 'Copy failed';
+            setTimeout(() => copyStatus.textContent = '', 1200);
+        }
+    });
 })();
 // this is the end of the emoji quiz (for ref)
 
@@ -1425,14 +1467,14 @@ function hideEmojiTooltip() {
 function initInteractiveTimeline() {
     const markersContainer = document.getElementById('timelineMarkers');
     const cardsContainer = document.getElementById('timelineCards');
-    
+
     if (!markersContainer || !cardsContainer) return;
-    
+
     // Calculate year range for proportional positioning
     const minYear = Math.min(...timelineData.map(d => d.year)); // 1837
     const maxYear = Math.max(...timelineData.map(d => d.year)); // 1991
     const yearRange = maxYear - minYear;
-    
+
     // Define adjusted positions that are "kind of to scale" but spread out for legibility
     // These are kind of arbitrary but we are trying to balance spacing
     const adjustedPositions = {
@@ -1445,20 +1487,20 @@ function initInteractiveTimeline() {
         1987: 95,     // Spread out from 1968
         1991: 100     // End
     };
-    
+
     // Create markers with adjusted positioning
     timelineData.forEach((item, index) => {
         const marker = document.createElement('div');
         marker.className = 'timeline-marker' + (index === 0 ? ' active' : '');
         marker.dataset.index = index;
-        
+
         // Use adjusted position if available, otherwise calculate proportionally
-        const position = adjustedPositions[item.year] !== undefined 
-            ? adjustedPositions[item.year] 
+        const position = adjustedPositions[item.year] !== undefined
+            ? adjustedPositions[item.year]
             : ((item.year - minYear) / yearRange) * 100;
 
         marker.style.left = `${position}%`;
-        
+
         marker.innerHTML = `
             <div class="timeline-marker-dot"></div>
             <span class="timeline-marker-year">${item.year}</span>
@@ -1466,7 +1508,7 @@ function initInteractiveTimeline() {
         marker.addEventListener('click', () => selectTimelineItem(index));
         markersContainer.appendChild(marker);
     });
-    
+
     // Create cards
     timelineData.forEach((item, index) => {
         const card = document.createElement('div');
@@ -1488,12 +1530,117 @@ function selectTimelineItem(index) {
     document.querySelectorAll('.timeline-marker').forEach((m, i) => {
         m.classList.toggle('active', i === index);
     });
-    
+
     // Update cards
     document.querySelectorAll('.timeline-card').forEach((c, i) => {
         c.classList.toggle('active', i === index);
     });
 }
+
+function initUnicodeTypewriterTitle() {
+    const title = document.getElementById('running-transition-ascii');
+    const section = document.getElementById('section-unicode-intro');
+    if (!title || !section) return;
+
+    const basePrefix = 'From ASCII to ';
+    // Sequence of words the title will cycle through
+    const variants = [
+        'ASCII',    // From ASCII to ASCII
+        'Unicode',  // From ASCII to Unicode (English)
+        'Юникод',   // Russian
+        '统一码',    // Chinese
+        'ユニコード', // Japanese (Katakana)
+        '유니코드',  // Korean
+        'יוניקוד',  // Hebrew
+        'यूनिकोड',  // Hindi
+        'Unicode'   // Final resting word
+    ];
+
+    let hasPlayed = false;
+
+    function typeWord(word, onDone) {
+        let i = 0;
+        title.classList.add('title-typewriter');
+
+        function step() {
+            if (i <= word.length) {
+                title.textContent = basePrefix + word.slice(0, i);
+                i++;
+                setTimeout(step, 90); // typing speed
+            } else {
+                setTimeout(onDone, 700); // pause before backspace
+            }
+        }
+
+        step();
+    }
+
+    function backspaceWord(word, onDone) {
+        let len = word.length;
+
+        function step() {
+            if (len >= 0) {
+                title.textContent = basePrefix + word.slice(0, len);
+                len--;
+                setTimeout(step, 60); // backspace speed
+            } else {
+                setTimeout(onDone, 180); // tiny pause before next word
+            }
+        }
+
+        step();
+    }
+
+    function playSequence() {
+        if (hasPlayed) return;
+        hasPlayed = true;
+
+        let index = 0;
+
+        function runNext() {
+            // If we are at the last variant, just type it and stop
+            if (index === variants.length - 1) {
+                typeWord(variants[index], () => {
+                    // keep final text, remove caret
+                    title.classList.remove('title-typewriter');
+                });
+                return;
+            }
+
+            const currentWord = variants[index];
+
+            // Type current word, then backspace it, then move to next variant
+            typeWord(currentWord, () => {
+                backspaceWord(currentWord, () => {
+                    index++;
+                    runNext();
+                });
+            });
+        }
+
+        runNext();
+    }
+
+    // Use IntersectionObserver so it plays when the section scrolls into view
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.target !== section) return;
+                if (entry.isIntersecting) {
+                    playSequence();
+                }
+            });
+        },
+        { root: null, threshold: 0.3 }
+    );
+
+    observer.observe(section);
+}
+
+// Make sure this is called on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    initUnicodeTypewriterTitle();
+});
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Sankey diagram (EVOLUTION OF UNICODE)
@@ -1501,12 +1648,12 @@ function selectTimelineItem(index) {
 function initSankeyDiagram() {
     const slider = document.getElementById('sankeyYearSlider');
     const yearDisplay = document.getElementById('sankeyYearDisplay');
-    
+
     if (!slider) return;
-    
+
     // Initial render
     createSankeyDiagram(2025);
-    
+
     // Slider interaction
     slider.addEventListener('input', (e) => {
         const year = parseInt(e.target.value);
@@ -1518,60 +1665,60 @@ function initSankeyDiagram() {
 function createSankeyDiagram(maxYear) {
     const container = document.querySelector('.sankey-viz-wrapper');
     const svg = d3.select('#sankeyChart');
-    
+
     if (!container || !svg.node()) return;
-    
+
     svg.selectAll('*').remove();
-    
+
     const margin = { top: 20, right: 120, bottom: 20, left: 120 };
     const width = container.clientWidth - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
-    
+
     svg.attr('viewBox', `0 0 ${container.clientWidth} 400`);
-    
+
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
-    
+
     // Filter versions by year
     const filteredVersions = unicodeVersionData.filter(v => v.year <= maxYear);
-    
+
     // Update stats
     const lastVersion = filteredVersions[filteredVersions.length - 1];
     document.getElementById('totalCharsCount').textContent = lastVersion ? lastVersion.chars.toLocaleString() : '0';
     document.getElementById('versionsShown').textContent = filteredVersions.length;
-    
+
     // Count scripts by filtering languageData
     const scriptsCount = languageData.filter(s => s.yearEncoded && s.yearEncoded <= maxYear).length;
     document.getElementById('totalScriptsCount').textContent = scriptsCount || languageData.length;
-    
+
     // Create simplified flow data for visualization
     // Group additions by category
     const categories = ['Han/CJK', 'Latin Extended', 'Arabic/Hebrew', 'Indic Scripts', 'Symbols/Emoji', 'Historic Scripts', 'Other Scripts'];
     const categoryColors = ['#e06b9a', '#72c9cd', '#8fa55d', '#d4a574', '#f4d03f', '#9b9b9b', '#6fcf97'];
-    
+
     // Create nodes (versions on left, categories on right)
     const nodes = [];
     const links = [];
-    
+
     // Add version nodes
-    const majorVersions = filteredVersions.filter((v, i) => 
-        i === 0 || v.chars - filteredVersions[i-1].chars > 1000 || v.version.includes('.0')
+    const majorVersions = filteredVersions.filter((v, i) =>
+        i === 0 || v.chars - filteredVersions[i - 1].chars > 1000 || v.version.includes('.0')
     ).slice(-8); // Show last 8 major versions
-    
+
     majorVersions.forEach((v, i) => {
         nodes.push({ name: `v${v.version}`, type: 'version', index: i });
     });
-    
+
     // Add category nodes
     categories.forEach((cat, i) => {
         nodes.push({ name: cat, type: 'category', index: majorVersions.length + i, color: categoryColors[i] });
     });
-    
+
     // Create links (simplified distribution)
     majorVersions.forEach((v, vIndex) => {
         const prevChars = vIndex > 0 ? majorVersions[vIndex - 1].chars : 0;
         const added = v.chars - prevChars;
-        
+
         if (added > 0) {
             // Distribute additions across categories (simplified estimation)
             const distributions = [
@@ -1583,7 +1730,7 @@ function createSankeyDiagram(maxYear) {
                 0.06, // Historic Scripts
                 0.06  // Other Scripts
             ];
-            
+
             distributions.forEach((ratio, catIndex) => {
                 const value = Math.max(added * ratio, 100);
                 links.push({
@@ -1594,18 +1741,18 @@ function createSankeyDiagram(maxYear) {
             });
         }
     });
-    
+
     // Create sankey layout
     const sankey = d3.sankey()
         .nodeWidth(20)
         .nodePadding(15)
         .extent([[0, 0], [width, height]]);
-    
+
     const { nodes: sankeyNodes, links: sankeyLinks } = sankey({
         nodes: nodes.map(d => Object.assign({}, d)),
         links: links.map(d => Object.assign({}, d))
     });
-    
+
     // Draw links
     g.append('g')
         .selectAll('path')
@@ -1618,36 +1765,36 @@ function createSankeyDiagram(maxYear) {
             return targetNode.color || '#666';
         })
         .attr('stroke-width', d => Math.max(1, d.width))
-        .on('mouseenter', function(event, d) {
+        .on('mouseenter', function (event, d) {
             d3.select(this).attr('stroke-opacity', 0.7);
             showSankeyTooltip(event, d, sankeyNodes);
         })
-        .on('mouseleave', function() {
+        .on('mouseleave', function () {
             d3.select(this).attr('stroke-opacity', 0.4);
             hideSankeyTooltip();
         });
-    
+
     // Draw nodes
     const node = g.append('g')
         .selectAll('g')
         .data(sankeyNodes)
         .join('g')
         .attr('class', 'sankey-node');
-    
+
     node.append('rect')
         .attr('x', d => d.x0)
         .attr('y', d => d.y0)
         .attr('height', d => Math.max(d.y1 - d.y0, 1))
         .attr('width', d => d.x1 - d.x0)
         .attr('fill', d => d.color || '#72c9cd');
-    
+
     node.append('text')
         .attr('x', d => d.x0 < width / 2 ? d.x0 - 6 : d.x1 + 6)
         .attr('y', d => (d.y1 + d.y0) / 2)
         .attr('dy', '0.35em')
         .attr('text-anchor', d => d.x0 < width / 2 ? 'end' : 'start')
         .text(d => d.name);
-    
+
     // Create legend
     createSankeyLegend(categories, categoryColors);
 }
@@ -1655,7 +1802,7 @@ function createSankeyDiagram(maxYear) {
 function createSankeyLegend(categories, colors) {
     const legend = document.getElementById('sankeyLegend');
     if (!legend) return;
-    
+
     legend.innerHTML = categories.map((cat, i) => `
         <div class="sankey-legend-item">
             <div class="sankey-legend-color" style="background: ${colors[i]}"></div>
@@ -1668,13 +1815,13 @@ function showSankeyTooltip(event, d, nodes) {
     const tooltip = document.getElementById('sankeyTooltip');
     const source = nodes[d.source.index];
     const target = nodes[d.target.index];
-    
+
     tooltip.innerHTML = `
         <strong>${source.name} → ${target.name}</strong><br>
         ~${Math.round(d.value).toLocaleString()} characters
     `;
     tooltip.classList.remove('hidden');
-    
+
     const rect = tooltip.parentElement.getBoundingClientRect();
     tooltip.style.left = (event.clientX - rect.left + 10) + 'px';
     tooltip.style.top = (event.clientY - rect.top + 10) + 'px';
@@ -1702,7 +1849,7 @@ async function initUnicodeUniverse() {
 function prepareUniverseData() {
     // Calculate total characters for percentage
     const totalChars = languageData.reduce((sum, d) => sum + (d.charCount || 0), 0);
-    
+
     universeScriptData = languageData
         .filter(d => d.charCount && d.charCount > 0)
         .map(d => ({
@@ -1722,12 +1869,12 @@ function prepareUniverseData() {
 function createScriptList() {
     const listContainer = document.getElementById('universeScriptList');
     if (!listContainer) return;
-    
+
     listContainer.innerHTML = '';
-    
+
     // Find max value for bar scaling
     const maxValue = universeScriptData.length > 0 ? universeScriptData[0].value : 1;
-    
+
     universeScriptData.forEach((script, index) => {
         const item = document.createElement('div');
         item.className = 'script-list-item';
@@ -1735,9 +1882,9 @@ function createScriptList() {
         item.dataset.region = script.region;
         item.dataset.name = script.name.toLowerCase();
         item.dataset.languages = (script.languages || '').toLowerCase();
-        
+
         const barWidth = (script.value / maxValue) * 100;
-        
+
         item.innerHTML = `
             <div class="script-item-header">
                 <span class="script-item-name">${script.name}</span>
@@ -1747,9 +1894,9 @@ function createScriptList() {
                 <div class="script-item-bar-fill" style="width: ${barWidth}%"></div>
             </div>
         `;
-        
+
         item.addEventListener('click', () => selectScript(index));
-        
+
         listContainer.appendChild(item);
     });
 }
@@ -1765,7 +1912,7 @@ function setupUniverseControlsV2() {
             filterScriptList();
         });
     });
-    
+
     // Search input
     const searchInput = document.getElementById('scriptSearchV2');
     if (searchInput) {
@@ -1773,7 +1920,7 @@ function setupUniverseControlsV2() {
             filterScriptList(e.target.value);
         });
     }
-    
+
     // Regenerate characters button
     const regenBtn = document.getElementById('charRegenerateBtn');
     if (regenBtn) {
@@ -1788,24 +1935,24 @@ function setupUniverseControlsV2() {
 function filterScriptList(searchQuery = '') {
     const items = document.querySelectorAll('.script-list-item');
     const q = searchQuery.toLowerCase().trim();
-    
+
     items.forEach(item => {
         const region = item.dataset.region;
         const name = item.dataset.name;
         const languages = item.dataset.languages;
-        
+
         let visible = true;
-        
+
         // Apply region filter
         if (currentUniverseFilter !== 'all' && region !== currentUniverseFilter) {
             visible = false;
         }
-        
+
         // Apply search filter
         if (q && !name.includes(q) && !languages.includes(q)) {
             visible = false;
         }
-        
+
         item.classList.toggle('filtered', !visible);
     });
 }
@@ -1813,33 +1960,33 @@ function filterScriptList(searchQuery = '') {
 function selectScript(index) {
     selectedScript = index;
     const script = universeScriptData[index];
-    
+
     // Update list item active states
     document.querySelectorAll('.script-list-item').forEach((item, i) => {
         item.classList.toggle('active', i === index);
     });
-    
+
     // Show details panel, hide empty state
     document.getElementById('universeEmptyState').classList.add('hidden');
     document.getElementById('universeScriptDetails').classList.remove('hidden');
-    
+
     // Add has-selection class to container for solid border
     document.getElementById('universeDetailsContainer').classList.add('has-selection');
-    
+
     // Update script info
     document.getElementById('scriptInfoName').textContent = script.name;
     document.getElementById('scriptInfoChars').textContent = script.value.toLocaleString();
     document.getElementById('scriptInfoVersion').textContent = script.version || 'N/A';
     document.getElementById('scriptInfoYear').textContent = script.year || 'N/A';
     document.getElementById('scriptInfoLanguages').textContent = script.languages || 'Various';
-    
+
     // Update map
     updateWorldMap(script);
-    
+
     // Update regions text
-    document.getElementById('mapRegionsText').textContent = 
+    document.getElementById('mapRegionsText').textContent =
         script.geography ? `Regions: ${script.geography}` : '';
-    
+
     // Generate random characters
     generateRandomCharacters(script);
 }
@@ -1848,10 +1995,10 @@ function categorizeRegion(geography) {
     if (!geography) return 'worldwide';
     const geo = geography.toLowerCase();
     if (geo.includes('historic') || geo.includes('ancient')) return 'historic';
-    if (geo.includes('china') || geo.includes('japan') || geo.includes('korea') || geo.includes('india') || 
+    if (geo.includes('china') || geo.includes('japan') || geo.includes('korea') || geo.includes('india') ||
         geo.includes('asia') || geo.includes('thai') || geo.includes('vietnam') || geo.includes('cambodia') ||
         geo.includes('myanmar') || geo.includes('laos') || geo.includes('tibet') || geo.includes('nepal') ||
-        geo.includes('bangladesh') || geo.includes('sri lanka') || geo.includes('pakistan') || 
+        geo.includes('bangladesh') || geo.includes('sri lanka') || geo.includes('pakistan') ||
         geo.includes('afghanistan') || geo.includes('indonesia') || geo.includes('malaysia') ||
         geo.includes('philippines') || geo.includes('mongolia')) return 'asia';
     if (geo.includes('europe') || geo.includes('russia') || geo.includes('greece') || geo.includes('german') ||
@@ -1885,7 +2032,7 @@ const countryNameMappings = {
     'south korea': ['South Korea'],
     'north korea': ['North Korea'],
     'mongolia': ['Mongolia'],
-    
+
     // Southeast Asia
     'vietnam': ['Vietnam'],
     'thailand': ['Thailand'],
@@ -1898,7 +2045,7 @@ const countryNameMappings = {
     'philippines': ['Philippines'],
     'singapore': ['Singapore'],
     'brunei': ['Brunei'],
-    
+
     // South Asia
     'india': ['India'],
     'pakistan': ['Pakistan'],
@@ -1908,14 +2055,14 @@ const countryNameMappings = {
     'bhutan': ['Bhutan'],
     'afghanistan': ['Afghanistan'],
     'maldives': ['Maldives'],
-    
+
     // Central Asia
     'kazakhstan': ['Kazakhstan'],
     'uzbekistan': ['Uzbekistan'],
     'turkmenistan': ['Turkmenistan'],
     'kyrgyzstan': ['Kyrgyzstan'],
     'tajikistan': ['Tajikistan'],
-    
+
     // Middle East
     'iran': ['Iran'],
     'iraq': ['Iraq'],
@@ -1932,7 +2079,7 @@ const countryNameMappings = {
     'bahrain': ['Bahrain'],
     'kuwait': ['Kuwait'],
     'turkey': ['Turkey'],
-    
+
     // Europe
     'russia': ['Russia'],
     'ukraine': ['Ukraine'],
@@ -1983,7 +2130,7 @@ const countryNameMappings = {
     'latvia': ['Latvia'],
     'estonia': ['Estonia'],
     'scandinavia': ['Sweden', 'Norway', 'Denmark', 'Finland', 'Iceland'],
-    
+
     // Africa
     'egypt': ['Egypt'],
     'ethiopia': ['Ethiopia'],
@@ -2006,7 +2153,7 @@ const countryNameMappings = {
     'sierra leone': ['Sierra Leone'],
     'ghana': ['Ghana'],
     'senegal': ['Senegal'],
-    
+
     // Americas
     'united states': ['United States of America'],
     'usa': ['United States of America'],
@@ -2022,14 +2169,14 @@ const countryNameMappings = {
     'cherokee': ['United States of America'],
     'oklahoma': ['United States of America'],
     'alaska': ['United States of America'],
-    
+
     // Oceania
     'australia': ['Australia'],
     'new zealand': ['New Zealand'],
     'fiji': ['Fiji'],
     'papua': ['Papua New Guinea'],
     'pacific': ['Australia', 'New Zealand', 'Fiji', 'Papua New Guinea'],
-    
+
     // Regional/special terms
     'middle east': ['Iran', 'Iraq', 'Syria', 'Israel', 'Jordan', 'Lebanon', 'Saudi Arabia', 'Yemen', 'Oman', 'United Arab Emirates', 'Qatar', 'Bahrain', 'Kuwait', 'Turkey'],
     'north africa': ['Egypt', 'Libya', 'Tunisia', 'Algeria', 'Morocco'],
@@ -2055,7 +2202,7 @@ const countryNameMappings = {
     'europe': ['Germany', 'France', 'United Kingdom', 'Italy', 'Spain', 'Poland', 'Romania', 'Netherlands', 'Belgium', 'Greece', 'Portugal', 'Sweden', 'Austria', 'Switzerland'],
     'east africa': ['Kenya', 'Tanzania', 'Ethiopia', 'Uganda'],
     'british isles': ['United Kingdom', 'Ireland'],
-    
+
     // General regions
     'worldwide': 'all',
     'global': 'all',
@@ -2067,36 +2214,36 @@ const countryNameMappings = {
 async function initWorldMap() {
     const svg = d3.select('#worldMapSvg');
     if (svg.empty()) return;
-    
+
     // Clear existing content
     svg.selectAll('*').remove();
-    
+
     // Get SVG dimensions
     const width = 400;
     const height = 200;
-    
+
     // Set viewBox
     svg.attr('viewBox', `0 0 ${width} ${height}`);
-    
+
     // Create projection - using Natural Earth for better aesthetics
     worldMapProjection = d3.geoNaturalEarth1()
         .scale(width / 5.5)
         .translate([width / 2, height / 2]);
-    
+
     // Create path generator
     worldMapPathGenerator = d3.geoPath().projection(worldMapProjection);
-    
+
     // Create map group
     const mapGroup = svg.append('g').attr('class', 'world-map-group');
-    
+
     try {
         // Load world map TopoJSON
         const worldData = await d3.json('https://unpkg.com/world-atlas@2.0.2/countries-110m.json');
         worldMapData = worldData;
-        
+
         // Convert TopoJSON to GeoJSON features
         const countries = topojson.feature(worldData, worldData.objects.countries);
-        
+
         // Draw countries
         mapGroup.selectAll('path.country')
             .data(countries.features)
@@ -2106,7 +2253,7 @@ async function initWorldMap() {
             .attr('d', worldMapPathGenerator)
             .attr('data-name', d => d.properties.name || '')
             .attr('data-id', d => d.id || '');
-            
+
     } catch (error) {
         console.error('Error loading world map:', error);
         // Fallback: show a simple placeholder
@@ -2121,17 +2268,17 @@ async function initWorldMap() {
 
 function updateWorldMap(script) {
     const geography = (script.geography || '').toLowerCase();
-    
+
     // Reset all countries
     d3.selectAll('#worldMapSvg .country')
         .classed('highlighted', false);
-    
+
     // If no geography info, return
     if (!geography) return;
-    
+
     // Find matching countries
     const countriesToHighlight = new Set();
-    
+
     // Check each keyword mapping
     for (const [keyword, countries] of Object.entries(countryNameMappings)) {
         if (geography.includes(keyword)) {
@@ -2145,11 +2292,11 @@ function updateWorldMap(script) {
             }
         }
     }
-    
+
     // Highlight matching countries
     if (countriesToHighlight.size > 0) {
         d3.selectAll('#worldMapSvg .country')
-            .classed('highlighted', function() {
+            .classed('highlighted', function () {
                 const name = d3.select(this).attr('data-name');
                 return countriesToHighlight.has(name);
             });
@@ -2233,23 +2380,23 @@ function generateRandomCharacters(script) {
         document.getElementById('charSample2'),
         document.getElementById('charSample3')
     ];
-    
+
     // Get Unicode ranges for this script
     let ranges = scriptUnicodeRanges[script.name];
-    
+
     // Fallback: use a generic approach based on script name patterns
     if (!ranges) {
         // Try to find a partial match
         const scriptNameLower = script.name.toLowerCase();
         for (const [key, value] of Object.entries(scriptUnicodeRanges)) {
-            if (key.toLowerCase().includes(scriptNameLower) || 
+            if (key.toLowerCase().includes(scriptNameLower) ||
                 scriptNameLower.includes(key.toLowerCase())) {
                 ranges = value;
                 break;
             }
         }
     }
-    
+
     // If still no ranges, show placeholder
     if (!ranges) {
         charBoxes.forEach((box, i) => {
@@ -2259,25 +2406,25 @@ function generateRandomCharacters(script) {
         });
         return;
     }
-    
+
     // Generate 3 random characters
     charBoxes.forEach(box => {
         if (!box) return;
-        
+
         // Pick a random range
         const range = ranges[Math.floor(Math.random() * ranges.length)];
         const [start, end] = range;
-        
+
         // Pick a random code point in the range
         const codePoint = Math.floor(Math.random() * (end - start + 1)) + start;
-        
+
         try {
             const char = String.fromCodePoint(codePoint);
             const codeHex = codePoint.toString(16).toUpperCase().padStart(4, '0');
-            
+
             // Look up character info from the map
             const charInfo = characterInfoMap.get(codeHex);
-            
+
             updateCharacterBox(box, char, codeHex, charInfo);
         } catch (e) {
             updateCharacterBox(box, '?', null, null);
@@ -2291,17 +2438,17 @@ function updateCharacterBox(box, char, codeHex, charInfo) {
     if (display) {
         display.textContent = char;
     }
-    
+
     // Update the info panel
     const infoChar = box.querySelector('.char-info-char');
     const infoName = box.querySelector('.char-info-name');
     const infoCategory = box.querySelector('.char-info-category');
     const infoCodepoint = box.querySelector('.char-info-codepoint');
-    
+
     if (infoChar) {
         infoChar.textContent = char;
     }
-    
+
     if (charInfo && typeof charInfo === 'object') {
         // We have character info from the CSV
         if (infoName) {
@@ -2312,13 +2459,13 @@ function updateCharacterBox(box, char, codeHex, charInfo) {
             }
             infoName.textContent = name;
         }
-        
+
         if (infoCategory) {
             const catCode = charInfo.category || '';
             const catName = categoryNames[catCode] || catCode;
             infoCategory.textContent = catCode ? `${catCode} (${catName})` : '';
         }
-        
+
         if (infoCodepoint) {
             let codepointText = codeHex ? `U+${codeHex}` : '';
             // Add decimal digit value if present
@@ -2362,40 +2509,40 @@ function setupBreakdownControls() {
             createBreakdownChart();
         });
     });
-    
+
     // Min chars filter - custom dropdown
     const minCharsDropdown = document.getElementById('minCharsDropdown');
     const minCharsMenu = document.getElementById('minCharsMenu');
     const minCharsLabel = document.getElementById('minCharsLabel');
-    
+
     if (minCharsDropdown && minCharsMenu) {
         minCharsDropdown.addEventListener('click', (e) => {
             e.stopPropagation();
             minCharsDropdown.classList.toggle('open');
             minCharsMenu.classList.toggle('hidden');
         });
-        
+
         minCharsMenu.querySelectorAll('.dropdown-option').forEach(option => {
             option.addEventListener('click', (e) => {
                 e.stopPropagation();
-                
+
                 // Update active state
                 minCharsMenu.querySelectorAll('.dropdown-option').forEach(opt => opt.classList.remove('active'));
                 option.classList.add('active');
-                
+
                 // Update label
                 minCharsLabel.textContent = option.textContent;
-                
+
                 // Update filter value
                 breakdownMinChars = parseInt(option.dataset.value);
-                
+
                 // Close dropdown and redraw chart
                 minCharsDropdown.classList.remove('open');
                 minCharsMenu.classList.add('hidden');
                 createBreakdownChart();
             });
         });
-        
+
         // Close dropdown when clicking outside
         document.addEventListener('click', () => {
             minCharsDropdown.classList.remove('open');
@@ -2420,18 +2567,18 @@ function createBreakdownChart() {
 function createBreakdownTreemap() {
     const container = document.querySelector('.breakdown-viz-wrapper');
     const svg = d3.select('#breakdownChart');
-    
+
     if (!container || !svg.node()) return;
-    
+
     svg.selectAll('*').remove();
-    
+
     const width = container.clientWidth - 40;
     const height = 460;
-    
+
     svg.attr('viewBox', `0 0 ${width + 40} ${height + 20}`);
-    
+
     const g = svg.append('g').attr('transform', 'translate(20, 10)');
-    
+
     // Prepare data
     const scriptData = languageData
         .filter(d => d.charCount >= breakdownMinChars)
@@ -2440,7 +2587,7 @@ function createBreakdownTreemap() {
             value: d.charCount,
             category: categorizeScript(d.script)
         }));
-    
+
     // Group by category
     const categories = d3.group(scriptData, d => d.category);
     const hierarchyData = {
@@ -2450,17 +2597,17 @@ function createBreakdownTreemap() {
             children
         }))
     };
-    
+
     const root = d3.hierarchy(hierarchyData)
         .sum(d => d.value)
         .sort((a, b) => b.value - a.value);
-    
+
     d3.treemap()
         .size([width, height])
         .padding(3)
         .paddingTop(20)
         .round(true)(root);
-    
+
     const categoryColors = {
         'CJK': '#e06b9a',
         'Latin & European': '#72c9cd',
@@ -2471,13 +2618,13 @@ function createBreakdownTreemap() {
         'Historic': '#9b9b9b',
         'Other': '#6fcf97'
     };
-    
+
     // Draw category group labels only (no boxes)
     const categoryGroup = g.selectAll('.category-group')
         .data(root.children || [])
         .join('g')
         .attr('class', 'category-group');
-    
+
     categoryGroup.append('text')
         .attr('x', d => d.x0 + 6)
         .attr('y', d => d.y0 + 14)
@@ -2485,14 +2632,14 @@ function createBreakdownTreemap() {
         .attr('font-size', '11px')
         .attr('font-weight', '600')
         .text(d => d.data.name);
-    
+
     // Draw leaf cells
     const cell = g.selectAll('.breakdown-cell')
         .data(root.leaves())
         .join('g')
         .attr('class', 'treemap-cell')
         .attr('transform', d => `translate(${d.x0},${d.y0})`);
-    
+
     cell.append('rect')
         .attr('width', d => Math.max(0, d.x1 - d.x0))
         .attr('height', d => Math.max(0, d.y1 - d.y0))
@@ -2502,25 +2649,25 @@ function createBreakdownTreemap() {
         })
         .attr('fill-opacity', 0.7)
         .attr('rx', 3);
-    
+
     cell.filter(d => (d.x1 - d.x0) > 40 && (d.y1 - d.y0) > 20)
         .append('text')
         .attr('x', 4)
         .attr('y', 14)
         .attr('font-size', '10px')
         .text(d => d.data.name.length > 8 ? d.data.name.slice(0, 6) + '…' : d.data.name);
-    
+
     // Tooltip
-    cell.on('mouseenter', function(event, d) {
+    cell.on('mouseenter', function (event, d) {
         showBreakdownTooltip(event, d.data);
         d3.select(this).select('rect').attr('fill-opacity', 1);
     })
-    .on('mousemove', moveBreakdownTooltip)
-    .on('mouseleave', function() {
-        hideBreakdownTooltip();
-        d3.select(this).select('rect').attr('fill-opacity', 0.7);
-    });
-    
+        .on('mousemove', moveBreakdownTooltip)
+        .on('mouseleave', function () {
+            hideBreakdownTooltip();
+            d3.select(this).select('rect').attr('fill-opacity', 0.7);
+        });
+
     // Create legend
     createBreakdownLegend(categoryColors);
 }
@@ -2528,20 +2675,20 @@ function createBreakdownTreemap() {
 function createBreakdownBarChart() {
     const container = document.querySelector('.breakdown-viz-wrapper');
     const svg = d3.select('#breakdownChart');
-    
+
     if (!container || !svg.node()) return;
-    
+
     svg.selectAll('*').remove();
-    
+
     const margin = { top: 20, right: 30, bottom: 100, left: 80 };
     const width = container.clientWidth - margin.left - margin.right - 40;
     const height = 440 - margin.top - margin.bottom;
-    
+
     svg.attr('viewBox', `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`);
-    
+
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
-    
+
     // Prepare data - top 20 scripts
     const scriptData = languageData
         .filter(d => d.charCount >= breakdownMinChars)
@@ -2552,7 +2699,7 @@ function createBreakdownBarChart() {
             value: d.charCount,
             category: categorizeScript(d.script)
         }));
-    
+
     const categoryColors = {
         'CJK': '#e06b9a',
         'Latin & European': '#72c9cd',
@@ -2563,17 +2710,17 @@ function createBreakdownBarChart() {
         'Historic': '#9b9b9b',
         'Other': '#6fcf97'
     };
-    
+
     // Scales
     const x = d3.scaleBand()
         .range([0, width])
         .padding(0.2)
         .domain(scriptData.map(d => d.name));
-    
+
     const y = d3.scaleLinear()
         .range([height, 0])
         .domain([0, d3.max(scriptData, d => d.value) * 1.1]);
-    
+
     // Axes
     g.append('g')
         .attr('transform', `translate(0,${height})`)
@@ -2583,12 +2730,12 @@ function createBreakdownBarChart() {
         .style('text-anchor', 'end')
         .attr('fill', '#a3a7b9')
         .attr('font-size', '10px');
-    
+
     g.append('g')
-        .call(d3.axisLeft(y).ticks(6).tickFormat(d => d >= 1000 ? (d/1000) + 'k' : d))
+        .call(d3.axisLeft(y).ticks(6).tickFormat(d => d >= 1000 ? (d / 1000) + 'k' : d))
         .selectAll('text')
         .attr('fill', '#a3a7b9');
-    
+
     // Bars
     g.selectAll('.breakdown-bar')
         .data(scriptData)
@@ -2600,12 +2747,12 @@ function createBreakdownBarChart() {
         .attr('height', 0)
         .attr('fill', d => categoryColors[d.category] || '#6fcf97')
         .attr('rx', 4)
-        .on('mouseenter', function(event, d) {
+        .on('mouseenter', function (event, d) {
             showBreakdownTooltip(event, d);
             d3.select(this).attr('opacity', 0.8);
         })
         .on('mousemove', moveBreakdownTooltip)
-        .on('mouseleave', function() {
+        .on('mouseleave', function () {
             hideBreakdownTooltip();
             d3.select(this).attr('opacity', 1);
         })
@@ -2614,27 +2761,27 @@ function createBreakdownBarChart() {
         .delay((d, i) => i * 30)
         .attr('y', d => y(d.value))
         .attr('height', d => height - y(d.value));
-    
+
     createBreakdownLegend(categoryColors);
 }
 
 function createBreakdownSunburst() {
     const container = document.querySelector('.breakdown-viz-wrapper');
     const svg = d3.select('#breakdownChart');
-    
+
     if (!container || !svg.node()) return;
-    
+
     svg.selectAll('*').remove();
-    
+
     const width = Math.min(container.clientWidth - 40, 500);
     const height = 460;
     const radius = Math.min(width, height) / 2 - 20;
-    
+
     svg.attr('viewBox', `0 0 ${width} ${height}`);
-    
+
     const g = svg.append('g')
-        .attr('transform', `translate(${width/2},${height/2})`);
-    
+        .attr('transform', `translate(${width / 2},${height / 2})`);
+
     // Prepare hierarchical data
     const scriptData = languageData
         .filter(d => d.charCount >= breakdownMinChars)
@@ -2643,7 +2790,7 @@ function createBreakdownSunburst() {
             value: d.charCount,
             category: categorizeScript(d.script)
         }));
-    
+
     const categories = d3.group(scriptData, d => d.category);
     const hierarchyData = {
         name: 'Unicode',
@@ -2652,16 +2799,16 @@ function createBreakdownSunburst() {
             children: children.slice(0, 10) // Limit children per category
         }))
     };
-    
+
     const root = d3.hierarchy(hierarchyData)
         .sum(d => d.value)
         .sort((a, b) => b.value - a.value);
-    
+
     const partition = d3.partition()
         .size([2 * Math.PI, radius]);
-    
+
     partition(root);
-    
+
     const categoryColors = {
         'CJK': '#e06b9a',
         'Latin & European': '#72c9cd',
@@ -2672,13 +2819,13 @@ function createBreakdownSunburst() {
         'Historic': '#9b9b9b',
         'Other': '#6fcf97'
     };
-    
+
     const arc = d3.arc()
         .startAngle(d => d.x0)
         .endAngle(d => d.x1)
         .innerRadius(d => d.y0)
         .outerRadius(d => d.y1 - 1);
-    
+
     g.selectAll('path')
         .data(root.descendants().filter(d => d.depth))
         .join('path')
@@ -2689,16 +2836,16 @@ function createBreakdownSunburst() {
         })
         .attr('fill-opacity', d => d.depth === 1 ? 0.9 : 0.7)
         .attr('d', arc)
-        .on('mouseenter', function(event, d) {
+        .on('mouseenter', function (event, d) {
             showBreakdownTooltip(event, d.data);
             d3.select(this).attr('fill-opacity', 1);
         })
         .on('mousemove', moveBreakdownTooltip)
-        .on('mouseleave', function(event, d) {
+        .on('mouseleave', function (event, d) {
             hideBreakdownTooltip();
             d3.select(this).attr('fill-opacity', d.depth === 1 ? 0.9 : 0.7);
         });
-    
+
     // Labels for outer ring
     g.selectAll('.sunburst-label')
         .data(root.descendants().filter(d => d.depth === 1 && (d.x1 - d.x0) > 0.2))
@@ -2712,7 +2859,7 @@ function createBreakdownSunburst() {
         .attr('dy', '0.35em')
         .attr('text-anchor', 'middle')
         .text(d => d.data.name.length > 12 ? d.data.name.slice(0, 10) + '…' : d.data.name);
-    
+
     createBreakdownLegend(categoryColors);
 }
 
@@ -2723,7 +2870,7 @@ function categorizeScript(scriptName) {
     if (name.includes('hiragana') || name.includes('katakana') || name.includes('japanese')) return 'East Asian';
     if (name.includes('latin') || name.includes('cyrillic') || name.includes('greek') || name.includes('georgian') || name.includes('armenian')) return 'Latin & European';
     if (name.includes('arabic') || name.includes('hebrew') || name.includes('syriac')) return 'Middle Eastern';
-    if (name.includes('devanagari') || name.includes('bengali') || name.includes('tamil') || name.includes('telugu') || 
+    if (name.includes('devanagari') || name.includes('bengali') || name.includes('tamil') || name.includes('telugu') ||
         name.includes('kannada') || name.includes('malayalam') || name.includes('gujarati') || name.includes('oriya') ||
         name.includes('gurmukhi') || name.includes('thai') || name.includes('tibetan')) return 'South Asian';
     if (name.includes('symbol') || name.includes('emoji') || name.includes('braille') || name.includes('musical')) return 'Symbols & Emoji';
@@ -2735,7 +2882,7 @@ function categorizeScript(scriptName) {
 function createBreakdownLegend(colors) {
     const legend = document.getElementById('breakdownLegend');
     if (!legend) return;
-    
+
     legend.innerHTML = Object.entries(colors).map(([name, color]) => `
         <div class="breakdown-legend-item">
             <div class="breakdown-legend-color" style="background: ${color}"></div>
@@ -2746,13 +2893,13 @@ function createBreakdownLegend(colors) {
 
 function showBreakdownTooltip(event, data) {
     const tooltip = document.getElementById('breakdownTooltip');
-    
+
     tooltip.innerHTML = `
         <strong>${data.name}</strong><br>
         ${data.value ? data.value.toLocaleString() + ' characters' : ''}
         ${data.category ? `<br><em>${data.category}</em>` : ''}
     `;
-    
+
     tooltip.classList.remove('hidden');
     moveBreakdownTooltip(event);
 }
@@ -2761,10 +2908,10 @@ function moveBreakdownTooltip(event) {
     const tooltip = document.getElementById('breakdownTooltip');
     const container = document.querySelector('.breakdown-viz-wrapper');
     const rect = container.getBoundingClientRect();
-    
+
     let x = event.clientX - rect.left + 15;
     let y = event.clientY - rect.top + 15;
-    
+
     const tooltipRect = tooltip.getBoundingClientRect();
     if (x + tooltipRect.width > rect.width - 20) {
         x = event.clientX - rect.left - tooltipRect.width - 15;
@@ -2772,7 +2919,7 @@ function moveBreakdownTooltip(event) {
     if (y + tooltipRect.height > rect.height - 20) {
         y = event.clientY - rect.top - tooltipRect.height - 15;
     }
-    
+
     tooltip.style.left = x + 'px';
     tooltip.style.top = y + 'px';
 }

@@ -1694,6 +1694,14 @@ body {
     font-size: 1rem;
 }
 
+@keyframes myAnimation {
+  0%   {opacity: 0;}
+  25%  {opacity: 0;}
+  50%  {opacity: 0;}
+  100% {opacity: 100%;}
+}
+
+
 /* ============================================
    [INSERT 2] SANKEY DIAGRAM STYLES
    ============================================ */
@@ -1866,6 +1874,28 @@ body {
 /* ============================================
    [INSERT 3] UNICODE UNIVERSE STYLES - V2
    ============================================ */
+
+/* Typewriter caret effect for the Unicode title */
+#running-transition-ascii.title-typewriter {
+    position: relative;
+}
+
+#running-transition-ascii.title-typewriter::after {
+    content: '|';
+    position: absolute;
+    right: -0.4em;
+    top: 0;
+    bottom: 0;
+    display: inline-block;
+    animation: unicodeCaretBlink 0.9s step-end infinite;
+    opacity: 0.7;
+}
+
+@keyframes unicodeCaretBlink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
 .universe-container-v2 {
     max-width: 1400px;
     width: 100%;
