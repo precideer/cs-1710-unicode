@@ -1000,7 +1000,7 @@ function parseEmojiCSV(text) {
         if (modeToggle.checked) {
             meta.textContent = 'Allowed: A–Z, digits, basic punctuation • 7-bit only';
         } else {
-            meta.textContent = 'Modern mode: your device can show many scripts and emoji';
+            meta.textContent = 'Modern Mode: A multitude of scripts and emoji';
         }
     });
 })();

@@ -21,7 +21,7 @@
             <div id="portraitGrid" class="portrait-grid"></div>
             <div class="final-title-overlay">
                 <h2>Unicode</h2>
-                <p>A story of typography and identity</p>
+                <p>A Unique, Universal, and Uniform Standard of Digital Communication for All</p>
             </div>
         </section>
 
@@ -50,7 +50,7 @@
         <!-- Journey to Unicode (INTERACTIVE TIMELINE) -->
         <section class="section" id="section-timeline">
             <div class="timeline-section-container">
-                <h2 class="section-title centered">Before Unicode: How people type</h2>
+                <h2 class="section-title centered">The Journey to Unicode</h2>
                 <p class="section-description centered compact">Click on any milestone to explore key moments in
                     encoding history</p>
                 <div class="interactive-timeline">
@@ -73,8 +73,9 @@
         <section class="section" id="section-before-unicode">
             <div class="placeholder-container">
                 <h2 class="section-title">ASCII Time Machine</h2> <br>
-                <p class="section-description centered compact">You found the oldest typing simulator
-                    ever, try and see some fun facts about ASCII!</p>
+                <p class="section-description centered compact">
+                    You found an old typing simulator.
+                    Try it out and explore some fun facts on the side!</p>
                 <div class="before-grid">
                     <!-- Retro terminal demo -->
                     <div class="ascii-terminal">
@@ -85,18 +86,18 @@
                                     <input type="checkbox" id="mode1963" checked>
                                     <span class="slider"></span>
                                 </label>
-                                <span class="toggle-label">1963 mode</span>
+                                <span class="toggle-label">1963 Mode</span>
                             </div>
                         </div>
                         <div class="terminal-screen" id="terminalScreen" aria-live="polite">
-                            <div class="line">$ Type here. Lowercase will be <em>removed</em> in the 1963 mode.</div>
+                            <div class="line">$ Type below. Lowercase letters will be <em>removed</em> in 1963 Mode.</div>
                             <div class="line input">
                                 <span class="prompt">&gt;</span>
                                 <input id="terminalInput" type="text" autocomplete="off"
-                                    placeholder="try: hello world! café — Привет" />
+                                    placeholder="Click here to type, or try a preset option" />
                                 <span class="cursor"></span>
                             </div>
-                            <div class="line meta" id="terminalMeta">Allowed: A-Z, digits, basic punctuation • 7-bit
+                            <div class="line meta" id="terminalMeta">1963 Mode: A-Z, digits, basic punctuation • 7-bit
                                 only</div>
                         </div>
                         <div class="terminal-actions">
@@ -133,12 +134,14 @@
         <!-- ASCII Frequency in English Corpus (VIZ) -->
         <section class="section" id="section-ascii">
             <div class="ascii-container">
-                <h2 class="section-title">What ASCII characters people use the most?</h2>
+                <h2 class="section-title">Which ASCII characters do people use the most?</h2>
                 <p class="section-description">
                     Relative frequency data (derived from the Reuters21578 corpus) for only the characters
-                    encodable by the original ASCII-1963 set. </p>
-                <p class="section-description">Toggle the legend items on/off to filter by subcategory of
-                    characters. </p>
+                    encodable by the original ASCII-1963 set.
+                    <br><br>
+                    Toggle the legend items on/off to filter by subcategory of
+                    characters.
+                </p>
 
                 <div class="controls-legend-wrapper">
                     <div class="legend">
@@ -193,10 +196,18 @@
                 <h2 class="section-title centered" id="running-transition-ascii">
                     From ASCII to Unicode
                 </h2>
-                <p class="section-description"> While ASCII is a technological breakthrough, it is for an English-only
-                    society.
-                    This is where Unicode steps in.
-
+                <p class="section-description"> 
+                    ASCII was built for an English-only society. 
+                    <br><br>
+                    It provided no way to represent accented letters or non-Latin scripts, leaving representations of languages like
+                    Spanish incomplete, and languages like Chinese completely unsupported. Early workarounds were awkward, and the
+                    8-bit "extended ASCII" systems that followed only made things more fragmented. 
+                    <br><br>
+                    Different vendors created incompatible code pages, and text often broke into unreadable "mojibake" (garbled gibberish) when moved between systems, especially in regions that required thousands of characters. 
+                    <br><br>
+                    <strong>
+                    That need became the motivation for Unicode, a single, universal character encoding system capable of representing as many writing systems, symbol sets, and textual elements as possible.
+                    </strong>
                 </p>
             </div>
         </section>
@@ -247,9 +258,8 @@
             <div class="placeholder-container">
                 <h2 class="section-title">Emojis are also part of Unicode!</h2>
                 <p class="section-description">
-                    Born in Japan in the late 1990s as proprietary character sets on cell phones, emoji became parts of
-                    Unicode –
-                    meaning emoji are just another script defined by the Unicode Standard.
+                    Born in Japan in the late 1990s as proprietary character sets on cell phones, emoji became parts of Unicode –
+                    meaning emoji are just another script defined by the Unicode Standard. 
                 </p>
             </div>
         </section>
@@ -343,8 +353,7 @@
         <section class="section" id="section-emoji">
             <div class="emoji-container">
                 <h2 class="section-title centered">Is your favourite emoji a niche or cliché?</h2>
-                <p class="emoji-instruction">Drag the timeline and hover over emojis to see their usage and statistics
-                </p>
+                <p class="emoji-instruction">Drag the timeline and hover over emojis to see their usage and statistics</p>
 
                 <div class="emoji-timeline-container">
                     <input type="range" id="emojiTimeline" class="emoji-timeline" min="0.6" max="18" step="0.1"
@@ -430,7 +439,7 @@
         <section class="section" id="section-unicode-1991">
             <div class="placeholder-container">
                 <h2 class="section-title" style="font-weight: 200;">So...</h2>
-                <h2 class="section-title">Are we approaching the limits of digital representation?</h2>
+                <h2 class="section-title">What does the entire Unicode set look like?</h2>
             </div>
         </section>
 
@@ -604,18 +613,18 @@
         </section>
 
 
-        <!-- Conclusion -->
+        <!-- closing slide -->
         <section class="section" id="section-conclusion">
             <div class="conclusion-container">
                 <!-- HERO -->
                 <div class="conclusion-hero">
                     <div class="hero-copy">
-                        <h2 class="hero-title">Uniconclusion</h2>
-                        <p class="hero-tagline">Code points became culture — and typography became a language of
-                            identity.</p>
+                        <p class="hero-tagline">What started in the 20th century as a proposal for a unified character encoding has expanded into a broad suite of open source standards, tools, libraries, and technologies that make global text support and cross-platform interoperability possible on billions of devices.</p>
+                        <p class="hero-tagline">Unicode provides a consistent foundation for global text processing, multilingual computing, and reliable data exchange across all modern devices and systems.</p>
+                        <p class="hero-tagline"><strong>Unicode is built into every major operating system and runs on more than 20 billion devices worldwide, making it arguably the most widely deployed technology in existence.</strong></p>
                         <div class="hero-stats">
                             <div class="hero-stat">
-                                <span class="stat-num" data-target="159801">159,801+</span>
+                                <span class="stat-num" data-target="159801">159,801</span>
                                 <span class="stat-label">characters</span>
                             </div>
                             <div class="hero-stat">
@@ -648,48 +657,6 @@
                                 opacity="0.2" />
                         </svg>
                     </div>
-                </div>
-
-                <!-- CARD GRID -->
-                <div class="conclusion-grid">
-                    <article class="conclusion-card">
-                        <div class="card-icon" aria-hidden="true">
-                            <svg viewBox="0 0 48 48">
-                                <path d="M8 12h32M8 24h24M8 36h16" stroke="currentColor" stroke-width="3" fill="none"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <h3>Design</h3>
-                        <p>Fonts and rendering systems translate code into perception — shaping trust, beauty,
-                            accessibility, and meaning in everyday interfaces.</p>
-                    </article>
-
-                    <article class="conclusion-card">
-                        <div class="card-icon" aria-hidden="true">
-                            <svg viewBox="0 0 48 48">
-                                <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="3" fill="none" />
-                                <path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="3"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <h3>Inclusion</h3>
-                        <p>From 128 ASCII symbols to a truly global standard: Unicode’s growth encodes lived realities
-                            across communities and time.</p>
-                    </article>
-
-                    <article class="conclusion-card">
-                        <div class="card-icon" aria-hidden="true">
-                            <svg viewBox="0 0 48 48">
-                                <path d="M8 24c8-12 24-12 32 0-8 12-24 12-32 0Z" stroke="currentColor" stroke-width="3"
-                                    fill="none" />
-                                <circle cx="18" cy="22" r="2" fill="currentColor" />
-                                <circle cx="30" cy="22" r="2" fill="currentColor" />
-                            </svg>
-                        </div>
-                        <h3>Expression</h3>
-                        <p>Emoji, skin tones, and symbols show how code points carry emotion, nuance, and identity — not
-                            just information.</p>
-                    </article>
                 </div>
             </div>
         </section>
