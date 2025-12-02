@@ -77,7 +77,6 @@
                                 <span class="prompt">&gt;</span>
                                 <input id="terminalInput" type="text" autocomplete="off"
                                     placeholder="Click here to type, then ENTER" />
-                                <span class="cursor"></span>
                             </div>
                             <div class="line meta" id="terminalMeta">1963 Mode: A-Z, digits, basic punctuation • 7-bit
                                 only</div>
@@ -163,24 +162,24 @@
 
                 <div class="controls-legend-wrapper">
                     <div class="legend">
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-latin" checked>
-                            <span class="legend-color latin"></span>
+                            <span class="legend-radio"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Latin alphabet</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-digits" checked>
-                            <span class="legend-color digits"></span>
+                            <span class="legend-radio digits"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Digits</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-punctuation" checked>
-                            <span class="legend-color punctuation"></span>
+                            <span class="legend-radio punctuation"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Punctuation & Symbols</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="remove-outlier">
-                            <span class="legend-color outlier"></span>
+                            <span class="legend-radio outlier"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Remove Outlier</span>
                         </label>
                     </div>
@@ -274,7 +273,7 @@
         <!-- Emoji Introduction -->
         <section class="section" id="section-emoji-intro">
             <div class="placeholder-container">
-                <h2 class="section-title">Emojis are also part of Unicode!</h2>
+                <h2 class="section-title">Emoji are also part of Unicode!</h2>
                 <p class="section-description">
                     Emoji were born in Japan in the late 1990s as proprietary character sets on cell phones, but today they are part of Unicode – meaning emoji are just another script defined by the Unicode Standard. In 2010, Unicode 6.0 officially added hundreds of emoji characters.
                 </p>
@@ -370,7 +369,7 @@
         <section class="section" id="section-emoji">
             <div class="emoji-container">
                 <h2 class="section-title centered">Are your favourite emoji niche or cliché?</h2>
-                <p class="emoji-instruction">Drag the timeline and hover over emojis to see their usage and statistics</p>
+                <p class="emoji-instruction">Drag the timeline and hover over the emoji to see their usage and statistics</p>
 
                 <div class="emoji-timeline-container">
                     <input type="range" id="emojiTimeline" class="emoji-timeline" min="0.6" max="18" step="0.1"
@@ -384,49 +383,49 @@
 
                 <div class="emoji-controls-wrapper">
                     <div class="emoji-legend">
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-smileys" checked>
-                            <span class="legend-color smileys"></span>
+                            <span class="legend-radio smileys"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Smileys & Emotion</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-people" checked>
-                            <span class="legend-color people"></span>
+                            <span class="legend-radio people"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">People & Body</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-animals" checked>
-                            <span class="legend-color animals"></span>
+                            <span class="legend-radio animals"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Animals & Nature</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-food" checked>
-                            <span class="legend-color food"></span>
+                            <span class="legend-radio food"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Food & Drink</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-travel" checked>
-                            <span class="legend-color travel"></span>
+                            <span class="legend-radio travel"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Travel & Places</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-activities" checked>
-                            <span class="legend-color activities"></span>
+                            <span class="legend-radio activities"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Activities</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-objects" checked>
-                            <span class="legend-color objects"></span>
+                            <span class="legend-radio objects"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Objects</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-symbols" checked>
-                            <span class="legend-color symbols"></span>
+                            <span class="legend-radio symbols"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Symbols</span>
                         </label>
-                        <label class="legend-item">
+                        <label class="legend-item radio-style">
                             <input type="checkbox" id="filter-flags" checked>
-                            <span class="legend-color flags"></span>
+                            <span class="legend-radio flags"><span class="legend-radio-inner"></span></span>
                             <span class="legend-label">Flags</span>
                         </label>
                     </div>
@@ -437,6 +436,22 @@
                             <button class="region-btn active" data-region="all">All</button>
                             <button class="region-btn" data-region="us">US</button>
                             <button class="region-btn" data-region="uk">UK</button>
+                        </div>
+                        
+                        <div class="dropdown emoji-top-dropdown">
+                            <button class="dropdown-btn" id="emojiTopNDropdown">
+                                <span id="emojiTopNLabel">Top 200</span>
+                                <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12">
+                                    <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu hidden" id="emojiTopNMenu">
+                                <button class="dropdown-option" data-value="5">Top 5</button>
+                                <button class="dropdown-option" data-value="10">Top 10</button>
+                                <button class="dropdown-option" data-value="50">Top 50</button>
+                                <button class="dropdown-option" data-value="100">Top 100</button>
+                                <button class="dropdown-option active" data-value="200">Top 200</button>
+                            </div>
                         </div>
                     </div>
 
@@ -685,20 +700,20 @@
                 <div class="member-row">
                     <figure class="member-box">
                         <!-- swap with <img src="path/to/photo.jpg" alt="Chi"> to use a real photo -->
-                        <div class="avatar-placeholder" aria-hidden="true"></div>
+                        <div class="avatar-placeholder" aria-hidden="true">☻</div>
                         <figcaption class="member-name">Chi Le</figcaption>
-                        <figcaption class="member-name" style="color: var(--text-color);"><em>Class of 2028</em>
+                        <figcaption class="member-name" style="color: var(--text-color);"><em>Harvard College '28</em>
                         </figcaption>
-                        <figcaption class="member-name">Computer Science; Art & Visual Studies</figcaption>
+                        <figcaption class="member-name">Art & CS</figcaption>
 
                     </figure>
 
                     <figure class="member-box">
-                        <div class="avatar-placeholder" aria-hidden="true"></div>
+                        <div class="avatar-placeholder" aria-hidden="true">☻</div>
                         <figcaption class="member-name">Rain YeYang</figcaption>
-                        <figcaption class="member-name" style="color: var(--text-color);"><em>Class of 2027</em>
+                        <figcaption class="member-name" style="color: var(--text-color);"><em>Harvard College '27</em>
                         </figcaption>
-                        <figcaption class="member-name">Computer Science; Mathematics</figcaption>
+                        <figcaption class="member-name">Math & CS</figcaption>
 
                     </figure>
                 </div>
@@ -712,7 +727,7 @@
 
                 <!-- Link for users to explore the main Unicode website for more information! -->
                 <a href="https://home.unicode.org/" target="_blank" rel="noopener" class="consortium-link-box">
-                    ↗ &nbsp; &nbsp; Explore the Unicode Consortium
+                    ↗ &nbsp; &nbsp; Explore the official Unicode site
                 </a>
 
                 <ul class="resources-list centered">

@@ -1,4 +1,3 @@
-/* CSS Variables for Easy Theme Management */
 :root {
     --bg-color: #3d4049;
     /* --text-color: #a3b1b9; */
@@ -273,19 +272,22 @@
     color: var(--text-bright);
     font-family: inherit;
     font-size: 1rem;
+    caret-color: var(--text-bright);
 }
 
-.cursor {
-    width: 10px;
-    height: 1.1em;
-    background: var(--text-bright);
-    display: inline-block;
-    animation: blink 1s step-end infinite
+/* Hide placeholder when focused */
+#terminalInput:focus::placeholder {
+    color: transparent;
 }
 
-@keyframes blink {
+/* Style the blinking caret */
+#terminalInput:focus {
+    animation: caretBlink 1s step-end infinite;
+}
+
+@keyframes caretBlink {
     50% {
-        opacity: 0
+        caret-color: transparent;
     }
 }
 
@@ -482,7 +484,8 @@ body {
     background: transparent;
     border: 2px solid var(--text-color);
     cursor: pointer;
-    transition: all var(--transition-speed);
+    transition: background 0.15s, border-color 0.15s;
+    padding: 0;
 }
 
 .nav-dot:hover {
@@ -912,6 +915,7 @@ body {
     display: none;
 }
 
+/* Original filled circle style (for backwards compatibility) */
 .legend-color {
     width: 20px;
     height: 20px;
@@ -937,6 +941,135 @@ body {
 
 .legend-item input[type="checkbox"]:not(:checked)+.legend-color {
     opacity: 0.3;
+}
+
+/* New radio button style - hollow circle with filled inner circle */
+.legend-radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed);
+}
+
+.legend-radio-inner {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    transition: transform var(--transition-speed), opacity var(--transition-speed);
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Specific colors for radio buttons */
+.legend-radio.digits {
+    border-color: var(--accent-pink);
+}
+.legend-radio.digits .legend-radio-inner {
+    background: var(--accent-pink);
+}
+
+.legend-radio.punctuation {
+    border-color: var(--accent-yellow);
+}
+.legend-radio.punctuation .legend-radio-inner {
+    background: var(--accent-yellow);
+}
+
+.legend-radio.outlier {
+    border-color: var(--outlier-color);
+}
+.legend-radio.outlier .legend-radio-inner {
+    background: var(--outlier-color);
+}
+
+/* Emoji category radio colors */
+.legend-radio.smileys {
+    border-color: var(--emoji-smileys);
+}
+.legend-radio.smileys .legend-radio-inner {
+    background: var(--emoji-smileys);
+}
+
+.legend-radio.people {
+    border-color: var(--emoji-people);
+}
+.legend-radio.people .legend-radio-inner {
+    background: var(--emoji-people);
+}
+
+.legend-radio.animals {
+    border-color: var(--emoji-animals);
+}
+.legend-radio.animals .legend-radio-inner {
+    background: var(--emoji-animals);
+}
+
+.legend-radio.food {
+    border-color: var(--emoji-food);
+}
+.legend-radio.food .legend-radio-inner {
+    background: var(--emoji-food);
+}
+
+.legend-radio.travel {
+    border-color: var(--emoji-travel);
+}
+.legend-radio.travel .legend-radio-inner {
+    background: var(--emoji-travel);
+}
+
+.legend-radio.activities {
+    border-color: var(--emoji-activities);
+}
+.legend-radio.activities .legend-radio-inner {
+    background: var(--emoji-activities);
+}
+
+.legend-radio.objects {
+    border-color: var(--emoji-objects);
+}
+.legend-radio.objects .legend-radio-inner {
+    background: var(--emoji-objects);
+}
+
+.legend-radio.symbols {
+    border-color: var(--emoji-symbols);
+}
+.legend-radio.symbols .legend-radio-inner {
+    background: var(--emoji-symbols);
+}
+
+.legend-radio.flags {
+    border-color: var(--emoji-flags);
+}
+.legend-radio.flags .legend-radio-inner {
+    background: var(--emoji-flags);
+}
+
+/* When unchecked, hide the inner circle */
+.legend-item input[type="checkbox"]:not(:checked)+.legend-radio .legend-radio-inner {
+    transform: scale(0);
+    opacity: 0;
+}
+
+/* When unchecked, fade the outer circle */
+.legend-item input[type="checkbox"]:not(:checked)+.legend-radio {
+    opacity: 0.5;
+}
+
+/* Disabled state for legend items (e.g., outlier when punctuation is off) */
+.legend-item.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.legend-item.disabled .legend-radio {
+    opacity: 0.4;
 }
 
 .legend-label {
@@ -1204,6 +1337,11 @@ body {
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.15);
     border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    color: var(--text-bright);
 }
 
 .member-name {
@@ -1441,6 +1579,15 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    flex-wrap: wrap;
+}
+
+.emoji-top-dropdown {
+    margin-left: 10px;
+}
+
+.emoji-top-dropdown .dropdown-btn {
+    min-width: 100px;
 }
 
 .region-buttons {
@@ -1904,20 +2051,16 @@ body {
     position: relative;
 }
 
-#running-transition-ascii.title-typewriter::after {
-    content: '|';
-    position: absolute;
-    right: -0.4em;
-    top: 0;
-    bottom: 0;
-    display: inline-block;
+/* Inline cursor that appears right after the text */
+.typewriter-cursor {
     animation: unicodeCaretBlink 0.9s step-end infinite;
     opacity: 0.7;
+    font-weight: 300;
 }
 
 @keyframes unicodeCaretBlink {
     0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 .universe-container-v2 {
@@ -2527,14 +2670,22 @@ body {
     gap: 8px;
     font-size: 0.85rem;
     color: var(--text-color);
-    cursor: pointer;
     padding: 4px 8px;
     border-radius: 0;
+}
+
+/* Only apply hover to items that don't have .no-hover class */
+.breakdown-legend-item:not(.no-hover) {
+    cursor: pointer;
     transition: background 0.2s;
 }
 
-.breakdown-legend-item:hover {
+.breakdown-legend-item:not(.no-hover):hover {
     background: var(--button-hover);
+}
+
+.breakdown-legend-item.no-hover {
+    cursor: default;
 }
 
 .breakdown-legend-item.inactive {

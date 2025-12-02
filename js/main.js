@@ -83,6 +83,7 @@ let emojiDataUK = [];
 let currentEmojiData = [];
 let currentRegion = 'all';
 let currentVersion = 18;
+let currentEmojiLimit = 200; // Default top N emojis to show
 
 // ASCII characters for 1963 (ASCII codes 32-93 ONLY - no lowercase)
 const ASCII_1963 = new Set();
@@ -421,6 +422,7 @@ function initNavigation() {
     }, { passive: true });
 }
 
+// Simplified, stable nav dots implementation
 (function initAutoNavDots() {
     const app = document.getElementById('app');
     const dotsContainer = document.getElementById('navDots');
@@ -428,7 +430,8 @@ function initNavigation() {
     if (!app || !dotsContainer) return;
 
     let sections = [];
-    let observer = null;
+    let currentActiveIndex = 0;
+    let scrollTimeout = null;
 
     function buildDots() {
         // Clear old dots
@@ -448,6 +451,7 @@ function initNavigation() {
             btn.dataset.sectionIndex = String(idx);
 
             btn.addEventListener('click', () => {
+                // Smooth scroll to section
                 sections[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
 
@@ -456,48 +460,54 @@ function initNavigation() {
 
         // Mark the first dot active initially (if any)
         updateActiveDot(0);
-
-        // (Re)wire the intersection observer
-        if (observer) observer.disconnect();
-        observer = createIO();
-        sections.forEach(sec => observer.observe(sec));
     }
 
     function updateActiveDot(activeIndex) {
+        if (activeIndex === currentActiveIndex) return;
+        currentActiveIndex = activeIndex;
         const dots = Array.from(dotsContainer.querySelectorAll('.nav-dot'));
         dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
     }
 
-    function createIO() {
-        // Use rootMargin so a section becomes "active" when centered-ish
-        return new IntersectionObserver((entries) => {
-            // Choose the most visible entry to avoid rapid toggling
-            let best = null;
-            for (const e of entries) {
-                if (!e.isIntersecting) continue;
-                if (!best || e.intersectionRatio > best.intersectionRatio) best = e;
-            }
-            if (!best) return;
-
-            const index = sections.indexOf(best.target);
-            if (index !== -1) updateActiveDot(index);
-        }, {
-            root: null,
-            threshold: [0.5],           // becomes active when ≥50% visible
-            rootMargin: '-20% 0px -20% 0px'
-        });
+    // Use scroll position to determine active section (more stable than IntersectionObserver)
+    function handleScroll() {
+        if (scrollTimeout) return;
+        
+        scrollTimeout = setTimeout(() => {
+            scrollTimeout = null;
+            
+            const scrollTop = app.scrollTop;
+            const viewportHeight = app.clientHeight;
+            const scrollCenter = scrollTop + viewportHeight / 2;
+            
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+            
+            sections.forEach((section, idx) => {
+                const sectionTop = section.offsetTop;
+                const sectionCenter = sectionTop + section.offsetHeight / 2;
+                const distance = Math.abs(scrollCenter - sectionCenter);
+                
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = idx;
+                }
+            });
+            
+            updateActiveDot(closestIndex);
+        }, 50);
     }
 
     // Build dots on load
     buildDots();
 
+    // Listen for scroll events
+    app.addEventListener('scroll', handleScroll, { passive: true });
+
     // If slides/sections are added/removed later, rebuild automatically
     const mo = new MutationObserver((muts) => {
-        // Rebuild only if .section count or order changes
-        const prevIds = sections.map(s => s.id).join('|');
         const currentSections = Array.from(app.querySelectorAll('.section'));
-        const currentIds = currentSections.map(s => s.id || '').join('|');
-        if (prevIds !== currentIds || currentSections.length !== sections.length) {
+        if (currentSections.length !== sections.length) {
             buildDots();
         }
     });
@@ -507,13 +517,11 @@ function initNavigation() {
     // Optional: keyboard shortcut to jump sections (↑/↓)
     window.addEventListener('keydown', (e) => {
         if (!sections.length) return;
-        const dots = Array.from(dotsContainer.querySelectorAll('.nav-dot'));
-        const current = dots.findIndex(d => d.classList.contains('active'));
         if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-            const next = Math.min(current + 1, sections.length - 1);
+            const next = Math.min(currentActiveIndex + 1, sections.length - 1);
             sections[next].scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-            const prev = Math.max(current - 1, 0);
+            const prev = Math.max(currentActiveIndex - 1, 0);
             sections[prev].scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
@@ -799,14 +807,34 @@ function setupASCIIControls() {
         punctuation: document.getElementById('filter-punctuation')
     };
 
+    // Outlier checkbox
+    const outlierCheckbox = document.getElementById('remove-outlier');
+    const outlierLegendItem = outlierCheckbox ? outlierCheckbox.closest('.legend-item') : null;
+
+    // Function to update outlier disabled state
+    function updateOutlierState() {
+        const punctuationEnabled = filters.punctuation && filters.punctuation.checked;
+        if (outlierCheckbox && outlierLegendItem) {
+            outlierCheckbox.disabled = !punctuationEnabled;
+            outlierLegendItem.classList.toggle('disabled', !punctuationEnabled);
+            // If punctuation is off, turn outlier off as well
+            if (!punctuationEnabled && outlierCheckbox.checked) {
+                outlierCheckbox.checked = false;
+                removeOutlier = false;
+            }
+        }
+    }
+
     Object.entries(filters).forEach(([type, checkbox]) => {
         checkbox.addEventListener('change', () => {
+            updateOutlierState();
             updateVisualization();
         });
     });
 
-    // Outlier checkbox
-    const outlierCheckbox = document.getElementById('remove-outlier');
+    // Initialize outlier state
+    updateOutlierState();
+
     outlierCheckbox.addEventListener('change', () => {
         removeOutlier = outlierCheckbox.checked;
         updateVisualization();
@@ -1060,6 +1088,47 @@ function setupEmojiControls() {
             updateEmojiVisualization(true); // true for smooth transition
         });
     });
+
+    // Top N emoji dropdown
+    const topNDropdownBtn = document.getElementById('emojiTopNDropdown');
+    const topNDropdownMenu = document.getElementById('emojiTopNMenu');
+    const topNOptions = document.querySelectorAll('#emojiTopNMenu .dropdown-option');
+
+    if (topNDropdownBtn && topNDropdownMenu) {
+        topNDropdownBtn.addEventListener('click', () => {
+            topNDropdownMenu.classList.toggle('hidden');
+            topNDropdownBtn.classList.toggle('open');
+        });
+
+        topNOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = parseInt(option.dataset.value);
+                currentEmojiLimit = value;
+
+                // Update active state
+                topNOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+
+                // Update label
+                document.getElementById('emojiTopNLabel').textContent = option.textContent;
+
+                // Close dropdown
+                topNDropdownMenu.classList.add('hidden');
+                topNDropdownBtn.classList.remove('open');
+
+                // Update visualization
+                updateEmojiVisualization(true);
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!topNDropdownBtn.contains(e.target) && !topNDropdownMenu.contains(e.target)) {
+                topNDropdownMenu.classList.add('hidden');
+                topNDropdownBtn.classList.remove('open');
+            }
+        });
+    }
 }
 
 
@@ -1102,8 +1171,8 @@ function createEmojiVisualization() {
     const simulation = d3.forceSimulation()
         .force('charge', d3.forceManyBody().strength(-30))
         .force('center', d3.forceCenter(width / 2, height / 2).strength(0.1))
-        .force('x', d3.forceX(width / 2).strength(0.05))
-        .force('y', d3.forceY(height / 2).strength(0.05))
+        .force('x', d3.forceX(width / 2).strength(0.5))
+        .force('y', d3.forceY(height / 2).strength(0.5))
         .force('collision', d3.forceCollide().radius(d => d.radius + 3).strength(0.9));
 
     // Store simulation for updates
@@ -1118,6 +1187,9 @@ function updateEmojiVisualization(smooth = false) {
     const container = document.querySelector('.emoji-viz-container');
     const width = container.clientWidth;
     const height = container.clientHeight;
+
+    // Very fast animation duration for toggling
+    const animDuration = smooth ? 50 : 0;
 
     // Filter data by version
     let filteredData = currentEmojiData.filter(d => d.version <= currentVersion);
@@ -1138,8 +1210,8 @@ function updateEmojiVisualization(smooth = false) {
     // Filter by categories
     filteredData = filteredData.filter(d => categoryFilters[d.category]);
 
-    // Take top 200 emojis for performance
-    filteredData = filteredData.slice(0, 200);
+    // Take top N emojis based on current limit
+    filteredData = filteredData.slice(0, currentEmojiLimit);
 
     // Calculate radius based on rank (count)
     const maxCount = d3.max(filteredData, d => d.count) || 1;
@@ -1174,20 +1246,20 @@ function updateEmojiVisualization(smooth = false) {
     simulation.force('center', d3.forceCenter(dims.width / 2, dims.height / 2).strength(0.1));
     simulation.force('x', d3.forceX(dims.width / 2).strength(0.05));
     simulation.force('y', d3.forceY(dims.height / 2).strength(0.05));
-    simulation.alpha(0.8).restart();
+    simulation.alpha(1).restart();
 
     // Bind data
     const nodes = svg.selectAll('.emoji-node')
         .data(filteredData, d => d.emoji);
 
-    // Exit
+    // Exit - faster animation
     nodes.exit()
         .transition()
-        .duration(smooth ? 500 : 0)
+        .duration(animDuration)
         .style('opacity', 0)
         .remove();
 
-    // Enter
+    // Enter - faster animation
     const nodesEnter = nodes.enter()
         .append('g')
         .attr('class', 'emoji-node')
@@ -1208,17 +1280,17 @@ function updateEmojiVisualization(smooth = false) {
     const allNodes = nodesEnter.merge(nodes);
 
     allNodes.transition()
-        .duration(smooth ? 500 : 0)
+        .duration(animDuration)
         .style('opacity', 1);
 
     allNodes.select('circle')
         .transition()
-        .duration(smooth ? 500 : 0)
+        .duration(animDuration)
         .attr('r', d => d.radius);
 
     allNodes.select('text')
         .transition()
-        .duration(smooth ? 500 : 0)
+        .duration(animDuration)
         .attr('font-size', d => Math.max(d.radius * 0.8, 14));
 
     // Event handlers
@@ -1250,7 +1322,7 @@ function updateEmojiVisualization(smooth = false) {
 }
 
 function updateEmojiFilters() {
-    updateEmojiVisualization();
+    updateEmojiVisualization(true);
 }
 
 function showEmojiTooltip(event, d) {
@@ -1587,7 +1659,8 @@ function initUnicodeTypewriterTitle() {
 
         function step() {
             if (i <= word.length) {
-                title.textContent = basePrefix + word.slice(0, i);
+                // Include cursor character directly in text
+                title.innerHTML = basePrefix + word.slice(0, i) + '<span class="typewriter-cursor">|</span>';
                 i++;
                 setTimeout(step, 90); // typing speed
             } else {
@@ -1603,7 +1676,8 @@ function initUnicodeTypewriterTitle() {
 
         function step() {
             if (len >= 0) {
-                title.textContent = basePrefix + word.slice(0, len);
+                // Include cursor character directly in text
+                title.innerHTML = basePrefix + word.slice(0, len) + '<span class="typewriter-cursor">|</span>';
                 len--;
                 setTimeout(step, 60); // backspace speed
             } else {
@@ -1626,6 +1700,7 @@ function initUnicodeTypewriterTitle() {
                 typeWord(variants[index], () => {
                     // keep final text, remove caret
                     title.classList.remove('title-typewriter');
+                    title.textContent = basePrefix + variants[index]; // Remove cursor
                 });
                 return;
             }
@@ -2907,7 +2982,7 @@ function createBreakdownLegend(colors) {
     if (!legend) return;
 
     legend.innerHTML = Object.entries(colors).map(([name, color]) => `
-        <div class="breakdown-legend-item">
+        <div class="breakdown-legend-item no-hover">
             <div class="breakdown-legend-color" style="background: ${color}"></div>
             <span>${name}</span>
         </div>
