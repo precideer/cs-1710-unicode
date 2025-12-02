@@ -1958,7 +1958,6 @@ function prepareUniverseData() {
             year: d.yearEncoded || d.year_first_encoded,
             geography: d.geography_summary,
             languages: d.languages_examples,
-            iso_code: d.iso_code,
             region: categorizeRegion(d.geography_summary)
         }))
         .sort((a, b) => b.value - a.value);
