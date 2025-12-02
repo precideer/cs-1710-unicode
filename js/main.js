@@ -22,7 +22,7 @@ function makeAsciiYang() {
         `       |    ${mouth}     |`,
         '       |____________| ',
         '',
-        'One second I am loading my stuffs'
+        'One second, I am loading my stuff...'
     ];
 
     asciiEl.textContent = lines.join('\n');
@@ -125,7 +125,7 @@ const timelineData = [
     {
         year: 1987,
         title: "Unicode conceived",
-        content: "MS-DOS 3.3 expanded character support through new codepages for Central European, Baltic, Turkish, and Greek scripts, enabling wider multilingual computing. In the same year, Joe Becker introduced the term \"Unicode\" to describe a universal, unified encoding that could transcend the patchwork of existing code systems."
+        content: "MS-DOS 3.3 (an operating system released by Microsoft) expanded character support through new codepages for Central European, Baltic, Turkish, and Greek scripts, enabling wider multilingual computing. In the same year, Joe Becker introduced the term \"Unicode\" to describe a universal, unified encoding that could transcend the patchwork of existing code systems."
     },
     {
         year: 1991,
@@ -291,15 +291,15 @@ async function loadData() {
         languageData = parseLanguageCSV(languageText);
 
         // Load emoji data
-        const emojiAllResponse = await fetch('data/final_all.csv');
+        const emojiAllResponse = await fetch('data/emoji_all.csv');
         const emojiAllText = await emojiAllResponse.text();
         emojiDataAll = parseEmojiCSV(emojiAllText);
 
-        const emojiUSResponse = await fetch('data/final_us.csv');
+        const emojiUSResponse = await fetch('data/emoji_us.csv');
         const emojiUSText = await emojiUSResponse.text();
         emojiDataUS = parseEmojiCSV(emojiUSText);
 
-        const emojiUKResponse = await fetch('data/final_uk.csv');
+        const emojiUKResponse = await fetch('data/emoji_uk.csv');
         const emojiUKText = await emojiUKResponse.text();
         emojiDataUK = parseEmojiCSV(emojiUKText);
 
@@ -2418,7 +2418,7 @@ function generateRandomCharacters(script) {
     if (!ranges) {
         charBoxes.forEach((box, i) => {
             if (box) {
-                updateCharacterBox(box, '?', null, 'Character samples not available for this script');
+                updateCharacterBox(box, '?', null, 'Character sample cannot be displayed (see note above)');
             }
         });
         return;
@@ -2498,7 +2498,7 @@ function updateCharacterBox(box, char, codeHex, charInfo) {
         if (infoCodepoint) infoCodepoint.textContent = '';
     } else {
         // No info available
-        if (infoName) infoName.textContent = 'Info not available';
+        if (infoName) infoName.textContent = '';
         if (infoCategory) infoCategory.textContent = '';
         if (infoCodepoint) infoCodepoint.textContent = codeHex ? `U+${codeHex}` : '';
     }
