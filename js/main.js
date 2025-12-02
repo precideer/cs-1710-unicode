@@ -135,33 +135,39 @@ const timelineData = [
 ];
 
 // Unicode version data for the Sankey diagram
+// Note that the char count includes Graphic + Format characters
+// Unicode.org considers this the overall character count, so we have chosen to include this
 const unicodeVersionData = [
-    { version: "1.0", year: 1991, chars: 7161 },
-    { version: "1.1", year: 1993, chars: 28359 },
-    { version: "2.0", year: 1996, chars: 38950 },
-    { version: "2.1", year: 1998, chars: 38952 },
-    { version: "3.0", year: 1999, chars: 49259 },
-    { version: "3.1", year: 2001, chars: 94205 },
-    { version: "3.2", year: 2002, chars: 95221 },
-    { version: "4.0", year: 2003, chars: 96447 },
-    { version: "4.1", year: 2005, chars: 97720 },
-    { version: "5.0", year: 2006, chars: 99089 },
-    { version: "5.1", year: 2008, chars: 100713 },
-    { version: "5.2", year: 2009, chars: 107361 },
-    { version: "6.0", year: 2010, chars: 109449 },
-    { version: "6.1", year: 2012, chars: 110181 },
-    { version: "7.0", year: 2014, chars: 113021 },
-    { version: "8.0", year: 2015, chars: 120737 },
-    { version: "9.0", year: 2016, chars: 128237 },
-    { version: "10.0", year: 2017, chars: 136755 },
-    { version: "11.0", year: 2018, chars: 137439 },
-    { version: "12.0", year: 2019, chars: 137993 },
+    { version: "1.0", year: 1991, chars: 7096 },
+    { version: "1.0.1", year: 1992, chars: 28294 },
+    { version: "1.1", year: 1993, chars: 34168	 },
+    { version: "2.0", year: 1996, chars: 38885 },
+    { version: "2.1", year: 1998, chars: 38887 },
+    { version: "3.0", year: 1999, chars: 49194 },
+    { version: "3.1", year: 2001, chars: 94140 },
+    { version: "3.2", year: 2002, chars: 95156 },
+    { version: "4.0", year: 2003, chars: 96382 },
+    { version: "4.1", year: 2005, chars: 97655 },
+    { version: "5.0", year: 2006, chars: 99024 },
+    { version: "5.1", year: 2008, chars: 100648},
+    { version: "5.2", year: 2009, chars: 107296 },
+    { version: "6.0", year: 2010, chars: 109384 },
+    { version: "6.1", year: 2012, chars: 110116 },
+    { version: "6.2", year: 2012, chars: 110117 },
+    { version: "6.3", year: 2013, chars: 110122	},
+    { version: "7.0", year: 2014, chars: 112956 },
+    { version: "8.0", year: 2015, chars: 120672	},
+    { version: "9.0", year: 2016, chars: 128172 },
+    { version: "10.0", year: 2017, chars: 136690 },
+    { version: "11.0", year: 2018, chars: 137374 },
+    { version: "12.0", year: 2019, chars: 137928 },
+    { version: "12.1", year: 2019, chars: 137929 },
     { version: "13.0", year: 2020, chars: 143859 },
     { version: "14.0", year: 2021, chars: 144697 },
     { version: "15.0", year: 2022, chars: 149186 },
     { version: "15.1", year: 2023, chars: 149813 },
     { version: "16.0", year: 2024, chars: 154998 },
-    { version: "17.0", year: 2025, chars: 156000 }
+    { version: "17.0", year: 2025, chars: 159801 }
 ];
 
 // Script category colors
@@ -1562,7 +1568,7 @@ function initUnicodeTypewriterTitle() {
     const basePrefix = 'From ASCII to ';
     // Sequence of words the title will cycle through
     const variants = [
-        'ASCII',    // From ASCII to ASCII
+        // 'ASCII',    // From ASCII to ASCII (removed due to confusion)
         'Unicode',  // From ASCII to Unicode (English)
         'Юникод',   // Russian
         '统一码',    // Chinese
