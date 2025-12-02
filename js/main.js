@@ -22,7 +22,7 @@ function makeAsciiYang() {
         `       |    ${mouth}     |`,
         '       |____________| ',
         '',
-        'One second, I am loading my stuff...'
+        'One second, I am loading the data story...'
     ];
 
     asciiEl.textContent = lines.join('\n');
@@ -110,7 +110,7 @@ const timelineData = [
     {
         year: 1963,
         title: "The first ASCII",
-        content: "The ASA released the inaugural ASCII specification, defining 97 characters using 7-bit codes. It unified letters, digits, punctuation, and control signals under a single scheme, though this early version differed significantly from the ASCII familiar today. Notably, ASCII-1963 did not include lowercase letters; these were added in the 1967 revision. The 1963 version also had a more restricted set of punctuation and special characters."
+        content: "The American Standards Association (ASA) released the inaugural ASCII specification, defining 97 characters using 7-bit codes. It unified letters, digits, punctuation, and control signals under a single scheme, though this early version differed significantly from the ASCII familiar today. Notably, ASCII-1963 did not include lowercase letters; these were added in the 1967 revision. The 1963 version also had a more restricted set of punctuation and special characters."
     },
     {
         year: 1967,
