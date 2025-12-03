@@ -70,6 +70,7 @@ let quizState = {
 let asciiData = [];
 let unicodeData = [];
 let languageData = [];
+let unicodeGrowthData = []; // Data from unicode_growth.csv for accurate Sankey diagram
 let currentSortType = 'code';
 let removeOutlier = false;
 
@@ -297,6 +298,11 @@ async function loadData() {
         const languageText = await languageResponse.text();
         languageData = parseLanguageCSV(languageText);
 
+        // Load unicode growth data for accurate Sankey diagram
+        const growthResponse = await fetch('data/unicode_growth.csv');
+        const growthText = await growthResponse.text();
+        unicodeGrowthData = parseUnicodeGrowthCSV(growthText);
+
         // Load emoji data
         const emojiAllResponse = await fetch('data/emoji_all.csv');
         const emojiAllText = await emojiAllResponse.text();
@@ -394,6 +400,37 @@ function parseLanguageCSV(text) {
             } else {
                 row.unicodeRanges = [];
             }
+
+            data.push(row);
+        }
+    }
+
+    return data;
+}
+
+// Unicode Growth CSV Parser (for Sankey diagram)
+// Parses unicode_growth.csv with columns: Version, Year, Release_Date, Total_Characters, Han_CJK, Latin_Extended, Arabic_Hebrew, Indic_Scripts, Symbols_Emoji, Historic_Scripts, Other_Scripts
+function parseUnicodeGrowthCSV(text) {
+    const lines = text.split('\n');
+    const data = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim()) {
+            const values = lines[i].split(',');
+            
+            const row = {
+                version: values[0] ? values[0].trim() : '',
+                year: parseInt(values[1]) || 0,
+                releaseDate: values[2] ? values[2].trim() : '',
+                totalChars: parseInt(values[3]) || 0,
+                hanCJK: parseInt(values[4]) || 0,
+                latinExtended: parseInt(values[5]) || 0,
+                arabicHebrew: parseInt(values[6]) || 0,
+                indicScripts: parseInt(values[7]) || 0,
+                symbolsEmoji: parseInt(values[8]) || 0,
+                historicScripts: parseInt(values[9]) || 0,
+                otherScripts: parseInt(values[10]) || 0
+            };
 
             data.push(row);
         }
@@ -1788,12 +1825,23 @@ function createSankeyDiagram(maxYear) {
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    // Filter versions by year
-    const filteredVersions = unicodeVersionData.filter(v => v.year <= maxYear);
+    // Filter growth data by year (use unicodeGrowthData if available, fallback to unicodeVersionData)
+    const useGrowthData = unicodeGrowthData && unicodeGrowthData.length > 0;
+    
+    let filteredVersions;
+    if (useGrowthData) {
+        filteredVersions = unicodeGrowthData.filter(v => v.year <= maxYear);
+    } else {
+        filteredVersions = unicodeVersionData.filter(v => v.year <= maxYear);
+    }
 
     // Update stats
     const lastVersion = filteredVersions[filteredVersions.length - 1];
-    document.getElementById('totalCharsCount').textContent = lastVersion ? lastVersion.chars.toLocaleString() : '0';
+    if (useGrowthData) {
+        document.getElementById('totalCharsCount').textContent = lastVersion ? lastVersion.totalChars.toLocaleString() : '0';
+    } else {
+        document.getElementById('totalCharsCount').textContent = lastVersion ? lastVersion.chars.toLocaleString() : '0';
+    }
     document.getElementById('versionsShown').textContent = filteredVersions.length;
 
     // Count scripts by filtering languageData
@@ -1804,15 +1852,25 @@ function createSankeyDiagram(maxYear) {
     // Group additions by category
     const categories = ['Han/CJK', 'Latin Extended', 'Arabic/Hebrew', 'Indic Scripts', 'Symbols/Emoji', 'Historic Scripts', 'Other Scripts'];
     const categoryColors = ['#e06b9a', '#72c9cd', '#8fa55d', '#d4a574', '#f4d03f', '#9b9b9b', '#6fcf97'];
+    
+    // Category keys mapping to unicodeGrowthData properties
+    const categoryKeys = ['hanCJK', 'latinExtended', 'arabicHebrew', 'indicScripts', 'symbolsEmoji', 'historicScripts', 'otherScripts'];
 
     // Create nodes (versions on left, categories on right)
     const nodes = [];
     const links = [];
 
-    // Add version nodes
-    const majorVersions = filteredVersions.filter((v, i) =>
-        i === 0 || v.chars - filteredVersions[i - 1].chars > 1000 || v.version.includes('.0')
-    ).slice(-8); // Show last 8 major versions
+    // Add version nodes - filter for major versions
+    let majorVersions;
+    if (useGrowthData) {
+        majorVersions = filteredVersions.filter((v, i) =>
+            i === 0 || v.totalChars - filteredVersions[i - 1].totalChars > 1000 || v.version.includes('.0')
+        ).slice(-8); // Show last 8 major versions
+    } else {
+        majorVersions = filteredVersions.filter((v, i) =>
+            i === 0 || v.chars - filteredVersions[i - 1].chars > 1000 || v.version.includes('.0')
+        ).slice(-8);
+    }
 
     majorVersions.forEach((v, i) => {
         nodes.push({ name: `v${v.version}`, type: 'version', index: i });
@@ -1823,31 +1881,43 @@ function createSankeyDiagram(maxYear) {
         nodes.push({ name: cat, type: 'category', index: majorVersions.length + i, color: categoryColors[i] });
     });
 
-    // Create links (simplified distribution)
+    // Create links using ACTUAL per-category data from unicode_growth.csv
     majorVersions.forEach((v, vIndex) => {
-        const prevChars = vIndex > 0 ? majorVersions[vIndex - 1].chars : 0;
-        const added = v.chars - prevChars;
-
-        if (added > 0) {
-            // Distribute additions across categories (simplified estimation)
-            const distributions = [
-                0.6,  // Han/CJK (dominant)
-                0.08, // Latin Extended
-                0.05, // Arabic/Hebrew
-                0.08, // Indic Scripts
-                0.07, // Symbols/Emoji
-                0.06, // Historic Scripts
-                0.06  // Other Scripts
-            ];
-
-            distributions.forEach((ratio, catIndex) => {
-                const value = Math.max(added * ratio, 100);
-                links.push({
-                    source: vIndex,
-                    target: majorVersions.length + catIndex,
-                    value: value
-                });
+        if (useGrowthData) {
+            // Find the previous version in majorVersions to calculate additions per category
+            const prevVersion = vIndex > 0 ? majorVersions[vIndex - 1] : null;
+            
+            // Calculate actual additions per category
+            categoryKeys.forEach((key, catIndex) => {
+                const currentVal = v[key] || 0;
+                const prevVal = prevVersion ? (prevVersion[key] || 0) : 0;
+                const added = currentVal - prevVal;
+                
+                // Only add link if there are actual additions (minimum 50 for visibility)
+                if (added > 0) {
+                    links.push({
+                        source: vIndex,
+                        target: majorVersions.length + catIndex,
+                        value: Math.max(added, 50) // Minimum value for visibility
+                    });
+                }
             });
+        } else {
+            // Fallback to old hardcoded distribution method
+            const prevChars = vIndex > 0 ? majorVersions[vIndex - 1].chars : 0;
+            const added = v.chars - prevChars;
+
+            if (added > 0) {
+                const distributions = [0.6, 0.08, 0.05, 0.08, 0.07, 0.06, 0.06];
+                distributions.forEach((ratio, catIndex) => {
+                    const value = Math.max(added * ratio, 100);
+                    links.push({
+                        source: vIndex,
+                        target: majorVersions.length + catIndex,
+                        value: value
+                    });
+                });
+            }
         }
     });
 

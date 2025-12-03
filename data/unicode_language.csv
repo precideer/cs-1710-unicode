@@ -9,14 +9,14 @@ Georgian,1,1991,Georgia; diaspora,173,Georgian,10A0-10FF;1C90-1CBF;2D00-2D2F
 Greek,1,1991,Greece; Cyprus; diaspora,518,Greek,0370-03FF;1F00-1FFF
 Gujarati,1,1991,India (Gujarat); East Africa; UK; diaspora,91,Gujarati,0A80-0AFF
 Gurmukhi,1,1991,India (Punjab); UK; Canada; global Sikh diaspora,80,Punjabi (Eastern),0A00-0A7F
-Han,1,1991,China; Taiwan; Japan; Korea; Vietnam (historic use); diaspora,94213,"Chinese; Japanese (kanji); Korean (Hanja, limited); Vietnamese (historic)",4E00-9FFF;3400-4DBF;20000-2A6DF;2A700-2B73F;2B740-2B81F;2B820-2CEAF;2CEB0-2EBEF;2EBF0-2EE5F;30000-3134F;31350-323AF;323B0-3347F
-Hangul,1,1991,South Korea; North Korea; diaspora,11739,Korean,AC00-D7AF;1100-11FF;A960-A97F;D7B0-D7FF;3130-318F
+Han,1,1991,China; Taiwan; Japan; Korea; Vietnam (historic use); diaspora,114170,"Chinese; Japanese (kanji); Korean (Hanja, limited); Vietnamese (historic)",4E00-9FFF;3400-4DBF;20000-2A6DF;2A700-2B73F;2B740-2B81F;2B820-2CEAF;2CEB0-2EBEF;2EBF0-2EE5F;30000-3134F;31350-323AF;323B0-3347F
+Hangul,1,1991,South Korea; North Korea; diaspora,11172,Korean,AC00-D7AF;1100-11FF;A960-A97F;D7B0-D7FF;3130-318F
 Hebrew,1,1991,Israel; Jewish diaspora,134,"Hebrew, Yiddish",0590-05FF
 Hiragana,1,1991,Japan,380,Japanese (syllabary),3040-309F;1B001-1B11E
 Kannada,1,1991,India (Karnataka); diaspora,90,"Kannada; also Tulu, Konkani (partly)",0C80-0CFF
 Katakana,1,1991,Japan,320,Japanese (syllabary),30A0-30FF;31F0-31FF;1B000-1B0FF
 Lao,1,1991,Laos; diaspora,82,Lao,0E80-0EFF
-Latin,1,1991,"Worldwide (Americas, Europe, Africa, Asia, Oceania)",1475,"English, Spanish, French, Portuguese, Indonesian (and hundreds more)",0041-007A;00C0-00FF;0100-017F;0180-024F;1E00-1EFF;2C60-2C7F;A720-A7FF;AB30-AB6F;10780-107BF;1DF00-1DFFF
+Latin,1,1991,"Worldwide (Americas, Europe, Africa, Asia, Oceania)",1492,"English, Spanish, French, Portuguese, Indonesian (and hundreds more)",0041-007A;00C0-00FF;0100-017F;0180-024F;1E00-1EFF;2C60-2C7F;A720-A7FF;AB30-AB6F;10780-107BF;1DF00-1DFFF
 Malayalam,1,1991,"India (Kerala, Lakshadweep); Gulf diaspora",118,Malayalam,0D00-0D7F
 Oriya (Odia),1,1991,India (Odisha); diaspora,91,Odia,0B00-0B7F
 Tamil,1,1991,India (Tamil Nadu); Sri Lanka; Singapore; Malaysia; diaspora,123,Tamil,0B80-0BFF;11FC0-11FFF
@@ -133,7 +133,7 @@ Bhaiksuki,9,2016,Northern India & Nepal; historic Sanskrit Buddhist texts,97,San
 Marchen,9,2016,Tibet,68,"Zhang-Zhung, Tibetan (historic Buddhist)",11C70-11CBF
 Newa,9,2016,"Kathmandu Valley, Nepal; Newar community",92,Nepal Bhasa (Newari),11400-1147F
 Osage,9,2016,"Oklahoma, USA; Osage Nation",72,Osage,104B0-104FF
-Tangut,9,2016,Ningxia & Gansu (China); Western Xia; historic,6881,Tangut (historic),17000-187FF;18800-18AFF;18D00-18D7F;18D80-18DFF
+Tangut,9,2016,Ningxia & Gansu (China); Western Xia; historic,6144,Tangut (historic),17000-187FF;18800-18AFF;18D00-18D7F;18D80-18DFF
 Masaram Gondi,10,2017,Central India; Gond communities,75,Gondi,11D00-11D5F
 Nushu,10,2017,"Hunan province, China; women’s script; historic",396,Chinese dialects (Tuhua); women's script (historic),1B170-1B2FF
 Soyombo,10,2017,Mongolia & Tibet; Buddhist liturgy; historic,80,"Mongolian, Sanskrit, Tibetan (historic liturgical)",11A50-11AAF
