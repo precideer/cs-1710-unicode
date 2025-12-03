@@ -136,41 +136,10 @@ const timelineData = [
     }
 ];
 
-// Unicode version data for the Sankey diagram
+// Unicode version data for the Sankey diagram (loaded from CSV)
 // Note that the char count includes Graphic + Format characters
 // Unicode.org considers this the overall character count, so we have chosen to include this
-const unicodeVersionData = [
-    { version: "1.0", year: 1991, chars: 7096 },
-    { version: "1.0.1", year: 1992, chars: 28294 },
-    { version: "1.1", year: 1993, chars: 34168	 },
-    { version: "2.0", year: 1996, chars: 38885 },
-    { version: "2.1", year: 1998, chars: 38887 },
-    { version: "3.0", year: 1999, chars: 49194 },
-    { version: "3.1", year: 2001, chars: 94140 },
-    { version: "3.2", year: 2002, chars: 95156 },
-    { version: "4.0", year: 2003, chars: 96382 },
-    { version: "4.1", year: 2005, chars: 97655 },
-    { version: "5.0", year: 2006, chars: 99024 },
-    { version: "5.1", year: 2008, chars: 100648},
-    { version: "5.2", year: 2009, chars: 107296 },
-    { version: "6.0", year: 2010, chars: 109384 },
-    { version: "6.1", year: 2012, chars: 110116 },
-    { version: "6.2", year: 2012, chars: 110117 },
-    { version: "6.3", year: 2013, chars: 110122	},
-    { version: "7.0", year: 2014, chars: 112956 },
-    { version: "8.0", year: 2015, chars: 120672	},
-    { version: "9.0", year: 2016, chars: 128172 },
-    { version: "10.0", year: 2017, chars: 136690 },
-    { version: "11.0", year: 2018, chars: 137374 },
-    { version: "12.0", year: 2019, chars: 137928 },
-    { version: "12.1", year: 2019, chars: 137929 },
-    { version: "13.0", year: 2020, chars: 143859 },
-    { version: "14.0", year: 2021, chars: 144697 },
-    { version: "15.0", year: 2022, chars: 149186 },
-    { version: "15.1", year: 2023, chars: 149813 },
-    { version: "16.0", year: 2024, chars: 154998 },
-    { version: "17.0", year: 2025, chars: 159801 }
-];
+let unicodeVersionData = [];
 
 // Script category colors
 const scriptCategoryColors = {
@@ -303,6 +272,11 @@ async function loadData() {
         const growthText = await growthResponse.text();
         unicodeGrowthData = parseUnicodeGrowthCSV(growthText);
 
+        // Load unicode version data (version, year, total chars)
+        const versionResponse = await fetch('data/unicode_version.csv');
+        const versionText = await versionResponse.text();
+        unicodeVersionData = parseUnicodeVersionCSV(versionText);
+
         // Load emoji data
         const emojiAllResponse = await fetch('data/emoji_all.csv');
         const emojiAllText = await emojiAllResponse.text();
@@ -430,6 +404,28 @@ function parseUnicodeGrowthCSV(text) {
                 symbolsEmoji: parseInt(values[8]) || 0,
                 historicScripts: parseInt(values[9]) || 0,
                 otherScripts: parseInt(values[10]) || 0
+            };
+
+            data.push(row);
+        }
+    }
+
+    return data;
+}
+
+// Parse Unicode version CSV (version, year, chars)
+function parseUnicodeVersionCSV(text) {
+    const lines = text.split('\n');
+    const data = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim()) {
+            const values = lines[i].split(',');
+            
+            const row = {
+                version: values[0] ? values[0].trim() : '',
+                year: parseInt(values[1]) || 0,
+                chars: parseInt(values[2]) || 0
             };
 
             data.push(row);
@@ -2123,8 +2119,21 @@ function filterScriptList(searchQuery = '') {
         let visible = true;
 
         // Apply region filter
-        if (currentUniverseFilter !== 'all' && region !== currentUniverseFilter) {
-            visible = false;
+        // "worldwide" scripts should appear in ALL region filters (except historic)
+        // "historic" filter should only show historic scripts
+        if (currentUniverseFilter !== 'all') {
+            if (currentUniverseFilter === 'historic') {
+                // Historic filter: only show historic scripts
+                if (region !== 'historic') {
+                    visible = false;
+                }
+            } else {
+                // Regional filters (asia, europe, africa, americas): 
+                // Show scripts from that region OR worldwide scripts
+                if (region !== currentUniverseFilter && region !== 'worldwide') {
+                    visible = false;
+                }
+            }
         }
 
         // Apply search filter
@@ -2173,26 +2182,59 @@ function selectScript(index) {
 function categorizeRegion(geography) {
     if (!geography) return 'worldwide';
     const geo = geography.toLowerCase();
-    if (geo.includes('historic') || geo.includes('ancient')) return 'historic';
+    
+    // Check for worldwide first (scripts used globally)
+    if (geo.includes('worldwide') || geo.includes('global')) return 'worldwide';
+    
+    // Check for purely historic scripts (only used historically, no modern use)
+    // Be more specific: only mark as historic if the ENTIRE geography is about historic use
+    // Not just a parenthetical mention like "Vietnam (historic use)"
+    const isOnlyHistoric = (geo.startsWith('historic') || geo.includes('(historic)') || 
+        geo.match(/^[^;]*(historic|ancient)[^;]*$/) !== null) && 
+        !geo.includes('china') && !geo.includes('japan') && !geo.includes('korea') &&
+        !geo.includes('india') && !geo.includes('taiwan');
+    
+    if (isOnlyHistoric) return 'historic';
+    
+    // Asia (East, Southeast, South, Central)
     if (geo.includes('china') || geo.includes('japan') || geo.includes('korea') || geo.includes('india') ||
         geo.includes('asia') || geo.includes('thai') || geo.includes('vietnam') || geo.includes('cambodia') ||
         geo.includes('myanmar') || geo.includes('laos') || geo.includes('tibet') || geo.includes('nepal') ||
         geo.includes('bangladesh') || geo.includes('sri lanka') || geo.includes('pakistan') ||
         geo.includes('afghanistan') || geo.includes('indonesia') || geo.includes('malaysia') ||
-        geo.includes('philippines') || geo.includes('mongolia')) return 'asia';
+        geo.includes('philippines') || geo.includes('mongolia') || geo.includes('taiwan') ||
+        geo.includes('singapore') || geo.includes('brunei')) return 'asia';
+    
+    // Middle East (categorized under Asia for simplicity, but checked separately)
+    if (geo.includes('middle east') || geo.includes('iran') || geo.includes('iraq') || geo.includes('syria') ||
+        geo.includes('israel') || geo.includes('jordan') || geo.includes('saudi') || geo.includes('yemen') ||
+        geo.includes('turkey') || geo.includes('maldives') || geo.includes('levant') || geo.includes('arabia') ||
+        geo.includes('gulf') || geo.includes('mesopotamia')) return 'asia';
+    
+    // Europe
     if (geo.includes('europe') || geo.includes('russia') || geo.includes('greece') || geo.includes('german') ||
         geo.includes('georgia') || geo.includes('armenia') || geo.includes('ukraine') || geo.includes('bulgaria') ||
         geo.includes('serbia') || geo.includes('scandinavia') || geo.includes('ireland') || geo.includes('uk') ||
-        geo.includes('british') || geo.includes('hungary') || geo.includes('albania') || geo.includes('cyprus')) return 'europe';
+        geo.includes('british') || geo.includes('hungary') || geo.includes('albania') || geo.includes('cyprus') ||
+        geo.includes('croatia') || geo.includes('poland') || geo.includes('romania') || geo.includes('france') ||
+        geo.includes('spain') || geo.includes('italy') || geo.includes('balkan')) return 'europe';
+    
+    // Africa
     if (geo.includes('africa') || geo.includes('egypt') || geo.includes('ethiop') || geo.includes('nigeria') ||
         geo.includes('liberia') || geo.includes('sierra leone') || geo.includes('cameroon') || geo.includes('chad') ||
         geo.includes('sudan') || geo.includes('morocco') || geo.includes('algeria') || geo.includes('libya') ||
-        geo.includes('mali') || geo.includes('niger') || geo.includes('somalia') || geo.includes('eritrea')) return 'africa';
+        geo.includes('mali') || geo.includes('niger') || geo.includes('somalia') || geo.includes('eritrea') ||
+        geo.includes('guinea') || geo.includes('senegal') || geo.includes('ghana') || geo.includes('kenya') ||
+        geo.includes('tanzania') || geo.includes('congo')) return 'africa';
+    
+    // Americas
     if (geo.includes('america') || geo.includes('canada') || geo.includes('cherokee') || geo.includes('united states') ||
-        geo.includes('oklahoma') || geo.includes('alaska')) return 'americas';
-    if (geo.includes('middle east') || geo.includes('iran') || geo.includes('iraq') || geo.includes('syria') ||
-        geo.includes('israel') || geo.includes('jordan') || geo.includes('saudi') || geo.includes('yemen') ||
-        geo.includes('turkey') || geo.includes('maldives')) return 'asia';
+        geo.includes('oklahoma') || geo.includes('alaska') || geo.includes('mexico') || geo.includes('brazil') ||
+        geo.includes('peru') || geo.includes('native') || geo.includes('indigenous')) return 'americas';
+    
+    // If we have specific regions mentioned but didn't match above, it's probably historic
+    if (geo.includes('historic') || geo.includes('ancient') || geo.includes('extinct')) return 'historic';
+    
     return 'worldwide';
 }
 
