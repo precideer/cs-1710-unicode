@@ -11,7 +11,7 @@ Gujarati,1,1991,India (Gujarat); East Africa; UK; diaspora,91,Gujarati,0A80-0AFF
 Gurmukhi,1,1991,India (Punjab); UK; Canada; global Sikh diaspora,80,Punjabi (Eastern),0A00-0A7F
 Han,1,1991,China; Taiwan; Japan; Korea; Vietnam (historic use); diaspora,94213,"Chinese; Japanese (kanji); Korean (Hanja, limited); Vietnamese (historic)",4E00-9FFF;3400-4DBF;20000-2A6DF;2A700-2B73F;2B740-2B81F;2B820-2CEAF;2CEB0-2EBEF;2EBF0-2EE5F;30000-3134F;31350-323AF;323B0-3347F
 Hangul,1,1991,South Korea; North Korea; diaspora,11739,Korean,AC00-D7AF;1100-11FF;A960-A97F;D7B0-D7FF;3130-318F
-Hebrew,1,1991,Israel; Jewish communities worldwide,134,"Hebrew, Yiddish",0590-05FF
+Hebrew,1,1991,Israel; Jewish diaspora,134,"Hebrew, Yiddish",0590-05FF
 Hiragana,1,1991,Japan,380,Japanese (syllabary),3040-309F;1B001-1B11E
 Kannada,1,1991,India (Karnataka); diaspora,90,"Kannada; also Tulu, Konkani (partly)",0C80-0CFF
 Katakana,1,1991,Japan,320,Japanese (syllabary),30A0-30FF;31F0-31FF;1B000-1B0FF
@@ -33,7 +33,7 @@ Myanmar,3,1999,Myanmar; Thailand (border regions); diaspora,223,"Burmese, Shan, 
 Ogham,3,1999,Ireland; UK (historic),29,Old Irish (historic),1680-169F
 Runic,3,1999,Scandinavia; British Isles (historic),86,"Old Norse, Old English (historic)",16A0-16FF
 Sinhala,3,1999,Sri Lanka; diaspora,111,Sinhala,0D80-0DFF;111E0-111FF
-Syriac,3,1999,Iraq; Syria; Turkey; diaspora (US/Europe),88,"Syriac (Classical, Assyrian Neo-Aramaic liturgical)",0700-074F;0860-086F
+Syriac,3,1999,Iraq; Syria; Turkey; diaspora (EU and US),88,"Syriac (Classical, Assyrian Neo-Aramaic liturgical)",0700-074F;0860-086F
 Thaana,3,1999,Maldives,50,Dhivehi (Maldivian),0780-07BF
 Yi,3,1999,"China (Sichuan, Yunnan, Guizhou)",1220,Nuosu (Yi),A000-A48F;A490-A4CF
 Deseret,3.1,2001,United States (historic),80,English (historic phonetic),10400-1044F
@@ -47,7 +47,7 @@ Cypriot Syllabary,4,2003,Cyprus (historic),55,Ancient Cypriot Greek (historic),1
 Limbu,4,2003,Nepal; India (Sikkim),68,Limbu,1900-194F
 Linear B,4,2003,Greece (historic),211,Mycenaean Greek (historic),10000-1007F;10080-100FF
 Osmanya,4,2003,Somalia (historic),40,Somali (historic),10480-104AF
-Shavian,4,2003,United Kingdom (historic use),48,"English (phonemic orthography, historic)",10450-1047F
+Shavian,4,2003,United Kingdom (UK) (historic use),48,"English (phonemic orthography, historic)",10450-1047F
 Tai Le,4,2003,China (Yunnan); Myanmar; Laos,35,Tai Nüa,1950-197F
 Ugaritic,4,2003,Syria (historic),31,Ugaritic (historic),10380-1039F
 Buginese,4.1,2005,Indonesia (South Sulawesi),30,Buginese,1A00-1A1F
@@ -62,7 +62,7 @@ Balinese,5,2006,Indonesia (Bali),124,Balinese,1B00-1B7F
 "Cuneiform, Sumero-Akkadian",5,2006,Iraq; Syria; Turkey (historic),1234,"Sumerian, Akkadian (historic)",12000-123FF;12400-1247F;12480-1254F
 N'Ko,5,2006,Guinea; Mali; Côte d’Ivoire; West African diaspora,62,"N'Ko (Mandinka, Bambara, Maninka and others)",07C0-07FF
 Phags‑pa,5,2006,China; Mongolia (historic),56,"Mongolian, Chinese (historic use)",A840-A87F
-Phoenician,5,2006,Levant (historic),29,Phoenician (historic),10900-1091F
+Phoenician,5,2006,Levant: Syria; Lebanon; Jordan; Palestine; Israel; and Cyprus (historic),29,Phoenician (historic),10900-1091F
 Carian,5.1,2008,Anatolia (Turkey) historic,49,Carian (historic),102A0-102DF
 Cham,5.1,2008,Vietnam; Cambodia,83,Cham,AA00-AA5F
 Kayah Li,5.1,2008,Myanmar; Thailand,47,Kayah languages,A900-A92F
