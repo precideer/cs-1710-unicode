@@ -383,6 +383,17 @@ function parseLanguageCSV(text) {
             if (row['year_first_encoded']) {
                 row.yearEncoded = parseInt(row['year_first_encoded']) || 1991;
             }
+            
+            // Parse unicode_range into array of [start, end] pairs
+            // Format in CSV: "0600-06FF;0750-077F" -> [[0x0600, 0x06FF], [0x0750, 0x077F]]
+            if (row['unicode_range']) {
+                row.unicodeRanges = row['unicode_range'].split(';').map(rangeStr => {
+                    const [start, end] = rangeStr.split('-');
+                    return [parseInt(start, 16), parseInt(end, 16)];
+                }).filter(range => !isNaN(range[0]) && !isNaN(range[1]));
+            } else {
+                row.unicodeRanges = [];
+            }
 
             data.push(row);
         }
@@ -1958,7 +1969,8 @@ function prepareUniverseData() {
             year: d.yearEncoded || d.year_first_encoded,
             geography: d.geography_summary,
             languages: d.languages_examples,
-            region: categorizeRegion(d.geography_summary)
+            region: categorizeRegion(d.geography_summary),
+            unicodeRanges: d.unicodeRanges || []
         }))
         .sort((a, b) => b.value - a.value);
 }
@@ -2400,7 +2412,8 @@ function updateWorldMap(script) {
     }
 }
 
-// Unicode ranges for different scripts
+// Unicode ranges for different scripts (FALLBACK - primary data now comes from CSV)
+// This object is kept as a backup in case CSV data is missing for any script
 const scriptUnicodeRanges = {
     'Han': [[0x4E00, 0x9FFF], [0x3400, 0x4DBF]], // CJK Unified Ideographs
     'Hangul': [[0xAC00, 0xD7AF], [0x1100, 0x11FF]], // Hangul Syllables & Jamo
@@ -2478,24 +2491,28 @@ function generateRandomCharacters(script) {
         document.getElementById('charSample3')
     ];
 
-    // Get Unicode ranges for this script
-    let ranges = scriptUnicodeRanges[script.name];
+    // Get Unicode ranges from the script data (loaded from CSV)
+    let ranges = script.unicodeRanges;
 
-    // Fallback: use a generic approach based on script name patterns
-    if (!ranges) {
-        // Try to find a partial match
-        const scriptNameLower = script.name.toLowerCase();
-        for (const [key, value] of Object.entries(scriptUnicodeRanges)) {
-            if (key.toLowerCase().includes(scriptNameLower) ||
-                scriptNameLower.includes(key.toLowerCase())) {
-                ranges = value;
-                break;
+    // Fallback to hardcoded ranges if CSV data is missing
+    if (!ranges || ranges.length === 0) {
+        ranges = scriptUnicodeRanges[script.name];
+        
+        // Try partial match as last resort
+        if (!ranges) {
+            const scriptNameLower = script.name.toLowerCase();
+            for (const [key, value] of Object.entries(scriptUnicodeRanges)) {
+                if (key.toLowerCase().includes(scriptNameLower) ||
+                    scriptNameLower.includes(key.toLowerCase())) {
+                    ranges = value;
+                    break;
+                }
             }
         }
     }
 
     // If still no ranges, show placeholder
-    if (!ranges) {
+    if (!ranges || ranges.length === 0) {
         charBoxes.forEach((box, i) => {
             if (box) {
                 updateCharacterBox(box, '?', null, 'Character sample cannot be displayed (see note above)');
