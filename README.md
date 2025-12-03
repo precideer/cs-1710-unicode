@@ -31,7 +31,7 @@ cs-1710-unicode/
 ├── data/
 └── fonts/
 ```
-⚠️ Important: Do not move files between folders.
+Important: Do not move files between folders.
 All data is loaded using relative paths (e.g., /data/...csv, /css/styles.css).
 
 ### b. Option 2 — Serve with a lightweight local server (recommended for Chrome)
@@ -132,4 +132,4 @@ To change the theme colors, edit the CSS variables in `css/styles.css`:
 - Chi Le — Harvard College ’28
 - Rain YeYang — Harvard College ’27
 <br>
-Built for CS171: Visualization, Fall 2024.
+Built for CS171: Visualization, Fall 2025.
