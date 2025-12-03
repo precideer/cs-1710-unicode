@@ -3153,3 +3153,54 @@ function moveBreakdownTooltip(event) {
 function hideBreakdownTooltip() {
     document.getElementById('breakdownTooltip').classList.add('hidden');
 }
+
+// Animated avatars!
+function generatechifaces() {
+    const asciiEl = document.getElementById('hellochi');
+    const eyeOptions = ['• •', '> <', '- -'];
+    const mouthOptions = ['___', ' U ', ' O ', '▂▂ '];
+
+    if (!asciiEl) return;
+    const eyes = eyeOptions[Math.floor(Math.random() * eyeOptions.length)];
+    const mouth = mouthOptions[Math.floor(Math.random() * mouthOptions.length)];
+
+    const lines = [
+        '        ssssss     ',
+        '      ssssssssss   ',
+        '     sssss/ \\ssss ',
+        '    ssss       |',
+        `   _ss  ${eyes}    |`,
+        '    |       ?    |s ',
+        `   ss\\    ${mouth}   /ss`,
+        '  sssss\\________/sssss',
+    ];
+
+    asciiEl.textContent = lines.join('\n');
+}
+const chi = setInterval(generatechifaces, 150);
+generatechifaces(); 
+
+function generaterainfaces() {
+    const asciiEl = document.getElementById('hellorain');
+    const eyeOptions = ['• •', 'U U', '- -'];
+    const mouthOptions = [' @ ', ' ^ ', ' O ', '▂▂ '];
+
+    if (!asciiEl) return;
+    const eyes = eyeOptions[Math.floor(Math.random() * eyeOptions.length)];
+    const mouth = mouthOptions[Math.floor(Math.random() * mouthOptions.length)];
+
+    const lines = [
+        '     ~~~~.     ',
+        '   ~~~~~~~     ',
+        '  **~~/ \\~~** ',
+        ' |         ~~~~',
+        `|   ${eyes}    |_`,
+        '   |   {       _|o ',
+        `  \\    ${mouth}   / ss`,
+        '    \\________/ .sss',
+    ];
+
+    asciiEl.textContent = lines.join('\n');
+}
+const rain = setInterval(generaterainfaces, 150);
+generaterainfaces();
