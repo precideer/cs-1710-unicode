@@ -52,6 +52,8 @@ npx http-server
 ```
 cs-1710-unicode/
 │
+├── ABOUT_DATA.md         # Dataset documentation
+│
 ├── index.html            # Main page containing all section structure
 │
 ├── css/
