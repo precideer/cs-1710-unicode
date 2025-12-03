@@ -1,4 +1,4 @@
-# Unicode Data Story — CS171 Final Project
+# CS1710 Final Project: Unicode Data Story
 
 This repository contains an interactive, scroll-driven data story exploring ASCII, Unicode, global scripts, and emoji usage over time. The project is built with HTML, CSS, JavaScript, and D3.js, supported by multiple datasets stored locally.
 
